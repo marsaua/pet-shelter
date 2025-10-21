@@ -130,7 +130,7 @@ GEM
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
     json (2.15.1)
-    kamal (2.8.0)
+    kamal (2.8.1)
       activesupport (>= 7.0)
       base64 (~> 0.2)
       bcrypt_pbkdf (~> 1.0)
@@ -193,6 +193,13 @@ GEM
     parser (3.3.9.0)
       ast (~> 2.4.1)
       racc
+    pg (1.6.2)
+    pg (1.6.2-aarch64-linux)
+    pg (1.6.2-aarch64-linux-musl)
+    pg (1.6.2-arm64-darwin)
+    pg (1.6.2-x86_64-darwin)
+    pg (1.6.2-x86_64-linux)
+    pg (1.6.2-x86_64-linux-musl)
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
@@ -257,7 +264,7 @@ GEM
     reline (0.6.2)
       io-console (~> 0.5)
     rexml (3.4.4)
-    rubocop (1.81.1)
+    rubocop (1.81.6)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -380,6 +387,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   kamal
+  pg (~> 1.1)
   propshaft
   puma (>= 5.0)
   rails (~> 8.0.3)
