@@ -1,0 +1,29 @@
+<%= form_with(model: @dog) do |form| %>
+    <div>
+        <%= form.label :name %>
+        <%= form.text_field :name %>
+    </div>
+    <div>
+        <%= form.label :sex %>
+        <%= form.select :sex, Dog.sexes.keys %>
+    </div>
+    <div>
+        <%= form.label :age_month %>
+        <%= form.text_field :age_month %>
+    </div>
+    <div>
+        <%= form.label :size %>
+        <%= form.select :size, Dog.sizes.keys %>
+    </div>
+    <div>
+        <%= form.label :breed %>
+        <%= form.text_field :breed %>
+    </div>
+    <div>
+        <%= form.label :status %>
+        <%= form.select :status, Dog.statuses.keys %>
+    </div>
+    <div>
+        <%= form.submit %>
+    </div>
+<% end %>

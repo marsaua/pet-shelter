@@ -1,0 +1,12 @@
+<div>
+    <h1>Dogs</h1>
+    <%= link_to "New Dog", new_dog_path %>
+    <% @dogs.inspect %>
+    <% unless @dogs %>
+        <p>No dogs found</p>
+    <% else %>
+        <div>
+            <%= render @dogs %> <!-- render each dog in the collection automatically -->
+        </div>
+    <% end %>
+</div>

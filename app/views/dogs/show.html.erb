@@ -1,0 +1,10 @@
+<div>
+    <h1><%= @dog.name %></h1>
+    <p><%= @dog.sex %></p>
+    <p><%= @dog.age_month %></p>
+    <p><%= @dog.size %></p>
+    <p><%= @dog.breed %></p>
+    <p><%= @dog.status %></p>
+    <%= link_to "Edit", edit_dog_path(@dog) %>
+    <%= link_to "Back", dogs_path %>
+</div>
