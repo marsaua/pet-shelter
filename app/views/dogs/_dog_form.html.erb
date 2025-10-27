@@ -1,33 +1,33 @@
 <%= form_with(model: @dog) do |form| %>
-    <div>
-        <%= form.label :name %>
-        <%= form.text_field :name %>
+    <div class="mb-3">
+        <%= form.label :name, class: "form-label" %>
+        <%= form.text_field :name, class: "form-control" %>
     </div>
-    <div>
-        <%= form.label :sex %>
-        <%= form.select :sex, %w[male female] %>
+    <div class="mb-3">
+        <%= form.label :sex, class: "form-label" %>
+        <%= form.select :sex, %w[male female], {}, { class: "form-select" } %>
     </div>
-    <div>
-        <%= form.label :age_month %>
-        <%= form.text_field :age_month %>
+    <div class="mb-3">
+        <%= form.label :age_month, class: "form-label" %>
+        <%= form.text_field :age_month, class: "form-control" %>
     </div>
-    <div>
-        <%= form.label :size %>
-        <%= form.select :size, %w[small medium large] %>
+    <div class="mb-3">
+        <%= form.label :size, class: "form-label" %>
+        <%= form.select :size, %w[small medium large], {}, { class: "form-select" } %>
     </div>
-    <div>
-        <%= form.label :breed %>
-        <%= form.text_field :breed %>
+    <div class="mb-3">
+        <%= form.label :breed, class: "form-label" %>
+        <%= form.text_field :breed, class: "form-control" %>
     </div>
-    <div>
-        <%= form.label :status %>
-        <%= form.select :status, %w[available adopted] %>
+    <div class="mb-3">
+        <%= form.label :status, class: "form-label" %>
+        <%= form.select :status, %w[available adopted], {}, { class: "form-select" }  %>
     </div>
-    <div>
-        <%= form.label :avatar %>
-        <%= form.file_field :avatar %>
+    <div class="mb-3">
+        <%= form.label :avatar, class: "form-label" %>
+        <%= form.file_field :avatar, class: "form-control" %>
     </div>
-    <div>
-        <%= form.submit %>
+    <div class="mb-3">
+        <%= form.submit class: "btn btn-primary" %>
     </div>
 <% end %>

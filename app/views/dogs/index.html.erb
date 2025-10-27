@@ -1,12 +1,13 @@
-<div>
-    <h1>Dogs</h1>
-    <%= link_to "New Dog", new_dog_path %>
-    <% @dogs.inspect %>
-    <% unless @dogs %>
-        <p>No dogs found</p>
-    <% else %>
-        <div class="row">
-            <%= render @dogs %> <!-- render each dog in the collection automatically -->
-        </div>
-    <% end %>
-</div>
+<section class="back-img">
+    <div class="container">
+        <h1>Dogs</h1>
+        <%= link_to "New Dog", new_dog_path %>
+        <% unless @dogs %>
+            <p>No dogs found</p>
+        <% else %>
+            <div class="row row-cols-1 auto-grid">
+                <%= render @dogs %> <!-- render each dog in the collection automatically -->
+            </div>
+        <% end %>
+    </div>
+</section>

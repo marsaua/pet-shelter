@@ -1,6 +1,11 @@
 @import "custom";
 @import "app";
 
+.back-img {
+  background-image: url("back.jpg");
+  background-size: cover;
+  background-position: center;
+}
 .hero-container {
   height: calc(100vh - 56px);
   width: 100%;
@@ -46,4 +51,47 @@
       text-align: right;
     }
   }
+}
+.about-us-list {
+  display: grid;
+  gap: 2rem;
+}
+.about-us-item {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.about-us-item-image {
+  flex: 0 0 40%;
+}
+.about-us-item-info {
+  flex: 1 1 0;
+}
+
+.about-us-item-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.about-us-list .about-us-item:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+@media (max-width: 768px) {
+  .about-us-item {
+    flex-direction: column !important;
+  }
+  .about-us-item-image,
+  .about-us-item-info {
+    flex: 0 1 auto;
+    width: 100%;
+  }
+}
+
+.auto-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--bs-gutter-x, 1rem);
 }

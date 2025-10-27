@@ -1,10 +1,10 @@
-<article class="col">
+<article class="col p-0">
     <%= link_to dog_path(dog) do %>
-        <div class="card" style="width: 18rem;">
+        <div class="card">
             <% if dog.avatar.attached? %>
-                <%= image_tag dog.avatar, height: 200 %>
+                <%= image_tag dog.avatar, height: 200, class: "object-fit-cover" %>
             <% else %>
-                <%= image_tag "avatar.svg", height: 200 %>
+                <%= image_tag "avatar.svg", height: 200, class: "object-fit-cover" %>
             <% end %>
             <div class="card-body">
                 <h5 class="card-title"><%= dog.name %> (<%= dog.sex %>)</h5>
