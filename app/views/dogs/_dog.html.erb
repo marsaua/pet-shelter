@@ -1,8 +1,18 @@
-<ul>
-    <li><%= dog.name %></li>
-    <li><%= dog.sex %></li>
-    <li><%= dog.age_month %></li>
-    <li><%= dog.size %></li>
-    <li><%= dog.breed %></li>
-    <li><%= dog.status %></li>
-</ul>
+<article class="col">
+    <%= link_to dog_path(dog) do %>
+        <div class="card" style="width: 18rem;">
+            <% if dog.avatar.attached? %>
+                <%= image_tag dog.avatar, height: 200 %>
+            <% else %>
+                <%= image_tag "avatar.svg", height: 200 %>
+            <% end %>
+            <div class="card-body">
+                <h5 class="card-title"><%= dog.name %> (<%= dog.sex %>)</h5>
+                <p class="card-text"><%= dog.age_month %></p>
+                <p class="card-text"><%= dog.size %></p>
+                <p class="card-text"><%= dog.breed %></p>
+                <p class="card-text"><%= dog.status %></p>
+            </div>
+        </div>
+    <% end %>
+</article>

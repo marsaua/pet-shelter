@@ -7,4 +7,5 @@
     <p><%= @dog.status %></p>
     <%= link_to "Edit", edit_dog_path(@dog) %>
     <%= link_to "Back", dogs_path %>
+    <%= link_to "Delete", dog_path(@dog), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "btn btn-danger" %>
 </div>

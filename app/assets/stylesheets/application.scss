@@ -1,0 +1,49 @@
+@import "custom";
+@import "app";
+
+.hero-container {
+  height: calc(100vh - 56px);
+  width: 100%;
+  background-image: url("hero.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right;
+  position: relative;
+  .hero-info {
+    position: absolute;
+    left: 5%;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+}
+
+.charlie {
+  border-radius: 100%;
+  background-color: #c1cce9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 270px;
+  max-height: 270px;
+  position: relative;
+
+  img {
+    padding: 20px;
+    position: static;
+    z-index: 1;
+  }
+  .charlie-info {
+    position: absolute;
+    top: 61%;
+    left: 10%;
+    background-color: #dec1e9;
+    padding: 10px;
+    border-radius: 10px;
+    width: 80vw;
+    z-index: 0;
+    p {
+      padding-left: 20px;
+      text-align: right;
+    }
+  }
+}

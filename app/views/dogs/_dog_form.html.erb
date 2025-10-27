@@ -5,7 +5,7 @@
     </div>
     <div>
         <%= form.label :sex %>
-        <%= form.select :sex, Dog.sexes.keys %>
+        <%= form.select :sex, %w[male female] %>
     </div>
     <div>
         <%= form.label :age_month %>
@@ -13,7 +13,7 @@
     </div>
     <div>
         <%= form.label :size %>
-        <%= form.select :size, Dog.sizes.keys %>
+        <%= form.select :size, %w[small medium large] %>
     </div>
     <div>
         <%= form.label :breed %>
@@ -21,7 +21,11 @@
     </div>
     <div>
         <%= form.label :status %>
-        <%= form.select :status, Dog.statuses.keys %>
+        <%= form.select :status, %w[available adopted] %>
+    </div>
+    <div>
+        <%= form.label :avatar %>
+        <%= form.file_field :avatar %>
     </div>
     <div>
         <%= form.submit %>
