@@ -45,6 +45,6 @@ class DogsController < ApplicationController
         @dog = Dog.find(params[:id])
     end
     def dog_params
-        params.require(:dog).permit(:name, :sex, :age_month, :size, :breed, :status, :avatar).merge(user_id: current_user&.id)
+        params.require(:dog).permit(:name, :sex, :age_month, :size, :breed, :status, :avatar)
     end
 end
