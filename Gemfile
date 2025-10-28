@@ -27,6 +27,9 @@ gem "solid_cache"
 gem "solid_queue"
 gem "solid_cable"
 
+gem 'cloudinary'
+gem "activestorage-cloudinary-service", "~> 0.2"
+
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
