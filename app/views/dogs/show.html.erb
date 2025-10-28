@@ -1,11 +1,29 @@
-<div>
-    <h1><%= @dog.name %></h1>
-    <p><%= @dog.sex %></p>
-    <p><%= @dog.age_month %></p>
-    <p><%= @dog.size %></p>
-    <p><%= @dog.breed %></p>
-    <p><%= @dog.status %></p>
-    <%= link_to "Edit", edit_dog_path(@dog) %>
-    <%= link_to "Back", dogs_path %>
-    <%= link_to "Delete", dog_path(@dog), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "btn btn-danger" %>
-</div>
+<section class="back-img">
+    <div class="container">
+    <div class=" d-flex pt-5 align-items-center gap-5">
+        <div>
+            <% if @dog.avatar.attached? %>
+                <%= image_tag @dog.avatar, height: 300, class: "object-fit-cover rounded-4" %>
+            <% else %>
+                <%= image_tag "avatar.svg", height: 300, class: "object-fit-cover rounded-4" %>
+            <% end %>
+        </div>
+        <div>
+            <h1><%= @dog.name %></h1>
+            <p><span class="fw-bold">Sex:</span> <%= @dog.sex %></p>
+            <p><span class="fw-bold">Age:</span> <%= @dog.age_month %> months</p>
+            <p><span class="fw-bold">Size:</span> <%= @dog.size %></p>
+            <p><span class="fw-bold">Breed:</span> <%= @dog.breed %></p>
+            <p><span class="fw-bold">Status:</span> <%= @dog.status %></p>
+            <div class="d-flex gap-2 align-items-center">
+                <%= link_to "Edit", edit_dog_path(@dog), class: "btn btn-primary" %>
+                <%= link_to "Back", dogs_path, class: "btn btn-secondary" %>
+                <%= link_to "Delete", dog_path(@dog), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "btn btn-danger" %>
+            </div>
+        </div>
+    </div>
+    <div class="pt-5">
+        <%= render "comments/new_comment", commentable: @dog %>
+        <%= render "comments/all_comments", comments: @dog.comments %>
+    </div>
+</section>

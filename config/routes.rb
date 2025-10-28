@@ -13,7 +13,9 @@ Rails.application.routes.draw do
   root "pages#home"
   get "about", to: "pages#about"
   get "contact", to: "pages#contact"
-  resources :dogs
+  resources :dogs do
+    resources :comments, only: :create
+  end
   resources :placements
   resources :adoption_applications
   resources :shifts

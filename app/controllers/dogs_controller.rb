@@ -12,15 +12,17 @@ class DogsController < ApplicationController
     def create
         @dog = Dog.new(dog_params)
         if @dog.save
-          redirect_to @dog, notice: "Dog was successfully created.", status: :see_other
+            redirect_to @dog, notice: "Dog was successfully created.", status: :see_other
         else
-          flash.now[:alert] = "Dog was not created."
-          render :new, status: :unprocessable_entity
+            flash.now[:alert] = "Dog was not created."
+            render :new, status: :unprocessable_entity
         end
-      end
-      
-    def show
     end
+    
+    def show
+        @comments = @dog.comments.order(created_at: :desc)
+        @comment = @dog.comments.build
+      end
     def edit
     end
     
@@ -43,6 +45,6 @@ class DogsController < ApplicationController
         @dog = Dog.find(params[:id])
     end
     def dog_params
-        params.require(:dog).permit(:name, :sex, :age_month, :size, :breed, :status, :avatar)
+        params.require(:dog).permit(:name, :sex, :age_month, :size, :breed, :status, :avatar).merge(user_id: current_user&.id)
     end
 end

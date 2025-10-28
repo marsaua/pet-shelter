@@ -1,0 +1,8 @@
+<div class="mt-5">
+<hr>
+   <% @comments.each do |comment| %>
+        <strong><%= comment.user&.email || "Anonymous" %></strong>
+        <p><%= comment.body %></p>
+        <hr>
+   <% end %>
+</div>  

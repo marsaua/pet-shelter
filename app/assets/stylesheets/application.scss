@@ -5,6 +5,7 @@
   background-image: url("back.jpg");
   background-size: cover;
   background-position: center;
+  min-height: 100vh;
 }
 .hero-container {
   height: calc(100vh - 56px);
