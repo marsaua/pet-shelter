@@ -92,24 +92,29 @@ Rails.application.configure do
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
 
-  config.action_mailer.default_url_options = {
-    host: "abrakadabramarsa.space", protocol: "https" 
-  }
-  config.action_mailer.asset_host = ENV["APP_ASSET_HOST"]
+  
+  config.action_mailer.default_url_options = { host: "abrakadabramarsa.space", protocol: "https" }
+  config.action_mailer.asset_host          = "https://abrakadabramarsa.space"
 
-  config.force_ssl = ActiveModel::Type::Boolean.new.cast(ENV["RAILS_FORCE_SSL"])
+  mailgun_domain = ENV["MAILGUN_DOMAIN"]
+  mailgun_key    = ENV["MAILGUN_API_KEY"]
 
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address: "smtp.mailgun.org",
-    port: 587,
-    domain: ENV.fetch("MAILGUN_DOMAIN"),
-    user_name: "postmaster@#{ENV.fetch("MAILGUN_DOMAIN")}",
-    password: ENV.fetch("MAILGUN_API_KEY"),
-    authentication: "plain",
-    enable_starttls_auto: true
-  }
+  if mailgun_domain.present? && mailgun_key.present?
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address: "smtp.mailgun.org",
+      port: 587,
+      domain: mailgun_domain,
+      user_name: "postmaster@#{mailgun_domain}",
+      password: mailgun_key,
+      authentication: "plain",
+      enable_starttls_auto: true
+    }
+  else
+    # під час build’у або якщо змінних немає — не валимося
+    config.action_mailer.delivery_method = :test
+  end
 
-  config.action_mailer.perform_deliveries = true
+  config.action_mailer.perform_deliveries   = true
   config.action_mailer.raise_delivery_errors = true
 end
