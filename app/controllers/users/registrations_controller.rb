@@ -22,7 +22,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         sign_up(resource_name, resource)
         
         # Відправляємо welcome email
-        UserMailer.with(user: resource).welcome_email.deliver_later
+        UserMailer.with(user: resource).welcome.deliver_later
         
         respond_with resource, location: after_sign_up_path_for(resource)
       else
