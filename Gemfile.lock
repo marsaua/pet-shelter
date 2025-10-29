@@ -203,6 +203,14 @@ GEM
       net-imap
       net-pop
       net-smtp
+    mailgun-ruby (1.4.0)
+      faraday (~> 2.1)
+      faraday-multipart (~> 1.1.0)
+      mini_mime
+    mailgun_rails (0.9.0)
+      actionmailer (>= 3.2.13)
+      json (>= 1.7.7)
+      rest-client (>= 1.6.7)
     marcel (1.1.0)
     matrix (0.4.3)
     mime-types (3.7.0)
@@ -475,6 +483,8 @@ DEPENDENCIES
   jbuilder
   kamal
   letter_opener_web
+  mailgun-ruby
+  mailgun_rails
   pg (~> 1.1)
   puma (>= 5.0)
   rails (~> 8.0.3)
