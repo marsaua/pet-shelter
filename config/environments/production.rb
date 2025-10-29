@@ -92,15 +92,23 @@ Rails.application.configure do
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
   config.action_mailer.default_url_options = { host: "mg.abrakadabramarsa.space", protocol: "https" }
-  config.action_mailer.asset_host          = "https://mg.abrakadabramarsa.space"
+  config.action_mailer.asset_host = "https://mg.abrakadabramarsa.space"
   
-  config.action_mailer.delivery_method = :mailgun
-  config.action_mailer.mailgun_settings = {
-    api_key: ENV.fetch("MAILGUN_API_KEY"),
-    domain:  ENV.fetch("MAILGUN_DOMAIN"),
-    api_host: ENV.fetch("MAILGUN_API_HOST", "api.mailgun.net") # для EU: api.eu.mailgun.net
-  }
+  mailgun_domain = ENV["MAILGUN_DOMAIN"]
+  mailgun_key    = ENV["MAILGUN_API_KEY"]
+  mailgun_host   = ENV["MAILGUN_API_HOST"].presence || "api.eu.mailgun.net"
   
-  config.action_mailer.perform_deliveries   = true
-  config.action_mailer.raise_delivery_errors = true
+  if mailgun_domain.present? && mailgun_key.present?
+    config.action_mailer.delivery_method = :mailgun
+    config.action_mailer.mailgun_settings = {
+      api_key:  mailgun_key,
+      domain:   mailgun_domain,
+      api_host: mailgun_host
+    }
+    config.action_mailer.perform_deliveries    = true
+    config.action_mailer.raise_delivery_errors = true
+  else
+    config.action_mailer.delivery_method = :test
+    config.action_mailer.perform_deliveries = false
+  end
 end
