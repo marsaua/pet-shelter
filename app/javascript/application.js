@@ -2,3 +2,4 @@
 import "@hotwired/turbo-rails";
 import "controllers";
 import "bootstrap";
+import "./maps/show_map.js";
