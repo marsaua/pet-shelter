@@ -1,5 +1,6 @@
 class ContactUsMailer < ApplicationMailer
     default to: email_address_with_name('marsaua001@gmail.com', 'Contact Us from Pet Shelter')
+    default from: email_address_with_name('no-reply@mg.abrakadabramarsa.space', 'Contact Us from Pet Shelter')
 
     def contact_us
         @contact = params[:contact] # {:first_name, :last_name, :email, :message}
