@@ -26,4 +26,6 @@ Rails.application.routes.draw do
     passwords: 'users/passwords',
     confirmations: 'users/confirmations'
   }
+  get "contact", to: "pages#contact"
+  resources :contact_us, only: [:create], controller: "contact_us"
 end

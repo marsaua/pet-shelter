@@ -1,7 +1,15 @@
-<div class="map-frame">
-  <div id="map"
-       data-lat="49.430895" 
-       data-lng="32.067994"
-       data-zoom="13">
+<section class="back-img">
+  <div class="container">
+    <div class="d-flex gap-5">
+      <%= render 'pages/contact_part/contacts' %>
+      <%= render 'pages/contact_part/contact_us_form' %>
+    </div>
+    <div class="map-frame">
+      <div id="map"
+          data-lat="49.430895" 
+          data-lng="32.067994"
+          data-zoom="13">
+      </div>
+    </div>
   </div>
-</div>
+</section>

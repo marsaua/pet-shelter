@@ -5,6 +5,7 @@ class DogsController < ApplicationController
 
     def index
         @dogs = Dog.all
+        @dogs = @dogs.page(params[:page]).per(3)
     end
     def new
         @dog = Dog.new

@@ -25,5 +25,6 @@ class PagesController < ApplicationController
 ]
       end
     def contact
+        @contact_us = ContactUs.new
     end
 end

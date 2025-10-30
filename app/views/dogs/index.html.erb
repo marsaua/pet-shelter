@@ -8,6 +8,7 @@
             <div class="row row-cols-1 auto-grid">
                 <%= render @dogs %> <!-- render each dog in the collection automatically -->
             </div>
+            <%= paginate @dogs %>
         <% end %>
     </div>
 </section>
