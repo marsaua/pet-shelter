@@ -1,1 +1,140 @@
 <%= render "layouts/hero" %>
+
+<section class="project-info">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="section-title text-center mb-5">About This Rails Project</h2>
+      </div>
+    </div>
+    
+    <div class="row mb-5">
+      <div class="col-md-6">
+        <div class="project-feature">
+          <%= image_tag "1-1.png", alt: "Rails Architecture", class: "img-fluid rounded mb-3 d-block mx-auto", style: "max-width: 300px;" %>
+          <h3>Modern Architecture</h3>
+          <p>This Ruby on Rails application demonstrates modern web development practices with MVC architecture, RESTful routing, and clean separation of concerns. Built with Rails 7+ features including Hotwire and modern JavaScript integration.</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="project-feature">
+          <%= image_tag "1-2.png", alt: "Database Design", class: "img-fluid rounded d-block mx-auto", style: "max-width: 300px;" %>
+          <h3>Database & Models</h3>
+          <p>Comprehensive database design with Active Record models, associations, and validations. Features user authentication with Devise, file uploads, and complex data relationships for a real-world application scenario.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row mb-5">
+      <div class="col-md-6">
+        <div class="project-feature">
+          <%= image_tag "1-3.png", alt: "User Interface", class: "img-fluid rounded mb-3 d-block mx-auto", style: "max-width: 300px;" %>
+          <h3>Responsive UI/UX</h3>
+          <p>Modern, responsive user interface built with Bootstrap and custom SCSS. Includes interactive forms, dynamic content updates, and mobile-first design principles for optimal user experience across all devices.</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="project-feature">
+          <%= image_tag "1-4.png", alt: "Full Stack Features", class: "img-fluid rounded mb-3 d-block mx-auto", style: "max-width: 300px;" %>
+          <h3>Full Stack Features</h3>
+          <p>Complete full-stack implementation including user management, CRUD operations, email integration with ActionMailer, file handling, and deployment-ready configuration. Perfect for learning modern Rails development.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tech-stack bg-light py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="section-title text-center mb-5">Technology Stack</h2>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-3 col-sm-6 mb-4">
+        <div class="tech-item text-center">
+          <div class="tech-icon mb-3">
+            <%= image_tag "ruby.svg", alt: "Ruby on Rails", class: "tech-logo" %>
+          </div>
+          <h4>Ruby on Rails</h4>
+          <p>Framework for rapid web development</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 mb-4">
+        <div class="tech-item text-center">
+          <div class="tech-icon mb-3">
+            <%= image_tag "postgresql.svg", alt: "PostgreSQL", class: "tech-logo" %>
+          </div>
+          <h4>PostgreSQL</h4>
+          <p>Robust relational database</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 mb-4">
+        <div class="tech-item text-center">
+          <div class="tech-icon mb-3">
+            <%= image_tag "bootstrap.png", alt: "Bootstrap", class: "tech-logo" %>
+          </div>
+          <h4>Bootstrap & SCSS</h4>
+          <p>Modern responsive styling</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 mb-4">
+        <div class="tech-item text-center">
+          <div class="tech-icon mb-3">
+            <%= image_tag "auth.svg", alt: "Devise", class: "tech-logo" %>
+          </div>
+          <h4>Devise & More</h4>
+          <p>Authentication & advanced features</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="project-highlights py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="section-title text-center mb-5">Key Features Implemented</h2>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="highlight-card">
+          <h4>🔐 User Authentication</h4>
+          <ul>
+            <li>Devise integration</li>
+            <li>User registration & login</li>
+            <li>Password recovery</li>
+            <li>Account management</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="highlight-card">
+          <h4>📊 Data Management</h4>
+          <ul>
+            <li>CRUD operations</li>
+            <li>Model associations</li>
+            <li>Form validations</li>
+            <li>Database migrations</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="highlight-card">
+          <h4>✉️ Communication</h4>
+          <ul>
+            <li>Contact forms</li>
+            <li>Email notifications</li>
+            <li>ActionMailer integration</li>
+            <li>Form submissions</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
