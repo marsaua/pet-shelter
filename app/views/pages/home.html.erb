@@ -104,35 +104,208 @@
     <div class="row">
       <div class="col-md-4 mb-4">
         <div class="highlight-card">
-          <h4>🔐 User Authentication</h4>
+          <h4>🔐 Advanced Authentication</h4>
           <ul>
-            <li>Devise integration</li>
+            <li>Devise integration with custom controllers</li>
+            <li>Google OAuth2 integration</li>
             <li>User registration & login</li>
-            <li>Password recovery</li>
-            <li>Account management</li>
+            <li>Password recovery & reset</li>
+            <li>Account confirmations</li>
+            <li>Account unlocking</li>
+            <li>Profile management</li>
           </ul>
         </div>
       </div>
       <div class="col-md-4 mb-4">
         <div class="highlight-card">
-          <h4>📊 Data Management</h4>
+          <h4>🐕 Pet Management System</h4>
           <ul>
-            <li>CRUD operations</li>
-            <li>Model associations</li>
-            <li>Form validations</li>
-            <li>Database migrations</li>
+            <li>Complete dog profiles with images</li>
+            <li>Adoption status tracking</li>
+            <li>Breed, size, and age management</li>
+            <li>File upload with Active Storage</li>
+            <li>Pagination with Kaminari</li>
+            <li>Interactive comment system</li>
+            <li>Search and filtering</li>
           </ul>
         </div>
       </div>
       <div class="col-md-4 mb-4">
         <div class="highlight-card">
-          <h4>✉️ Communication</h4>
+          <h4>🤝 Volunteer Management</h4>
           <ul>
-            <li>Contact forms</li>
-            <li>Email notifications</li>
+            <li>Role-based volunteer scheduling</li>
+            <li>Google Calendar integration</li>
+            <li>Event creation and tracking</li>
+            <li>Multiple volunteer roles (Walker, Feeder, Cleaner)</li>
+            <li>Date validation and constraints</li>
+            <li>Automated calendar sync</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="highlight-card">
+          <h4>💬 Interactive Features</h4>
+          <ul>
+            <li>Polymorphic comment system</li>
+            <li>Real-time form validations</li>
+            <li>AJAX form submissions</li>
+            <li>Dynamic content updates</li>
+            <li>User-generated content</li>
+            <li>Responsive interactions</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="highlight-card">
+          <h4>✉️ Email & Communication</h4>
+          <ul>
+            <li>Contact form with validation</li>
             <li>ActionMailer integration</li>
-            <li>Form submissions</li>
+            <li>Password reset emails</li>
+            <li>Custom email templates</li>
+            <li>Mailgun integration</li>
+            <li>Email previews for development</li>
           </ul>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="highlight-card">
+          <h4>🎨 Modern UI/UX</h4>
+          <ul>
+            <li>Bootstrap 5 integration</li>
+            <li>Custom SCSS styling</li>
+            <li>Font Awesome icons</li>
+            <li>Responsive design patterns</li>
+            <li>Interactive hover effects</li>
+            <li>Mobile-first approach</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="development-practices py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="section-title text-center mb-5">Development Practices & Architecture</h2>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-lg-6 mb-4">
+        <div class="practice-card">
+          <div class="practice-icon">
+            <i class="fas fa-code-branch fa-3x text-primary mb-3"></i>
+          </div>
+          <h4>Rails Best Practices</h4>
+          <ul class="practice-list">
+            <li><strong>MVC Architecture:</strong> Clean separation of concerns</li>
+            <li><strong>RESTful Routes:</strong> Standard resource routing</li>
+            <li><strong>Active Record:</strong> Database abstraction and ORM</li>
+            <li><strong>Migrations:</strong> Version-controlled database changes</li>
+            <li><strong>Validations:</strong> Data integrity at model level</li>
+            <li><strong>Associations:</strong> Complex model relationships</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="col-lg-6 mb-4">
+        <div class="practice-card">
+          <div class="practice-icon">
+            <i class="fas fa-shield-alt fa-3x text-success mb-3"></i>
+          </div>
+          <h4>Security & Authentication</h4>
+          <ul class="practice-list">
+            <li><strong>Devise Gem:</strong> Industry-standard authentication</li>
+            <li><strong>OAuth2:</strong> Third-party authentication (Google)</li>
+            <li><strong>CSRF Protection:</strong> Cross-site request forgery prevention</li>
+            <li><strong>Strong Parameters:</strong> Mass assignment protection</li>
+            <li><strong>Secure Headers:</strong> XSS and clickjacking protection</li>
+            <li><strong>Password Encryption:</strong> BCrypt hashing</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-lg-6 mb-4">
+        <div class="practice-card">
+          <div class="practice-icon">
+            <i class="fas fa-database fa-3x text-info mb-3"></i>
+          </div>
+          <h4>Database Design</h4>
+          <ul class="practice-list">
+            <li><strong>PostgreSQL:</strong> Production-ready database</li>
+            <li><strong>Foreign Keys:</strong> Referential integrity</li>
+            <li><strong>Indexes:</strong> Optimized query performance</li>
+            <li><strong>Polymorphic Associations:</strong> Flexible relationships</li>
+            <li><strong>Active Storage:</strong> File attachment handling</li>
+            <li><strong>Data Validation:</strong> Business rule enforcement</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="col-lg-6 mb-4">
+        <div class="practice-card">
+          <div class="practice-icon">
+            <i class="fas fa-cogs fa-3x text-warning mb-3"></i>
+          </div>
+          <h4>Modern Web Features</h4>
+          <ul class="practice-list">
+            <li><strong>Turbo & Stimulus:</strong> Hotwire for SPA-like experience</li>
+            <li><strong>Import Maps:</strong> Modern JavaScript without bundling</li>
+            <li><strong>SCSS:</strong> Advanced CSS preprocessing</li>
+            <li><strong>Responsive Design:</strong> Mobile-first approach</li>
+            <li><strong>API Integration:</strong> Google Calendar API</li>
+            <li><strong>Email Services:</strong> Mailgun integration</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="project-stats py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="section-title text-center mb-5">Project Statistics</h2>
+      </div>
+    </div>
+    
+    <div class="row text-center">
+      <div class="col-md-3 col-sm-6 mb-4">
+        <div class="stat-card">
+          <div class="stat-number">7+</div>
+          <div class="stat-label">Models</div>
+          <div class="stat-description">User, Dog, Volunteer, Comment, ContactUs</div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 mb-4">
+        <div class="stat-card">
+          <div class="stat-number">15+</div>
+          <div class="stat-label">Controllers</div>
+          <div class="stat-description">Including custom Devise controllers</div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 mb-4">
+        <div class="stat-card">
+          <div class="stat-number">25+</div>
+          <div class="stat-label">Views</div>
+          <div class="stat-description">Responsive templates and partials</div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6 mb-4">
+        <div class="stat-card">
+          <div class="stat-number">10+</div>
+          <div class="stat-label">Integrations</div>
+          <div class="stat-description">Google OAuth, Calendar API, Mailgun, etc.</div>
         </div>
       </div>
     </div>

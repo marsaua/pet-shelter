@@ -12,15 +12,16 @@ class Users::PasswordsController < Devise::PasswordsController
   # end
 
   # GET /resource/password/edit?reset_password_token=abcdef
-  # def edit
-  #   super
+  def edit
+    super
   
-  # end
+  end
 
   # PUT /resource/password
-  # def update
-  #   super
-  # end
+  def update
+    super
+    PasswordMailer.reset_password(user: current_user).deliver_later
+  end
 
   # protected
 
