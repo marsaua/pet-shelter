@@ -1,0 +1,28 @@
+<h2>Volunteers</h2>
+<hr>
+
+
+
+<%= render 'new', volunteer: @volunteer %>
+<hr>
+
+<h2 class="mb-3">Your Google Calendar Events</h2>
+<div id="calendar"></div>
+
+<hr>
+<h3>Your Google Calendar Events</h3>
+<% if @volunteers.present? %>
+  <ul>
+    <% @volunteers.each do |v| %>
+      <li class="d-grid row">
+        <%= content_tag(:div, "#{v.date} — #{v.role}", class: "col") %>
+        </= button_to "🗓️ Add to Google Calendar",
+            create_event_volunteers_path(date: v.date, role: v.role),
+            method: :post,
+            class: "btn btn-sm btn-outline-primary col" %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Поки що подій немає.</p>
+<% end %>

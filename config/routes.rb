@@ -24,8 +24,16 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     registrations: 'users/registrations',
     passwords: 'users/passwords',
-    confirmations: 'users/confirmations'
+    confirmations: 'users/confirmations',
+    omniauth_callbacks: 'users/omniauth_callbacks'
   }
   get "contact", to: "pages#contact"
   resources :contact_us, only: [:create], controller: "contact_us"
+
+  resources :volunteers do
+    collection do
+      post :create_event
+    end
+  end
+
 end

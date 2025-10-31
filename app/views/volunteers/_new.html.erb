@@ -1,0 +1,22 @@
+<h2>Create New Event</h2>
+<%= form_with model: @volunteer, url: volunteers_path do |f| %>
+
+  <%= f.label :date %>
+  <%= f.date_field :date, required: true %>
+
+  <%= f.label :role %>
+  <%= f.select :role, %w[cleaner feeder walker], required: true %>
+
+  <%= f.submit "Create Event" %>
+<% end %>
+
+<% if @volunteer.errors.any? %>
+  <div class="error-messages">
+    <h4><%= pluralize(@volunteer.errors.count, "error") %> prevented saving:</h4>
+    <ul>
+      <% @volunteer.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
