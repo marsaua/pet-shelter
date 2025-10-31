@@ -5,15 +5,27 @@ class User < ApplicationRecord
 
   has_many :volunteers
   def google_credentials
-    Signet::OAuth2::Client.new(
+    return nil unless google_access_token.present?
+    
+    require 'googleauth'
+    
+    credentials = Google::Auth::UserRefreshCredentials.new(
       client_id: ENV["GOOGLE_CLIENT_ID"],
       client_secret: ENV["GOOGLE_CLIENT_SECRET"],
-      token_credential_uri: "https://oauth2.googleapis.com/token",
-      grant_type: "refresh_token", 
-      access_token: google_access_token,
       refresh_token: google_refresh_token,
-      expires_at: google_token_expires_at&.to_i
+      access_token: google_access_token
     )
+    
+    # Refresh token if expired
+    if google_token_expires_at && google_token_expires_at < Time.current
+      credentials.refresh!
+      update!(
+        google_access_token: credentials.access_token,
+        google_token_expires_at: Time.current + credentials.expires_in.seconds
+      )
+    end
+    
+    credentials
   end
 
   def self.from_google_omniauth(auth)

@@ -1,19 +1,35 @@
-<h2>Create New Event</h2>
-<%= form_with model: @volunteer, url: volunteers_path do |f| %>
-
-  <%= f.label :date %>
-  <%= f.date_field :date, required: true %>
-
-  <%= f.label :role %>
-  <%= f.select :role, %w[cleaner feeder walker], required: true %>
-
-  <%= f.submit "Create Event" %>
+<%= form_with model: @volunteer, url: volunteers_path, local: true do |f| %>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= f.label :date, "Select Date", class: "form-label" %>
+        <%= f.date_field :date, required: true, class: "form-control", min: Date.current %>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= f.label :role, "Choose Role", class: "form-label" %>
+        <%= f.select :role, 
+            options_for_select([
+              ['🧹 Cleaner - Facility Maintenance', 'cleaner'],
+              ['🍽️ Feeder - Meal Preparation', 'feeder'],
+              ['🚶‍♂️ Walker - Exercise & Socialization', 'walker']
+            ]), 
+            { prompt: 'Select a volunteer role...' }, 
+            { required: true, class: "form-control" } %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="text-center mt-3">
+    <%= f.submit "Schedule Volunteer Session", class: "btn btn-primary btn-lg px-4" %>
+  </div>
 <% end %>
 
 <% if @volunteer.errors.any? %>
-  <div class="error-messages">
-    <h4><%= pluralize(@volunteer.errors.count, "error") %> prevented saving:</h4>
-    <ul>
+  <div class="alert alert-danger mt-4">
+    <h5><i class="fas fa-exclamation-triangle me-2"></i>Please fix the following errors:</h5>
+    <ul class="mb-0">
       <% @volunteer.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>

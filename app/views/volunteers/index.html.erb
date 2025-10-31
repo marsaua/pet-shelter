@@ -1,32 +1,258 @@
 <section class="back-img">
 <div class="container">
-<h2>Volunteers</h2>
-<hr>
+<div class="hero-section bg-primary text-white py-5 mb-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-8">
+        <h1 class="display-4 fw-bold mb-3">Join Our Volunteer Community</h1>
+        <p class="lead mb-4">Make a difference in the lives of animals by volunteering with us. Every contribution matters, no matter how small!</p>
+        <div class="d-flex gap-3">
+          <span class="badge bg-light text-primary fs-6 px-3 py-2">🐕 Dog Care</span>
+          <span class="badge bg-light text-primary fs-6 px-3 py-2">🧹 Facility Maintenance</span>
+          <span class="badge bg-light text-primary fs-6 px-3 py-2">🚶‍♂️ Exercise & Walking</span>
+        </div>
+      </div>
+      <div class="col-lg-4 text-center">
+        <i class="fas fa-heart fa-5x text-warning"></i>
+      </div>
+    </div>
+  </div>
+</div>
 
+<div class="container">
+  <!-- Volunteer Roles Information Section -->
+  <section class="volunteer-info-section mb-5">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="section-title text-center mb-5">Volunteer Opportunities</h2>
+      </div>
+    </div>
+    
+    <div class="row g-4 mb-5">
+      <div class="col-md-4">
+        <div class="volunteer-role-card h-100">
+          <div class="card-icon">
+            <i class="fas fa-broom fa-3x text-primary"></i>
+          </div>
+          <h3 class="card-title">Cleaner</h3>
+          <p class="card-description">Help maintain a clean and healthy environment for our animals.</p>
+          <ul class="role-tasks">
+            <li>Clean kennels and living spaces</li>
+            <li>Sanitize feeding areas</li>
+            <li>Maintain facility cleanliness</li>
+            <li>Organize storage areas</li>
+          </ul>
+          <div class="time-commitment">
+            <strong>Time:</strong> 2-4 hours per session
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-4">
+        <div class="volunteer-role-card h-100">
+          <div class="card-icon">
+            <i class="fas fa-utensils fa-3x text-success"></i>
+          </div>
+          <h3 class="card-title">Feeder</h3>
+          <p class="card-description">Ensure our animals receive proper nutrition and care during meal times.</p>
+          <ul class="role-tasks">
+            <li>Prepare and distribute meals</li>
+            <li>Monitor eating habits</li>
+            <li>Clean feeding equipment</li>
+            <li>Track dietary requirements</li>
+          </ul>
+          <div class="time-commitment">
+            <strong>Time:</strong> 1-3 hours per session
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-4">
+        <div class="volunteer-role-card h-100">
+          <div class="card-icon">
+            <i class="fas fa-walking fa-3x text-warning"></i>
+          </div>
+          <h3 class="card-title">Walker</h3>
+          <p class="card-description">Provide exercise and socialization for our dogs through walks and play.</p>
+          <ul class="role-tasks">
+            <li>Take dogs on regular walks</li>
+            <li>Provide exercise and playtime</li>
+            <li>Basic training and socialization</li>
+            <li>Monitor animal behavior</li>
+          </ul>
+          <div class="time-commitment">
+            <strong>Time:</strong> 2-3 hours per session
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- Requirements and Benefits Section -->
+  <section class="requirements-benefits mb-5">
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <div class="info-card requirements-card">
+          <h3 class="card-header">
+            <i class="fas fa-clipboard-check me-2"></i>
+            Requirements
+          </h3>
+          <div class="card-content">
+            <ul class="requirements-list">
+              <li><i class="fas fa-check text-success me-2"></i>Must be 16 years or older</li>
+              <li><i class="fas fa-check text-success me-2"></i>Complete volunteer orientation</li>
+              <li><i class="fas fa-check text-success me-2"></i>Comfortable working with animals</li>
+              <li><i class="fas fa-check text-success me-2"></i>Reliable and punctual</li>
+              <li><i class="fas fa-check text-success me-2"></i>Physical ability to perform tasks</li>
+              <li><i class="fas fa-check text-success me-2"></i>Follow safety protocols</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-lg-6">
+        <div class="info-card benefits-card">
+          <h3 class="card-header">
+            <i class="fas fa-star me-2"></i>
+            Benefits
+          </h3>
+          <div class="card-content">
+            <ul class="benefits-list">
+              <li><i class="fas fa-heart text-danger me-2"></i>Make a meaningful impact</li>
+              <li><i class="fas fa-users text-primary me-2"></i>Meet like-minded people</li>
+              <li><i class="fas fa-graduation-cap text-info me-2"></i>Learn animal care skills</li>
+              <li><i class="fas fa-calendar text-warning me-2"></i>Flexible scheduling</li>
+              <li><i class="fas fa-certificate text-success me-2"></i>Volunteer certificates</li>
+              <li><i class="fas fa-smile text-orange me-2"></i>Personal satisfaction</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<%= render 'new', volunteer: @volunteer %>
-<hr>
+  <!-- Schedule Your Volunteer Session -->
+  <section class="schedule-section mb-5">
+    <div class="schedule-container">
+      <h2 class="text-center mb-4">Schedule Your Volunteer Session</h2>
+      <%= render 'new', volunteer: @volunteer %>
+    </div>
+  </section>
 
-<h2 class="mb-3">Your Google Calendar Events</h2>
-<div id="calendar"></div>
+  <hr class="my-5">
 
-<hr>
-<h3>Your Google Calendar Events</h3>
-<% if @volunteers.present? %>
-  <ul>
-    <% @volunteers.each do |v| %>
-      <li class="d-grid row">
-        <%= content_tag(:div, "#{v.date} — #{v.role}", class: "col") %>
-        </= button_to "🗓️ Add to Google Calendar",
-            create_event_volunteers_path(date: v.date, role: v.role),
-            method: :post,
-            class: "btn btn-sm btn-outline-primary col" %>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>There are no events scheduled.</p>
-<% end %>
+  <!-- Your Scheduled Events Section -->
+  <section class="scheduled-events-section mb-5">
+    <div class="events-container">
+      <h2 class="text-center mb-4">
+        <i class="fas fa-calendar-alt me-2"></i>
+        Your Scheduled Volunteer Events
+      </h2>
+      
+      <% if @volunteers.present? %>
+        <div class="row g-3">
+          <% @volunteers.each do |v| %>
+            <div class="col-md-6 col-lg-4">
+              <div class="event-card">
+                <div class="event-header">
+                  <div class="event-icon">
+                    <% case v.role %>
+                    <% when 'cleaner' %>
+                      <i class="fas fa-broom fa-2x text-primary"></i>
+                    <% when 'feeder' %>
+                      <i class="fas fa-utensils fa-2x text-success"></i>
+                    <% when 'walker' %>
+                      <i class="fas fa-walking fa-2x text-warning"></i>
+                    <% end %>
+                  </div>
+                  <div class="event-details">
+                    <h5 class="event-role"><%= v.role.capitalize %></h5>
+                    <p class="event-date">
+                      <i class="fas fa-calendar me-1"></i>
+                      <%= Date.parse(v.date).strftime("%B %d, %Y") %>
+                    </p>
+                  </div>
+                </div>
+                
+                <div class="event-actions">
+                  <%= button_to create_event_volunteers_path(date: v.date, role: v.role),
+                      method: :post,
+                      class: "btn btn-outline-primary btn-sm w-100" do %>
+                    <i class="fab fa-google me-1"></i>
+                    Add to Google Calendar
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="no-events-message">
+          <div class="text-center py-5">
+            <i class="fas fa-calendar-times fa-4x text-muted mb-3"></i>
+            <h4 class="text-muted">No Events Scheduled</h4>
+            <p class="text-muted">Schedule your first volunteer session above to get started!</p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </section>
+
+  <!-- Google Calendar Integration Section -->
+  <section class="calendar-section">
+    <div class="calendar-container">
+      <h2 class="text-center mb-4">
+        <i class="fab fa-google me-2"></i>
+        Google Calendar Integration
+      </h2>
+      
+      <% if @google_connected %>
+        <div class="alert alert-success d-flex align-items-center mb-4">
+          <i class="fas fa-check-circle me-2"></i>
+          <span>Google Calendar is connected! Your events will sync automatically.</span>
+        </div>
+        
+        <% if @google_events.any? %>
+          <h4 class="mb-3">Upcoming Events from Google Calendar:</h4>
+          <div class="row g-3 mb-4">
+            <% @google_events.each do |event| %>
+              <div class="col-md-6">
+                <div class="google-event-card">
+                  <h6><%= event.summary %></h6>
+                  <p class="text-muted mb-0">
+                    <i class="fas fa-calendar me-1"></i>
+                    <%= event.start.date_time&.strftime("%B %d, %Y at %I:%M %p") || event.start.date %>
+                  </p>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="text-center text-muted mb-4">
+            <i class="fas fa-calendar-plus fa-2x mb-2"></i>
+            <p>No upcoming events found in your Google Calendar.</p>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="alert alert-warning d-flex align-items-center mb-4">
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          <span>Google Calendar is not connected. Connect to sync your volunteer events automatically.</span>
+        </div>
+        
+        <div class="text-center">
+          <%= link_to user_google_oauth2_omniauth_authorize_path, 
+              class: "btn btn-primary btn-lg",
+              data: { turbo: false } do %>
+            <i class="fab fa-google me-2"></i>
+            Connect Google Calendar
+          <% end %>
+        </div>
+      <% end %>
+      
+      <div id="calendar" class="mt-4"></div>
+    </div>
+  </section>
+
+</div>
 </div>
 </section>
