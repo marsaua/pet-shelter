@@ -649,3 +649,107 @@
     margin-bottom: 1rem;
   }
 }
+
+// Development practices section styles
+.development-practices {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.practice-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  height: 100%;
+  text-align: center;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  }
+
+  h4 {
+    color: #2c3e50;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+  }
+
+  .practice-icon {
+    margin-bottom: 1rem;
+  }
+
+  .practice-list {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+
+    li {
+      padding: 0.5rem 0;
+      color: #495057;
+      line-height: 1.6;
+
+      strong {
+        color: #2c3e50;
+      }
+    }
+  }
+}
+
+// Project statistics styles
+.project-stats {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 2rem 1rem;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  height: 100%;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-3px);
+  }
+
+  .stat-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #ffd700;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .stat-description {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.4;
+  }
+}
+
+@media (max-width: 768px) {
+  .practice-card {
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    margin-bottom: 1.5rem;
+
+    .stat-number {
+      font-size: 2.5rem;
+    }
+  }
+}
