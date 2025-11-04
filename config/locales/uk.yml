@@ -1,0 +1,6 @@
+uk:
+  pundit:
+    dog_policy:
+      edit?: "You are not authorized to edit this dog."
+      update?: "You are not authorized to update this dog."
+      destroy?: "You are not authorized to destroy this dog."

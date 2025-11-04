@@ -1,0 +1,15 @@
+<section class="back-img">
+    <div class="container">
+    <h1 class="text-center mb-5"> My Profile</h1>
+        <div class="d-flex flex-column flex-md-row gap-2 w-100 justify-content-center align-items-start">
+            <div class="d-flex flex-column gap-2 flex-grow-1">
+                <p><span class="fw-light">Name:</span> <%= current_user.name %> </p>
+                <p><span class="fw-light">Email:</span> <%= current_user.email %> </p>
+                <p><span class="fw-light">Phone:</span> <%= current_user.phone %> </p>
+                <p><span class="fw-light">Age:</span> <%= current_user.age %> </p>
+            </div>
+
+            <%= link_to "Edit my profile", edit_user_registration_path, class: "btn btn-primary flex-grow-1" %>
+        </div>
+    </div>
+</section>

@@ -1,7 +1,12 @@
 class DogsController < ApplicationController
-    before_action :authenticate_user!
+    include Pundit::Authorization
+    rescue_from Pundit::NotAuthorizedError do
+        redirect_to root_path, alert: "Not authorized"
+      end
+
     before_action :set_dog, only: [:show, :edit, :update, :destroy]
 
+    
 
     def index
         @dogs = Dog.all
@@ -9,9 +14,11 @@ class DogsController < ApplicationController
     end
     def new
         @dog = Dog.new
+        authorize @dog
     end
     def create
         @dog = Dog.new(dog_params)
+        authorize @dog
         if @dog.save
             redirect_to @dog, notice: "Dog was successfully created.", status: :see_other
         else
@@ -25,9 +32,11 @@ class DogsController < ApplicationController
         @comment = @dog.comments.build
       end
     def edit
+        authorize @dog
     end
     
     def update
+        authorize @dog
         if @dog.update(dog_params)
             redirect_to @dog, notice: "Dog was successfully updated.", status: :see_other
         else
@@ -37,6 +46,7 @@ class DogsController < ApplicationController
     end
 
     def destroy
+        authorize @dog
         @dog.destroy
         redirect_to dogs_path, notice: "Dog was successfully deleted."
     end
@@ -48,4 +58,5 @@ class DogsController < ApplicationController
     def dog_params
         params.require(:dog).permit(:name, :sex, :age_month, :size, :breed, :status, :avatar)
     end
+    
 end

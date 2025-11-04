@@ -1,8 +1,9 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: [:google_oauth2]
-
+  :recoverable, :rememberable, :validatable,
+  :omniauthable, omniauth_providers: [:google_oauth2]
+  
+  enum :role, { user: 0, manager: 1, admin: 2 }, default: :user
   has_many :volunteers
   def google_credentials
     return nil unless google_access_token.present?

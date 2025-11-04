@@ -27,4 +27,8 @@ class PagesController < ApplicationController
     def contact
         @contact_us = ContactUs.new
     end
+
+    def profile
+        @user = current_user
+    end
 end

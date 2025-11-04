@@ -29,7 +29,8 @@ Rails.application.routes.draw do
   }
   get "contact", to: "pages#contact"
   resources :contact_us, only: [:create], controller: "contact_us"
-
+  get "profile", to: "pages#profile"
+  
   resources :volunteers do
     collection do
       post :create_event

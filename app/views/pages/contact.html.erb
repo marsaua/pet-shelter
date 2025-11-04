@@ -1,8 +1,12 @@
 <section class="back-img">
   <div class="container">
-    <div class="d-flex gap-5">
-      <%= render 'pages/contact_part/contact_us_form' %>
-      <%= render 'pages/contact_part/contacts' %>
+    <div class="row">
+      <div class="col-12 col-md-6 order-2 order-md-1">
+        <%= render 'pages/contact_part/contact_us_form' %>
+      </div>
+      <div class="col-12 col-md-6 order-1 order-md-2">
+        <%= render 'pages/contact_part/contacts' %>
+      </div>
     </div>
     <div class="map-frame mt-5">
       <div id="map"

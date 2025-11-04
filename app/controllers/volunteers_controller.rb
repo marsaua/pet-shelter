@@ -1,6 +1,8 @@
 
 class VolunteersController < ApplicationController
+    include Pundit::Authorization
     before_action :authenticate_user!
+
   
     def index
       @volunteers = current_user.volunteers.order(:date)

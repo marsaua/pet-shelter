@@ -16,10 +16,14 @@
             <p><span class="fw-bold">Breed:</span> <%= @dog.breed %></p>
             <p><span class="fw-bold">Status:</span> <%= @dog.status %></p>
             <div class="d-flex gap-2 align-items-center">
-                <%= link_to "Edit", edit_dog_path(@dog), class: "btn btn-primary" %>
-                <%= link_to "Back", dogs_path, class: "btn btn-secondary" %>
-                <%= link_to "Delete", dog_path(@dog), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "btn btn-danger" %>
-            </div>
+                <% if policy(@dog).update? %>
+                    <%= link_to "Edit", edit_dog_path(@dog), class: "btn btn-primary" %>
+                <% end %>
+                    <%= link_to "Back", dogs_path, class: "btn btn-secondary" %>
+                <% if policy(@dog).destroy? %>
+                    <%= link_to "Delete", dog_path(@dog), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "btn btn-danger" %>
+                <% end %>
+                </div>
         </div>
     </div>
     <div class="pt-5">

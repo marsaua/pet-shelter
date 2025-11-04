@@ -23,10 +23,10 @@
         <% if user_signed_in? %>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <%= current_user.email %>
+              <%= current_user.name || current_user.email %>
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">My profile</a></li>
+              <li><a class="dropdown-item" href="<%= profile_path %>">My profile</a></li>
               <li><%= link_to "Logout", destroy_user_session_path,
                     class: "dropdown-item",
                     data: { turbo_method: :delete, turbo_confirm: "Log out?" } %>
