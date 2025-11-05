@@ -1,0 +1,38 @@
+<section class="back-img">
+<div class="container">
+  <h1>Adoption Requests for <%= @dog.name %></h1>
+    <div class="d-flex flex-column flex-md-row gap-4">
+    <div>
+      <% if @dog.avatar.attached? %>
+          <%= image_tag @dog.avatar, height: 200, class: "object-fit-cover" %>
+      <% else %>
+          <%= image_tag "avatar.svg", height: 200, class: "object-fit-cover" %>
+      <% end %>
+      <p>Name: <%= @dog.name %></p>
+      <p>Breed: <%= @dog.breed %></p>
+      <p>Age: <%= @dog.age_month %></p>
+      <p>Size: <%= @dog.size %></p>
+      <p>Sex: <%= @dog.sex %></p>
+      <p>Status: <%= @dog.status %></p>
+    </div>
+    <div class="w-100">
+    <% @adopts.each do |adopt| %>
+        <div class="card mb-3 shadow-sm w-100">
+          <div class="card-body">
+            <h5 class="card-title"><%= adopt.user.name %></h5>
+            <p class="card-text">
+              <strong>Name:</strong> <%= adopt.dog.name %><br>
+              <strong>Email:</strong> <%= adopt.email %><br>
+              <strong>Phone:</strong> <%= adopt.phone %><br>
+              <strong>Has other pets:</strong> <%= adopt.has_another_pets ? "Yes" : "No" %><br>
+              <strong>Yard:</strong> <%= adopt.yard ? "Yes" : "No" %><br>
+              <strong>Home:</strong> <%= adopt.home ? "Own" : "Rent" %>
+
+            </p>
+          </div>
+          </div>
+          <% end %>
+          </div>
+    </div>
+  </div>
+</section>

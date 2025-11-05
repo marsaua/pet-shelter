@@ -11,18 +11,27 @@ Rails.application.routes.draw do
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
+  resources :dogs do
+    resources :comments, only: :create
+    resources :adopts, only: [:new, :create, :index, :show]
+  end
+
+  get "dogs/:id/requests", to: "adopts#requests", as: :dog_requests
+  
   # Defines the root path route ("/")
   root "pages#home"
   get "about", to: "pages#about"
   get "contact", to: "pages#contact"
-  resources :dogs do
-    resources :comments, only: :create
-    resources :adopts
-  end
+
+
   resources :placements
+
   resources :adoption_applications
+
   resources :shifts
+
   resources :donations
+
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations',

@@ -25,7 +25,7 @@
                 <% end %>
                 <% if current_user.user? %>
                     <% if @dog.adopts.empty? %>
-                        <%= link_to "Adopt", dog_adopt_path(@dog), class: "btn btn-primary" %>
+                        <%= link_to "Adopt", new_dog_adopt_path(@dog), class: "btn btn-primary" %>
                     <% else %>
                         <%= link_to "You have already sent an adoption request", dog_adopt_path(@dog), class: "btn btn-primary disabled" %>
                     <% end %>

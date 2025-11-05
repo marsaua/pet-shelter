@@ -2,8 +2,7 @@ class AdoptsController < ApplicationController
   before_action :set_dog
   before_action :set_adopt, only: [:show, :edit, :update, :destroy]
   def index
-    @adopts = Adopt.all
-    authorize Adopt
+    @adopts = policy_scope(Adopt.includes(:dog, :user))
   end
   def new
     @adopt = @dog.adopts.build
@@ -16,6 +15,13 @@ class AdoptsController < ApplicationController
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def requests
+    @adopts = policy_scope(Adopt)
+                .where(dog_id: @dog.id)
+                .includes(:user, :dog)
+                .order(created_at: :desc)
   end
 
   def show
@@ -44,7 +50,7 @@ class AdoptsController < ApplicationController
   private
 
   def set_dog
-    @dog = Dog.find(params[:dog_id])
+    @dog = Dog.find(params[:dog_id] || params[:id])
   end
 
   def set_adopt

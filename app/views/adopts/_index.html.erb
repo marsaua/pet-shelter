@@ -1,29 +1,33 @@
+<h1 class="mb-4">Adoption Wishes</h1>
 
-    <h1>Adoptation wishes</h1>
-        <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Dog</th>
-            <th>Yard</th>
-            <th>Home</th>
-            <th>Has Pets</th>
-        </tr>
-        </thead>
-        <tbody>
-        <% @adopts.each do |adopt| %>
-            <tr>
-            <td><%= adopt.name %></td>
-            <td><%= adopt.email %></td>
-            <td><%= adopt.phone %></td>
-            <td><%= adopt.dog&.name %></td>
-            <td><%= adopt.yard ? "Yes" : "No" %></td>
-            <td><%= adopt.home ? "Yes" : "No" %></td>
-            <td><%= adopt.has_another_pets ? "Yes" : "No" %></td>
-            </tr>
-        <% end %>
-        </tbody>
-    </table>
-    
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+<% @adopts.group_by(&:dog).each do |dog, adopts| %>
+    <% next if dog.nil? %>
+      <div class="col">
+        <div class="card h-100 shadow-sm border-0"
+             onclick="window.location='<%= dog_requests_path(dog) %>'"
+             style="cursor:pointer; transition: transform 0.2s;">
+             <% if dog.avatar.attached? %>
+                <%= image_tag dog.avatar, height: 200, class: "object-fit-cover" %>
+            <% else %>
+                <%= image_tag "avatar.svg", height: 200, class: "object-fit-cover" %>
+            <% end %>
+  
+          <div class="card-body">
+            <h5 class="card-title text-primary"><%= dog.name %></h5>
+            <p class="card-text text-muted mb-2">
+              <strong>Breed:</strong> <%= dog.breed.presence || "Unknown" %>
+            </p>
+            <p class="card-text small text-secondary">
+              <%= pluralize(adopts.count, "adoption request") %>
+            </p>
+          </div>
+  
+          <div class="card-footer bg-transparent border-0 text-end">
+            <a href="<%= dog_requests_path(dog) %>" class="btn btn-outline-primary btn-sm">View Requests</a>
+          </div>
+        </div>
+      </div>
+  <% end %>
+  
+</div>
