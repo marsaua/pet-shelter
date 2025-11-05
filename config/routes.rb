@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "adopts/index"
+  get "adopts/create"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -15,6 +17,7 @@ Rails.application.routes.draw do
   get "contact", to: "pages#contact"
   resources :dogs do
     resources :comments, only: :create
+    resources :adopts
   end
   resources :placements
   resources :adoption_applications
@@ -30,7 +33,6 @@ Rails.application.routes.draw do
   get "contact", to: "pages#contact"
   resources :contact_us, only: [:create], controller: "contact_us"
   get "profile", to: "pages#profile"
-  
   resources :volunteers do
     collection do
       post :create_event

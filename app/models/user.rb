@@ -5,6 +5,7 @@ class User < ApplicationRecord
   
   enum :role, { user: 0, manager: 1, admin: 2 }, default: :user
   has_many :volunteers
+  has_many :adopts
   def google_credentials
     return nil unless google_access_token.present?
     

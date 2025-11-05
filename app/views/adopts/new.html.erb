@@ -1,0 +1,74 @@
+<section class="back-img">
+    <div class="container">
+        <h1 class="text-center">Pet Adoptation Form for <%= @dog.name %></h1>
+        <% if @dog.avatar.attached? %>
+            <%= image_tag @dog.avatar, class: "w-25" %>
+        <% else %>
+            <%= image_tag "avatar.svg", class: "w-25" %>
+        <% end %>
+        <p>Fill out the form below to express your interest in adopting <%= @dog.name %>.</p>
+
+            <%= form_with(model: [@dog, @adopt]) do |f| %>
+                <div class="mb-3">
+                    <%= f.label :name, "Perspective Pet Parent", class: "form-label" %>
+                    <%= f.text_field :name, placeholder: "Full Name", required: true, value: current_user.name, class: "form-control" %>
+                </div>
+                <div class="mb-3">
+                    <%= f.label :email, "Email", class: "form-label" %>
+                    <%= f.text_field :email, placeholder: "Email", required: true, value: current_user.email, class: "form-control" %>
+                </div>
+                <div class="mb-3">
+                    <%= f.label :phone, "Phone", class: "form-label" %>
+                    <%= f.text_field :phone, placeholder: "Phone", required: true, value: current_user.phone, class: "form-control" %>
+                </div>
+                <div data-controller="pets">
+                    <div class="mb-3">
+                        <%= f.check_box :has_another_pets,
+                            class: "form-check-input",
+                            data: { action: "change->pets#toggle", pets_target: "checkbox" } %>
+                        <%= f.label :has_another_pets, "Has another pets?", class: "form-label fw-bold" %>
+                    </div>
+
+                    <div data-pets-target="section" class="d-none" aria-live="polite">
+                        <div class="mb-3">
+                        <%= f.label :other_pets_types, "Type(s) of pets", class: "form-label" %>
+                        <%= f.text_field :other_pets_types, class: "form-control", data: { pets_target: "input" } %>
+                        </div>
+
+                        <div class="mb-3">
+                        <%= f.label :other_pets_count, "How many?", class: "form-label" %>
+                        <%= f.number_field :other_pets_count, min: 1, class: "form-control", data: { pets_target: "input" } %>
+                        </div>
+
+                        <div class="mb-3">
+                        <%= f.label :other_pets_notes, "Details", class: "form-label" %>
+                        <%= f.text_area :other_pets_notes, rows: 3, class: "form-control", data: { pets_target: "input" } %>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <%= f.label :yard, "Do you have a yard?", class: "form-label" %> <br>
+                    <%= f.radio_button :yard, true, class: "form-check-input" %>
+                    <%= f.label :yard, "Yes", class: "form-label" %>
+                    <%= f.radio_button :yard, false, class: "form-check-input" %>
+                    <%= f.label :yard, "No", class: "form-label" %>
+                </div>
+                
+                <div class="mb-3">
+                    <%= f.label :home, "Do you have own or rent home?", class: "form-label" %><br>
+
+                    <%= f.radio_button :home, "own", class: "form-check-input" %>
+                    <%= f.label :home, "Own", class: "form-label" %>
+
+                    <%= f.radio_button :home, "rent", class: "form-check-input" %>
+                    <%= f.label :home, "Rent", class: "form-label" %>
+                </div>
+
+
+                <div class="mb-3">
+                    <%= f.submit class: "btn btn-primary" %>
+                </div>
+            <% end %>
+    </div>
+</section>

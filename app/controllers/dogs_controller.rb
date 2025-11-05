@@ -28,6 +28,10 @@ class DogsController < ApplicationController
     end
     
     def show
+        @dog = Dog.find(params[:id])
+
+        @adopt = Adopt.new(dog: @dog, user: current_user)
+
         @comments = @dog.comments.order(created_at: :desc)
         @comment = @dog.comments.build
       end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_03_134605) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_04_142121) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -37,6 +37,24 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_03_134605) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "adopts", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.string "phone"
+    t.boolean "has_another_pets"
+    t.string "other_pets_types"
+    t.string "other_pets_count"
+    t.string "other_pets_notes"
+    t.boolean "yard", default: false, null: false
+    t.boolean "home", default: false, null: false
+    t.integer "dog_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dog_id"], name: "index_adopts_on_dog_id"
+    t.index ["user_id"], name: "index_adopts_on_user_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -99,6 +117,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_03_134605) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "adopts", "dogs"
+  add_foreign_key "adopts", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "volunteers", "users"
 end
