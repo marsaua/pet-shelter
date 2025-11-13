@@ -93,11 +93,11 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: "mg.abrakadabramarsa.space", protocol: "https" }
   config.action_mailer.asset_host = "https://mg.abrakadabramarsa.space"
-  
+
   mailgun_domain = ENV["MAILGUN_DOMAIN"]
   mailgun_key    = ENV["MAILGUN_API_KEY"]
   mailgun_host   = ENV["MAILGUN_API_HOST"].presence || "api.eu.mailgun.net"
-  
+
   if mailgun_domain.present? && mailgun_key.present?
     config.action_mailer.delivery_method = :mailgun
     config.action_mailer.mailgun_settings = {

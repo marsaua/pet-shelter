@@ -1,6 +1,6 @@
 class AdoptsController < ApplicationController
   before_action :set_dog
-  before_action :set_adopt, only: [:show, :edit, :update, :destroy]
+  before_action :set_adopt, only: [ :show, :edit, :update, :destroy ]
   def index
     @adopts = policy_scope(Adopt.includes(:dog, :user))
   end

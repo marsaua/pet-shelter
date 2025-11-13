@@ -8,5 +8,4 @@ class DogPolicy < ApplicationPolicy
     def update?  = user.admin? || user.manager?
     def edit?    = update?
     def destroy? = user.admin?
-
 end

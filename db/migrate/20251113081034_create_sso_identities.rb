@@ -9,10 +9,10 @@ class CreateSsoIdentities < ActiveRecord::Migration[8.0]
       t.datetime :token_expires_at
       t.string  :name
       t.string  :image
-      t.json   :data, default: {} 
+      t.json :data, default: {}
 
       t.timestamps
     end
-    add_index :sso_identities, [:provider, :uid], unique: true
+    add_index :sso_identities, [ :provider, :uid ], unique: true
   end
 end

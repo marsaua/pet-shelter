@@ -27,7 +27,7 @@ gem "solid_cache"
 gem "solid_queue"
 gem "solid_cable"
 
-gem 'cloudinary'
+gem "cloudinary"
 gem "activestorage-cloudinary-service", "~> 0.2"
 
 # Reduces boot times through caching; required in config/boot.rb
@@ -45,9 +45,9 @@ gem "thruster", require: false
 # PostgreSQL database adapter
 gem "pg", "~> 1.1"
 
-gem 'dotenv-rails', groups: [:development, :test]
+gem "dotenv-rails", groups: [ :development, :test ]
 
-gem "mailgun-ruby" 
+gem "mailgun-ruby"
 gem "mailgun_rails"
 
 # For pagination
@@ -64,7 +64,7 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 end
 
-#Google 
+# Google
 gem "omniauth-google-oauth2"
 gem "google-apis-calendar_v3"
 gem "googleauth"

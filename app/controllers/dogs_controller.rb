@@ -4,7 +4,7 @@ class DogsController < ApplicationController
         redirect_to root_path, alert: "Not authorized"
       end
 
-    before_action :set_dog, only: [:show, :edit, :update, :destroy, :adopt_dog ]
+    before_action :set_dog, only: [ :show, :edit, :update, :destroy, :adopt_dog ]
 
     def index
         @dogs = Dog.all
@@ -24,7 +24,7 @@ class DogsController < ApplicationController
             render :new, status: :unprocessable_entity
         end
     end
-    
+
     def show
         @dog = Dog.find(params[:id])
 
@@ -36,7 +36,7 @@ class DogsController < ApplicationController
     def edit
         authorize @dog
     end
-    
+
     def update
         authorize @dog
         if @dog.update(dog_params)
@@ -80,5 +80,4 @@ class DogsController < ApplicationController
     def dog_params
         params.require(:dog).permit(:name, :sex, :age_month, :size, :breed, :status, :avatar)
     end
-    
 end
