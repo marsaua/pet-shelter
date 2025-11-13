@@ -4,9 +4,7 @@ class DogsController < ApplicationController
         redirect_to root_path, alert: "Not authorized"
       end
 
-    before_action :set_dog, only: [:show, :edit, :update, :destroy]
-
-    
+    before_action :set_dog, only: %i[show edit update destroy adopt_dog]
 
     def index
         @dogs = Dog.all
@@ -26,7 +24,7 @@ class DogsController < ApplicationController
             render :new, status: :unprocessable_entity
         end
     end
-    
+
     def show
         @dog = Dog.find(params[:id])
 
@@ -38,7 +36,7 @@ class DogsController < ApplicationController
     def edit
         authorize @dog
     end
-    
+
     def update
         authorize @dog
         if @dog.update(dog_params)
@@ -49,18 +47,49 @@ class DogsController < ApplicationController
         end
     end
 
+    def adopt_dog
+        if @dog.status == "available"
+
+            book_adoption
+
+            deliver_emails
+
+        elsif @dog.status == "adopted"
+            @dog.update(params.require(:dog).permit(:status))
+            flash[:notice] = "Dog was successfully returned."
+            redirect_to dog_path(@dog)
+        end
+    end
+
     def destroy
         authorize @dog
         @dog.destroy
         redirect_to dogs_path, notice: "Dog was successfully deleted."
     end
 
+
     private
+
     def set_dog
         @dog = Dog.find(params[:id])
     end
+
     def dog_params
         params.require(:dog).permit(:name, :sex, :age_month, :size, :breed, :status, :avatar)
     end
-    
+
+    def book_adoption
+        @adopt = Adopt.find(params[:adopt_id])
+        @dog.update(params.require(:dog).permit(:status).merge(user_id: @adopt.user.id))
+        redirect_to dog_path(@dog), notice: "Dog was successfully adopted."
+    end
+
+    def deliver_emails
+        AdoptAccessMailer.with(user: @adopt.user).adopt_access.deliver_later
+
+        @adopts = Adopt.where.not(id: params[:adopt_id])
+        @adopts.each do |adopt|
+            AdoptRejectMailer.with(user: adopt.user).adopt_reject.deliver_later
+        end
+    end
 end

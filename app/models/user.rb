@@ -1,51 +1,26 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
-  :recoverable, :rememberable, :validatable,
-  :omniauthable, omniauth_providers: [:google_oauth2]
-  
-  enum :role, { user: 0, manager: 1, admin: 2 }, default: :user
-  has_many :volunteers
-  has_many :adopts
-  def google_credentials
-    return nil unless google_access_token.present?
-    
-    require 'googleauth'
-    
-    credentials = Google::Auth::UserRefreshCredentials.new(
-      client_id: ENV["GOOGLE_CLIENT_ID"],
-      client_secret: ENV["GOOGLE_CLIENT_SECRET"],
-      refresh_token: google_refresh_token,
-      access_token: google_access_token
-    )
-    
-    # Refresh token if expired
-    if google_token_expires_at && google_token_expires_at < Time.current
-      credentials.refresh!
-      update!(
-        google_access_token: credentials.access_token,
-        google_token_expires_at: Time.current + credentials.expires_in.seconds
-      )
-    end
-    
-    credentials
+         :recoverable, :rememberable, :validatable,
+         :omniauthable, omniauth_providers: %i[google_oauth2]
+
+  enum :role, { user: 0, manager: 1, admin: 2, guest: 3 }, default: :user
+
+  has_many :volunteers, dependent: :destroy
+  has_many :adopts, dependent: :destroy
+  has_many :dogs, dependent: :nullify
+  has_many :comments, dependent: :nullify
+
+  has_many :sso_identities, dependent: :destroy
+
+  def identity_for(provider)
+    sso_identities.find_by(provider:)
   end
 
-  def self.from_google_omniauth(auth)
-    user = find_by(email: auth.info.email)
-    user ||= find_by(google_uid: auth.uid)
-    user ||= new(email: auth.info.email)
+  def google_identity
+    @google_identity ||= identity_for("google_oauth2")
+  end
 
-    user.google_uid = auth.uid if user.respond_to?(:google_uid=)
-    user.name       = auth.info.name  if auth.info&.name && user.respond_to?(:name=)
-    user.image      = auth.info.image if auth.info&.image && user.respond_to?(:image=)
-
-    creds = auth.credentials
-    user.google_access_token     = creds.token
-    user.google_refresh_token  ||= creds.refresh_token if creds.refresh_token.present?
-    user.google_token_expires_at = Time.at(creds.expires_at) if creds.expires_at
-
-    user.password ||= Devise.friendly_token[0, 20]
-    user.save!
-    user
+  def google_connected?
+    google_identity&.google_connected? || false
   end
 end

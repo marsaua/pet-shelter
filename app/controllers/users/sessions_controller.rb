@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
-  # before_action :configure_sign_in_params, only: [:create]
+  # before_action :configure_sign_in_params, only: %i[create]
 
   # GET /resource/sign_in
   # def new
@@ -27,16 +27,19 @@ class Users::SessionsController < Devise::SessionsController
   def google
     auth = request.env["omniauth.auth"]
 
-    user = User.find_or_initialize_by(google_uid: auth.uid)
-    user.email = auth.info.email
-    creds = auth.credentials
+    user = SsoIdentity.upsert_from_omniauth(auth)
 
-    user.google_access_token      = creds.token
-    user.google_refresh_token   ||= creds.refresh_token
-    user.google_token_expires_at  = Time.at(creds.expires_at) if creds.expires_at
-    user.save!
+    redirect_to new_user_session_path, alert: "Google sign-in failed. Please try again." unless user
 
-    session[:user_id] = user.id
-    redirect_to root_path, notice: "Signed in with Google"
+    sign_in_and_redirect user, event: :authentication
+    set_flash_message(:notice, :success, kind: "Google") if is_navigational_format?
+
+  rescue => e
+    Rails.logger.error "[Omniauth][Google] #{e.class}: #{e.message}"
+    redirect_to new_user_session_path, alert: "Google sign-in failed."
+  end
+
+  def failure
+    redirect_to new_user_session_path, alert: "Authentication failed."
   end
 end

@@ -1,0 +1,36 @@
+<!-- Google Calendar Connection Status -->
+  <section class="google-calendar-section mb-5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body text-center p-4">
+              <% if @google_connected %>
+                <div class="d-flex align-items-center justify-content-center mb-3">
+                  <i class="fab fa-google fa-2x text-success me-3"></i>
+                  <div>
+                    <h5 class="mb-1 text-success">Google Calendar Connected</h5>
+                    <p class="text-muted mb-0">Your volunteer sessions will be automatically synced</p>
+                  </div>
+                </div>
+              <% else %>
+                <div class="d-flex align-items-center justify-content-center mb-3">
+                  <i class="fab fa-google fa-2x text-muted me-3"></i>
+                  <div>
+                    <h5 class="mb-1 text-muted">Google Calendar Not Connected</h5>
+                    <p class="text-muted mb-0">Connect to automatically sync your volunteer sessions</p>
+                  </div>
+                </div>
+                <%= link_to user_google_oauth2_omniauth_authorize_path,
+                    class: "btn btn-outline-primary d-flex align-items-center justify-content-center gap-2 mx-auto",
+                    style: "max-width: 250px;" do %>
+                  <i class="fab fa-google"></i>
+                  Connect Google Calendar
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

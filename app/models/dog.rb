@@ -6,6 +6,7 @@ class Dog < ApplicationRecord
     validates :age_month, presence: true
     validates :breed, presence: true
     has_one_attached :avatar
-    has_many :comments, as: :commentable
+    has_many :comments, as: :commentable, dependent: :nullify
     has_many :adopts, dependent: :destroy
+    belongs_to :user, optional: true
 end

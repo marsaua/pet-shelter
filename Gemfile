@@ -20,14 +20,14 @@ gem "jbuilder"
 gem "sprockets-rails"
 gem "sassc-rails"
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ windows jruby ]
+gem "tzinfo-data", platforms: %i[windows jruby]
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 gem "solid_cache"
 gem "solid_queue"
 gem "solid_cable"
 
-gem 'cloudinary'
+gem "cloudinary"
 gem "activestorage-cloudinary-service", "~> 0.2"
 
 # Reduces boot times through caching; required in config/boot.rb
@@ -45,17 +45,18 @@ gem "thruster", require: false
 # PostgreSQL database adapter
 gem "pg", "~> 1.1"
 
-gem 'dotenv-rails', groups: [:development, :test]
 
-gem "mailgun-ruby" 
+gem "mailgun-ruby"
 gem "mailgun_rails"
 
 # For pagination
 gem "kaminari"
 
 group :development, :test do
+  gem "dotenv-rails"
+
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+  gem "debug", platforms: %i[mri windows], require: "debug/prelude"
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
@@ -64,7 +65,7 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 end
 
-#Google 
+# Google
 gem "omniauth-google-oauth2"
 gem "google-apis-calendar_v3"
 gem "googleauth"
@@ -74,6 +75,10 @@ group :development do
   gem "web-console"
   gem "letter_opener_web"
   gem "rest-client"
+  # Rubocop
+  gem "rubocop", require: false
+  gem "rubocop-rails", require: false
+  gem "ruby-lsp", require: false
 end
 
 group :test do
