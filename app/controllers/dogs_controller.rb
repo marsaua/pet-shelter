@@ -4,9 +4,7 @@ class DogsController < ApplicationController
         redirect_to root_path, alert: "Not authorized"
       end
 
-    before_action :set_dog, only: [:show, :edit, :update, :destroy]
-
-    
+    before_action :set_dog, only: [:show, :edit, :update, :destroy, :adopt_dog ]
 
     def index
         @dogs = Dog.all
@@ -49,11 +47,31 @@ class DogsController < ApplicationController
         end
     end
 
+    def adopt_dog
+        if @dog.status == "available"
+            @adopt = Adopt.find(params[:adopt_id])
+            @dog.update(params.require(:dog).permit(:status).merge(user_id: @adopt.user.id))
+            flash[:notice] = "Dog was successfully adopted."
+            AdoptAccessMailer.with(user: @adopt.user).adopt_access.deliver_later
+            redirect_to dog_path(@dog)
+
+            @adopts = Adopt.where.not(id: params[:adopt_id])
+            @adopts.each do |adopt|
+                AdoptRejectMailer.with(user: adopt.user).adopt_reject.deliver_later
+            end
+        elsif @dog.status == "adopted"
+            @dog.update(params.require(:dog).permit(:status))
+            flash[:notice] = "Dog was successfully returned."
+            redirect_to dog_path(@dog)
+        end
+    end
+
     def destroy
         authorize @dog
         @dog.destroy
         redirect_to dogs_path, notice: "Dog was successfully deleted."
     end
+
 
     private
     def set_dog

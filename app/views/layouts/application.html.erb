@@ -36,6 +36,11 @@
 
   <body>
     <%= render "layouts/header" %>
+    <% flash.each do |key, value| %>
+      <div class="alert alert-<%= key %>" role="alert">
+        <%= value %>
+      </div>
+    <% end %>
     <%= yield %>
     </body>
 </html>

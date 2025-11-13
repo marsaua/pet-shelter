@@ -8,4 +8,5 @@ class Dog < ApplicationRecord
     has_one_attached :avatar
     has_many :comments, as: :commentable
     has_many :adopts, dependent: :destroy
+    belongs_to :user, optional: true
 end

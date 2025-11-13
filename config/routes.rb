@@ -13,7 +13,8 @@ Rails.application.routes.draw do
 
   resources :dogs do
     resources :comments, only: :create
-    resources :adopts, only: [:new, :create, :index, :show]
+    resources :adopts, only: [:new, :create, :index, :show, :destroy]
+    post :adopt_dog, on: :member
   end
 
   get "dogs/:id/requests", to: "adopts#requests", as: :dog_requests

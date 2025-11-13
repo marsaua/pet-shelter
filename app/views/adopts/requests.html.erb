@@ -26,9 +26,19 @@
               <strong>Phone:</strong> <%= adopt.phone %><br>
               <strong>Has other pets:</strong> <%= adopt.has_another_pets ? "Yes" : "No" %><br>
               <strong>Yard:</strong> <%= adopt.yard ? "Yes" : "No" %><br>
-              <strong>Home:</strong> <%= adopt.home ? "Own" : "Rent" %>
+              <strong>Home:</strong> <%= adopt.home ? "Own" : "Rent" %><br>
+              <strong>Status:</strong> <%= adopt.dog.status %><br>
+
+              <% if  @dog.user_id == adopt.user_id %>
+                <strong>Possible owner:</strong> <%= adopt.user.name %><br>
+              <% end %>
 
             </p>
+            <% if adopt.dog.status == "available" %>
+              <%= link_to "Accept", adopt_dog_dog_path(@dog, adopt_id: adopt.id, dog: { status: "adopted" }), data: { turbo_method: :post }, class: "btn btn-primary" %>            
+            <% else %>
+              <%= button_to "Reject adoption", adopt_dog_dog_path(@dog, dog: { status: "available" }), data: { turbo_method: :post }, class: "btn btn-primary" %>
+            <% end %>
           </div>
           </div>
           <% end %>

@@ -9,18 +9,16 @@ class VolunteersController < ApplicationController
       @volunteer = Volunteer.new
       
       # Try to get Google Calendar events
+      google = current_user.sso_identities.find_by(provider: "google_oauth2")
       @google_events = []
-      @google_connected = false
+      @google_connected = google&.access_token.present?
+
       
-      if current_user.google_access_token.present?
-        begin
-          calendar = GoogleCalendarService.new(current_user)
+      if @google_connected
+          calendar = GoogleCalendarService.new(google)
           @google_events = calendar.list_events
-          @google_connected = calendar.connected?
-        rescue => e
-          Rails.logger.error "Failed to load Google Calendar events: #{e.message}"
-          flash.now[:warning] = "Unable to connect to Google Calendar. Please reconnect your account."
-        end
+      else
+          @google_events = []
       end
     end
   
