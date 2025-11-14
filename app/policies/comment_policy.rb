@@ -1,7 +1,7 @@
 class CommentPolicy < ApplicationPolicy
     def index?   = true
     def show?    = true
-    def create?  = user.present?
+    def create?  = true
     def update?  = admin? || manager? || owner?
     def destroy? = admin? || owner?
 

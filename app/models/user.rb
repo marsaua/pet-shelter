@@ -3,11 +3,11 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[ google_oauth2 ]
 
-  enum :role, { user: 0, manager: 1, admin: 2 }, default: :user
+  enum :role, { user: 0, manager: 1, admin: 2, guest: 3 }, default: :user
 
-  has_many :volunteers
-  has_many :adopts
-  has_many :dogs, through: :adopts
+  has_many :volunteers, dependent: :destroy
+  has_many :adopts, dependent: :destroy
+  has_many :dogs, through: :adopts, dependent: :destroy
 
   has_many :sso_identities, dependent: :destroy
 
@@ -21,5 +21,13 @@ class User < ApplicationRecord
 
   def google_connected?
     google_identity&.google_connected? || false
+  end
+
+  def self.anonymous
+    @default ||= find_or_create_by!(email: "anonymous@example.com") do |u|
+      u.password = SecureRandom.base58(16)
+      u.name     = "Anonymous"
+      u.role     = :guest if u.respond_to?(:role=)
+    end
   end
 end

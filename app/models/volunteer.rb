@@ -3,7 +3,7 @@ class Volunteer < ApplicationRecord
     validate :date_cannot_be_in_the_past
 
     belongs_to :user
-    has_many :dogs
+    has_many :dogs, dependent: :destroy
 
     private
 

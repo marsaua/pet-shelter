@@ -23,4 +23,6 @@ class CommentsController < ApplicationController
     def set_commentable
       @commentable = Dog.find(params[:dog_id])
     end
+
+
 end
