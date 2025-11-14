@@ -39,7 +39,7 @@ class ApplicationPolicy
   def admin?    = user&.admin?
   def manager?  = user&.manager?
   def owner?    = record.respond_to?(:user_id) && user && record.user_id == user.id
-  
+
 
   class Scope
     def initialize(user, scope)

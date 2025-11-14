@@ -17,7 +17,7 @@ class AdoptPolicy < ApplicationPolicy
                 scope.where(user: user)
               end
             end
-          end
+        end
     private
     def owner? = record.user == user
 end

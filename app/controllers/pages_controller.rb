@@ -8,7 +8,7 @@ class PagesController < ApplicationController
         info: "For many people, especially those who are lonely, having a pet can be a valuable source of comfort and company. Renting a pet gives lonely people the opportunity to enjoy the presence and love of a pet, which can significantly increase their mood and well-being at such a difficult time.",
         image: "about_us_1.png",
         color: "#DEC1E9"
-        
+
     },
     {
         title: "animal socialization",

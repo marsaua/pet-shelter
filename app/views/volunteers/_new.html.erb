@@ -8,14 +8,14 @@
     </div>
     <div class="col-md-6">
       <div class="form-group">
-        <%= f.label :role, "Choose Role", class: "form-label" %>
-        <%= f.select :role, 
+        <%= f.label :duty , "Choose Duty", class: "form-label" %>
+        <%= f.select :duty, 
             options_for_select([
               ['🧹 Cleaner - Facility Maintenance', 'cleaner'],
               ['🍽️ Feeder - Meal Preparation', 'feeder'],
               ['🚶‍♂️ Walker - Exercise & Socialization', 'walker']
             ]), 
-            { prompt: 'Select a volunteer role...' }, 
+            { prompt: 'Select a volunteer duty...' }, 
             { required: true, class: "form-control" } %>
       </div>
     </div>

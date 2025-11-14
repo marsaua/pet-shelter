@@ -14,7 +14,7 @@ dogs_data = [
   },
   {
     name: "Luna",
-    sex: "female", 
+    sex: "female",
     age_month: 18,
     size: "small",
     breed: "Beagle",
@@ -33,7 +33,7 @@ dogs_data = [
     sex: "female",
     age_month: 12,
     size: "small",
-    breed: "Chihuahua", 
+    breed: "Chihuahua",
     status: "available"
   },
   {
@@ -57,3 +57,11 @@ dogs_data.each do |dog_attrs|
 end
 
 puts "Created #{Dog.count} dogs"
+
+User.find_or_create_by!(email: "anonymous@example.com") do |u|
+  u.password = SecureRandom.base58(16)
+  u.name     = "Anonymous"
+  u.role     = :user if u.respond_to?(:role=)
+end
+puts "Seeded default user: anonymous@example.com"
+
