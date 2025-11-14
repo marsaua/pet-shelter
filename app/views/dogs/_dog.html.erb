@@ -7,11 +7,11 @@
                 <%= image_tag "avatar.svg", height: 200, class: "object-fit-cover" %>
             <% end %>
             <div class="card-body d-flex flex-column gap-2">
-                <h5 class="card-title"><%= dog.name %> (<%= dog.sex %>)</h5>
+                <h5 class="card-title"><%= dog.name %> (<%= dog.sex.humanize %>)</h5>
                 <p class="card-text"><span class="fw-bold">Age:</span> <%= dog.age_month %> months</p>
                 <p class="card-text"><span class="fw-bold">Size:</span> <%= dog.size %></p>
                 <p class="card-text"><span class="fw-bold">Breed:</span> <%= dog.breed %></p>
-                <p class="card-text"><span class="fw-bold">Status:</span> <%= dog.status %></p>
+                <p class="card-text"><span class="fw-bold">Status:</span> <%= dog.status.humanize %></p>
             </div>
         </div>
     <% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_13_111203) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_14_122632) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -75,14 +75,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_13_111203) do
 
   create_table "dogs", force: :cascade do |t|
     t.string "name"
-    t.string "sex"
     t.integer "age_month"
-    t.string "size"
     t.string "breed"
-    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id"
+    t.integer "sex", default: 0, null: false
+    t.integer "status", default: 0, null: false
+    t.integer "size", default: 0, null: false
     t.index ["user_id"], name: "index_dogs_on_user_id"
   end
 
@@ -120,11 +120,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_13_111203) do
   end
 
   create_table "volunteers", force: :cascade do |t|
-    t.string "duty"
     t.string "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
+    t.integer "duty"
     t.index ["user_id"], name: "index_volunteers_on_user_id"
   end
 

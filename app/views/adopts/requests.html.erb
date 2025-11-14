@@ -12,8 +12,8 @@
       <p>Breed: <%= @dog.breed %></p>
       <p>Age: <%= @dog.age_month %></p>
       <p>Size: <%= @dog.size %></p>
-      <p>Sex: <%= @dog.sex %></p>
-      <p>Status: <%= @dog.status %></p>
+      <p>Sex: <%= @dog.sex.humanize %></p>
+      <p>Status: <%= @dog.status.humanize %></p>
     </div>
     <div class="w-100">
     <% @adopts.each do |adopt| %>
@@ -27,7 +27,7 @@
               <strong>Has other pets:</strong> <%= adopt.has_another_pets ? "Yes" : "No" %><br>
               <strong>Yard:</strong> <%= adopt.yard ? "Yes" : "No" %><br>
               <strong>Home:</strong> <%= adopt.home ? "Own" : "Rent" %><br>
-              <strong>Status:</strong> <%= adopt.dog.status %><br>
+              <strong>Status:</strong> <%= adopt.dog.status.humanize %><br>
 
               <% if  @dog.user_id == adopt.user_id %>
                 <strong>Possible owner:</strong> <%= adopt.user.name %><br>

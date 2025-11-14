@@ -1,15 +1,16 @@
 class User < ApplicationRecord
+  has_many :volunteers, dependent: :destroy
+  has_many :adopts, dependent: :destroy
+  has_many :dogs, through: :adopts, dependent: :destroy
+
+  has_many :sso_identities, dependent: :destroy
+  
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[ google_oauth2 ]
 
   enum :role, { user: 0, manager: 1, admin: 2, guest: 3 }, default: :user
 
-  has_many :volunteers, dependent: :destroy
-  has_many :adopts, dependent: :destroy
-  has_many :dogs, through: :adopts, dependent: :destroy
-
-  has_many :sso_identities, dependent: :destroy
 
   def identity_for(provider)
     sso_identities.find_by(provider:)

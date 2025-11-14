@@ -10,11 +10,11 @@
         </div>
         <div>
             <h1><%= @dog.name %></h1>
-            <p><span class="fw-bold">Sex:</span> <%= @dog.sex %></p>
+            <p><span class="fw-bold">Sex:</span> <%= @dog.sex.humanize %></p>
             <p><span class="fw-bold">Age:</span> <%= @dog.age_month %> months</p>
             <p><span class="fw-bold">Size:</span> <%= @dog.size %></p>
             <p><span class="fw-bold">Breed:</span> <%= @dog.breed %></p>
-            <p><span class="fw-bold">Status:</span> <%= @dog.status %></p>
+            <p><span class="fw-bold">Status:</span> <%= @dog.status.humanize %></p>
             <div class="d-flex gap-2 align-items-center">
                 <% if policy(@dog).update? %>
                     <%= link_to "Edit", edit_dog_path(@dog), class: "btn btn-primary" %>

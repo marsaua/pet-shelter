@@ -9,12 +9,7 @@
     <div class="col-md-6">
       <div class="form-group">
         <%= f.label :duty , "Choose Duty", class: "form-label" %>
-        <%= f.select :duty, 
-            options_for_select([
-              ['🧹 Cleaner - Facility Maintenance', 'cleaner'],
-              ['🍽️ Feeder - Meal Preparation', 'feeder'],
-              ['🚶‍♂️ Walker - Exercise & Socialization', 'walker']
-            ]), 
+        <%= f.select :duty,  Volunteer.duties.keys.map { |duty| [duty.titleize, duty] },
             { prompt: 'Select a volunteer duty...' }, 
             { required: true, class: "form-control" } %>
       </div>

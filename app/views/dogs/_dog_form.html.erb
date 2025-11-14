@@ -5,7 +5,7 @@
     </div>
     <div class="mb-3">
         <%= form.label :sex, class: "form-label" %>
-        <%= form.select :sex, %w[male female], {}, { class: "form-select" } %>
+        <%= form.select :sex, Dog.sexes.keys.map { |k| [k.titleize, k] } %>
     </div>
     <div class="mb-3">
         <%= form.label :age_month, class: "form-label" %>
@@ -13,7 +13,7 @@
     </div>
     <div class="mb-3">
         <%= form.label :size, class: "form-label" %>
-        <%= form.select :size, %w[small medium large], {}, { class: "form-select" } %>
+        <%= form.select :size, Dog.sizes.keys.map { |k| [k.titleize, k] } %>
     </div>
     <div class="mb-3">
         <%= form.label :breed, class: "form-label" %>
@@ -21,7 +21,7 @@
     </div>
     <div class="mb-3">
         <%= form.label :status, class: "form-label" %>
-        <%= form.select :status, %w[available adopted], {}, { class: "form-select" }  %>
+        <%= form.select :status, Dog.statuses.keys.map { |k| [k.titleize, k] } %>
     </div>
     <div class="mb-3">
         <%= form.label :avatar, class: "form-label" %>
