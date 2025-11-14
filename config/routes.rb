@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   resources :dogs do
     resources :comments, only: :create
-    resources :adopts, only: [ :new, :create, :index, :show, :destroy ]
+    resources :adopts, only: %i[ new create index show destroy ]
     post :adopt_dog, on: :member
   end
 
@@ -41,7 +41,7 @@ Rails.application.routes.draw do
     omniauth_callbacks: "users/omniauth_callbacks"
   }
   get "contact", to: "pages#contact"
-  resources :contact_us, only: [ :create ], controller: "contact_us"
+  resources :contact_us, only: :create , controller: "contact_us"
   get "profile", to: "pages#profile"
   resources :volunteers do
     collection do

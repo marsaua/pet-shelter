@@ -1,13 +1,13 @@
 require "google/apis/calendar_v3"
 
 class GoogleCalendarService
-  def initialize(user)
-    @user = user
+  def initialize(sso_identity)
+    @identity = sso_identity
     @service = Google::Apis::CalendarV3::CalendarService.new
 
-    credentials = user.google_credentials
+    credentials = @identity.google_credentials
     if credentials.nil?
-      raise "User #{user.id} does not have valid Google credentials"
+      raise "SSO Identity #{@identity.id} does not have valid Google credentials"
     end
 
     @service.authorization = credentials
@@ -34,13 +34,13 @@ class GoogleCalendarService
     end
   end
 
-  def create_event(summary:, start_time:, end_time:)
+  def create_event(summary:, start_time:, end_time:, description: nil)
     return nil unless @service.authorization
 
     begin
       event = Google::Apis::CalendarV3::Event.new(
         summary: summary,
-        description: "Volunteer session scheduled through our platform",
+        description: description || "Volunteer session scheduled through Pet Shelter platform",
         start: {
           date_time: start_time.iso8601,
           time_zone: "Europe/Kiev"
@@ -64,6 +64,6 @@ class GoogleCalendarService
   end
 
   def connected?
-    @service.authorization.present? && @user.google_access_token.present?
+    @service.authorization.present? && @identity.access_token.present?
   end
 end

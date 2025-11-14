@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
   include Pundit::Authorization
-    before_action :authenticate_user!, except: [ :create ]
-    before_action :set_commentable, only: [ :create ]
+    before_action :authenticate_user!, except: :create
+    before_action :set_commentable, only: :create
 
     def create
       @comment = @commentable.comments.build(comment_params)

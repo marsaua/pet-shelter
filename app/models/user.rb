@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: [ :google_oauth2 ]
+         :omniauthable, omniauth_providers: %i[ google_oauth2 ]
 
   enum :role, { user: 0, manager: 1, admin: 2 }, default: :user
 
@@ -20,6 +20,6 @@ class User < ApplicationRecord
   end
 
   def google_connected?
-    google_identity&.access_token.present?
+    google_identity&.google_connected? || false
   end
 end

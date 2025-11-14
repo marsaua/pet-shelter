@@ -20,7 +20,7 @@
 </div>
 
 <div class="container">
-  <!-- Volunteer Roles Information Section -->
+  <!-- Volunteer Duties Information Section -->
   <section class="volunteer-info-section mb-5">
     <div class="row">
       <div class="col-12">
@@ -131,6 +131,43 @@
     </div>
   </section>
 
+  <!-- Google Calendar Connection Status -->
+  <section class="google-calendar-section mb-5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="card border-0 shadow-sm">
+            <div class="card-body text-center p-4">
+              <% if @google_connected %>
+                <div class="d-flex align-items-center justify-content-center mb-3">
+                  <i class="fab fa-google fa-2x text-success me-3"></i>
+                  <div>
+                    <h5 class="mb-1 text-success">Google Calendar Connected</h5>
+                    <p class="text-muted mb-0">Your volunteer sessions will be automatically synced</p>
+                  </div>
+                </div>
+              <% else %>
+                <div class="d-flex align-items-center justify-content-center mb-3">
+                  <i class="fab fa-google fa-2x text-muted me-3"></i>
+                  <div>
+                    <h5 class="mb-1 text-muted">Google Calendar Not Connected</h5>
+                    <p class="text-muted mb-0">Connect to automatically sync your volunteer sessions</p>
+                  </div>
+                </div>
+                <%= link_to user_google_oauth2_omniauth_authorize_path, 
+                    class: "btn btn-outline-primary d-flex align-items-center justify-content-center gap-2 mx-auto", 
+                    style: "max-width: 250px;" do %>
+                  <i class="fab fa-google"></i>
+                  Connect Google Calendar
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Schedule Your Volunteer Session -->
   <section class="schedule-section mb-5">
     <div class="schedule-container">
@@ -156,7 +193,7 @@
               <div class="event-card">
                 <div class="event-header">
                   <div class="event-icon">
-                    <% case v.role %>
+                    <% case v.duty %>
                     <% when 'cleaner' %>
                       <i class="fas fa-broom fa-2x blue-text"></i>
                     <% when 'feeder' %>
@@ -166,7 +203,7 @@
                     <% end %>
                   </div>
                   <div class="event-details">
-                    <h5 class="event-role"><%= v.role.capitalize %></h5>
+                    <h5 class="event-role"><%= v.duty.capitalize %></h5>
                     <p class="event-date">
                       <i class="fas fa-calendar me-1"></i>
                       <%= Date.parse(v.date).strftime("%B %d, %Y") %>
@@ -175,7 +212,7 @@
                 </div>
                 
                 <div class="event-actions">
-                  <%= button_to create_event_volunteers_path(date: v.date, role: v.role),
+                  <%= button_to create_event_volunteers_path(date: v.date, duty: v.duty),
                       method: :post,
                       class: "btn btn-outline-primary btn-sm w-100" do %>
                     <i class="fab fa-google me-1"></i>
@@ -199,19 +236,14 @@
   </section>
 
   <!-- Google Calendar Integration Section -->
-  <section class="calendar-section">
+  <section class="google-calendar-section mb-5">
     <div class="calendar-container">
       <h2 class="text-center mb-4">
         <i class="fab fa-google me-2"></i>
-        Google Calendar Integration
+        Google Calendar Events
       </h2>
       
       <% if @google_connected %>
-        <div class="alert alert-success d-flex align-items-center mb-4">
-          <i class="fas fa-check-circle me-2"></i>
-          <span>Google Calendar is connected! Your events will sync automatically.</span>
-        </div>
-        
         <% if @google_events.any? %>
           <h4 class="mb-3">Upcoming Events from Google Calendar:</h4>
           <div class="row g-3 mb-4">
@@ -234,25 +266,14 @@
           </div>
         <% end %>
       <% else %>
-        <div class="alert alert-warning d-flex align-items-center mb-4">
-          <i class="fas fa-exclamation-triangle me-2"></i>
-          <span>Google Calendar is not connected. Connect to sync your volunteer events automatically.</span>
-        </div>
-        
-        <div class="text-center">
-          <%= link_to user_google_oauth2_omniauth_authorize_path, 
-              class: "btn btn-primary btn-lg",
-              data: { turbo: false } do %>
-            <i class="fab fa-google me-2"></i>
-            Connect Google Calendar
-          <% end %>
+        <div class="text-center text-muted mb-4">
+          <i class="fas fa-calendar-times fa-2x mb-2"></i>
+          <p>Connect Google Calendar above to see your upcoming events here.</p>
         </div>
       <% end %>
-      
-      <div id="calendar" class="mt-4"></div>
     </div>
   </section>
 
 </div>
 </div>
-</section>
+{{ ... }}

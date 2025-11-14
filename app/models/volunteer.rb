@@ -1,5 +1,5 @@
 class Volunteer < ApplicationRecord
-    validates :role, presence: true, inclusion: { in: %w[ walker feeder cleaner ] }
+    validates :duty, presence: true, inclusion: { in: %w[ walker feeder cleaner ] }
     validate :date_cannot_be_in_the_past
 
     belongs_to :user

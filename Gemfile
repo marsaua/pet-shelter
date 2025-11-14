@@ -45,7 +45,7 @@ gem "thruster", require: false
 # PostgreSQL database adapter
 gem "pg", "~> 1.1"
 
-gem "dotenv-rails", groups: [ :development, :test ]
+gem "dotenv-rails", groups: %i[ development test ]
 
 gem "mailgun-ruby"
 gem "mailgun_rails"

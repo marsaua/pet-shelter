@@ -4,7 +4,7 @@ class DogsController < ApplicationController
         redirect_to root_path, alert: "Not authorized"
       end
 
-    before_action :set_dog, only: [ :show, :edit, :update, :destroy, :adopt_dog ]
+    before_action :set_dog, only: %i[ show edit update destroy adopt_dog ]
 
     def index
         @dogs = Dog.all

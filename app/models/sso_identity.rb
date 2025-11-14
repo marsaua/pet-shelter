@@ -1,3 +1,6 @@
+require "googleauth"
+
+
 class SsoIdentity < ApplicationRecord
     belongs_to :user
     validates :provider, :uid, presence: true
@@ -6,24 +9,37 @@ class SsoIdentity < ApplicationRecord
     def google_credentials
         return unless provider == "google_oauth2" && access_token.present?
 
-        require "googleauth"
-
-        creds = Google::Auth::UserRefreshCredentials.new(
-          client_id:     ENV["GOOGLE_CLIENT_ID"],
-          client_secret: ENV["GOOGLE_CLIENT_SECRET"],
-          refresh_token: refresh_token,
-          access_token:  access_token
-        )
-
-        if token_expires_at && token_expires_at < Time.current
-          creds.refresh!
-          update!(
-            access_token:     creds.access_token,
-            token_expires_at: Time.current + creds.expires_in.seconds
-          )
+        # Check if token is expired and we don't have a refresh token
+        if token_expires_at && token_expires_at < Time.current && refresh_token.blank?
+          Rails.logger.warn "Google token expired and no refresh token available for SSO Identity #{id}"
+          return nil
         end
 
-        creds
+
+        begin
+          creds = Google::Auth::UserRefreshCredentials.new(
+            client_id:     ENV["GOOGLE_CLIENT_ID"],
+            client_secret: ENV["GOOGLE_CLIENT_SECRET"],
+            refresh_token: refresh_token,
+            access_token:  access_token
+          )
+
+          # Check if token is expired and we have a refresh token
+          if token_expires_at && token_expires_at < Time.current && refresh_token.present?
+            Rails.logger.info "Refreshing Google token for SSO Identity #{id}"
+            creds.refresh!
+
+            update!(
+              access_token:     creds.access_token,
+              token_expires_at: Time.current + creds.expires_in.seconds
+            )
+          end
+
+          creds
+        rescue => e
+          Rails.logger.error "Failed to create Google credentials for SSO Identity #{id}: #{e.message}"
+          nil
+        end
       end
 
     def self.upsert_from_omniauth(auth)
@@ -52,5 +68,23 @@ class SsoIdentity < ApplicationRecord
       identity.save!
 
       user
+      rescue ActiveRecord::RecordInvalid => e
+        Rails.logger.error "SSO upsert failed (validation). provider=#{provider} uid=#{uid} email=#{email} user_id=#{user&.id} errors=#{e.record.errors.full_messages.to_sentence}"
+        nil
+      rescue => e
+        Rails.logger.error "SSO upsert failed. provider=#{provider} uid=#{uid} email=#{email} user_id=#{user&.id} error=#{e.class}: #{e.message}"
+        nil
+
+    end
+
+    def google_connected?
+      return false unless provider == "google_oauth2" && access_token.present?
+      
+      # If token is expired and no refresh token, not connected
+      if token_expires_at && token_expires_at < Time.current && refresh_token.blank?
+        false
+      else
+        true
+      end
     end
 end
