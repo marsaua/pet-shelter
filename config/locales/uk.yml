@@ -1,6 +1,33 @@
-uk:
+en:
+  failed_create: "Failed to add %{thing}."
+  success_create: "%{thing} was successfully added."
+  failed_update: "Failed to update %{thing}."
+  success_update: "%{thing} was successfully updated."
+  failed_destroy: "Failed to destroy %{thing}."
+  success_destroy: "%{thing} was successfully destroyed."
+
+  contact_us:
+    failed_create: "Failed to send your message."
+    success_create: "Your message was successfully sent."
+
+  adopt:
+    failed_adopt: "Failed to adopt dog."
+    success_adopt: "Dog was successfully adopted."
+    failed_return: "Failed to return dog."
+    success_return: "Dog was successfully returned."
+
   pundit:
-    dog_policy:
-      edit?: "You are not authorized to edit this dog."
-      update?: "You are not authorized to update this dog."
-      destroy?: "You are not authorized to destroy this dog."
+    unauthorized: "You are not authorized to perform this action."
+    edit?: "You are not authorized to edit this dog."
+    update?: "You are not authorized to update this dog."
+    destroy?: "You are not authorized to destroy this dog."
+    create?: "You are not authorized to create this comment."
+
+  authorization:
+    auth_failed: "Authentication failed. Please try again."
+    auth_success: "User was successfully authenticated."
+    failed_create: "Failed to create user."
+    success_create: "User was successfully created."
+    failed_update: "Failed to update user."
+    success_update: "User was successfully updated."
+    no_auth_data: "No authentication data received."

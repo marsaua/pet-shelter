@@ -5,11 +5,12 @@ class ContactUsController < ApplicationController
           ContactUsMailer.with(contact: @contact_us.attributes.symbolize_keys)
                          .contact_us
                          .deliver_later
-          redirect_to contact_path, notice: "Your message has been sent successfully!"
+          redirect_to contact_path, notice: I18n.t("contact_us.success_create")
         else
-          flash.now[:alert] = "Contact Us form is invalid."
+          flash.now[:alert] = I18n.t("contact_us.failed_create")
           render "pages/contact", status: :unprocessable_entity
         end
+        @contact_us.save
       end
 
     private

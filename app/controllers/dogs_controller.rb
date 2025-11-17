@@ -1,7 +1,7 @@
 class DogsController < ApplicationController
     include Pundit::Authorization
     rescue_from Pundit::NotAuthorizedError do
-        redirect_to root_path, alert: "Not authorized"
+        redirect_to root_path, alert: I18n.t("pundit.unauthorized")
       end
 
     before_action :set_dog, only: %i[ show edit update destroy adopt_dog ]
@@ -18,9 +18,9 @@ class DogsController < ApplicationController
         @dog = Dog.new(dog_params)
         authorize @dog
         if @dog.save
-            redirect_to @dog, notice: "Dog was successfully created.", status: :see_other
+            redirect_to @dog, notice: I18n.t("success_create", thing: "Dog"), status: :see_other
         else
-            flash.now[:alert] = "Dog was not created."
+            flash.now[:alert] = I18n.t("failed_create", thing: "Dog")
             render :new, status: :unprocessable_entity
         end
     end
@@ -40,9 +40,9 @@ class DogsController < ApplicationController
     def update
         authorize @dog
         if @dog.update(dog_params)
-            redirect_to @dog, notice: "Dog was successfully updated.", status: :see_other
+            redirect_to @dog, notice: I18n.t("success_update", thing: "Dog"), status: :see_other
         else
-            flash.now[:error] = "Dog was not updated."
+            flash.now[:error] = I18n.t("failed_update", thing: "Dog")
     render :edit, status: :unprocessable_entity
         end
     end
@@ -50,26 +50,33 @@ class DogsController < ApplicationController
     def adopt_dog
         if @dog.status == "available"
             @adopt = Adopt.find(params[:adopt_id])
-            @dog.update(params.require(:dog).permit(:status).merge(user_id: @adopt.user.id))
-            flash[:notice] = "Dog was successfully adopted."
-            AdoptAccessMailer.with(user: @adopt.user).adopt_access.deliver_later
-            redirect_to dog_path(@dog)
-
+             if @dog.update(params.require(:dog).permit(:status).merge(user_id: @adopt.user.id))
+                flash[:notice] = I18n.t("adopt.success_adopt", thing: "Dog")
+                AdoptAccessMailer.with(user: @adopt.user).adopt_access.deliver_later
+                redirect_to dog_path(@dog)
+            else
+                flash.now[:alert] = I18n.t("adopt.failed_adopt", thing: "Dog")
+                render :show, status: :unprocessable_entity
+            end
             @adopts = Adopt.where.not(id: params[:adopt_id])
             @adopts.each do |adopt|
                 AdoptRejectMailer.with(user: adopt.user).adopt_reject.deliver_later
             end
         elsif @dog.status == "adopted"
-            @dog.update(params.require(:dog).permit(:status))
-            flash[:notice] = "Dog was successfully returned."
-            redirect_to dog_path(@dog)
+            if @dog.update(params.require(:dog).permit(:status))
+                flash[:notice] = I18n.t("adopt.success_return", thing: "Dog")
+                redirect_to dog_path(@dog)
+            else
+                flash.now[:alert] = I18n.t("adopt.failed_return", thing: "Dog")
+                render :show, status: :unprocessable_entity
+            end
         end
     end
 
     def destroy
         authorize @dog
         @dog.destroy
-        redirect_to dogs_path, notice: "Dog was successfully deleted."
+        redirect_to dogs_path, notice: I18n.t("success_destroy", thing: "Dog")
     end
 
 

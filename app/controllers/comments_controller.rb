@@ -8,9 +8,9 @@ class CommentsController < ApplicationController
       @comment.user = current_user if current_user
 
       if @comment.save
-        redirect_to @commentable, notice: "Comment was successfully added."
+        redirect_to @commentable, notice: I18n.t("success_create", thing: "Comment")
       else
-        redirect_to @commentable, alert: "Failed to add comment."
+        redirect_to @commentable, alert: I18n.t("failed_create", thing: "comment")
       end
     end
 

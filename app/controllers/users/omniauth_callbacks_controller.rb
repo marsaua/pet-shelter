@@ -5,12 +5,12 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       sign_in_and_redirect @user, event: :authentication
       set_flash_message(:notice, :success, kind: "Google") if is_navigational_format?
     else
-      redirect_to new_user_registration_url, alert: "Authentication failed."
+      redirect_to new_user_registration_url, alert: I18n.t("authorization.auth_failed")
     end
   end
 
   def failure
-    redirect_to root_path, alert: "Authentication failed. Please try again."
+    redirect_to root_path, alert: I18n.t("authorization.auth_failed")
   end
 
   private
@@ -18,7 +18,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def handle_auth(provider)
     auth = request.env["omniauth.auth"]
     unless auth
-      redirect_to root_path, alert: "No auth data received"
+      redirect_to root_path, alert: I18n.t("authorization.no_auth_data")
       return
     end
 
@@ -28,7 +28,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       sign_in_and_redirect user, event: :authentication
       set_flash_message(:notice, :success, kind: provider.titleize) if is_navigational_format?
     else
-      redirect_to new_user_registration_url, alert: "Authentication failed. Please try again."
+      redirect_to new_user_registration_url, alert: I18n.t("authorization.auth_failed")
     end
   end
 end

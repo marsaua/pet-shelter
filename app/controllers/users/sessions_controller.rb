@@ -33,14 +33,14 @@ class Users::SessionsController < Devise::SessionsController
       sign_in_and_redirect user, event: :authentication
       set_flash_message(:notice, :success, kind: "Google") if is_navigational_format?
     else
-      redirect_to new_user_session_path, alert: "Google sign-in failed. Please try again."
+      redirect_to new_user_session_path, alert: I18n.t("authorization.auth_failed")
     end
   rescue => e
     Rails.logger.error "[Omniauth][Google] #{e.class}: #{e.message}"
-    redirect_to new_user_session_path, alert: "Google sign-in failed."
+    redirect_to new_user_session_path, alert: I18n.t("authorization.auth_failed")
   end
 
   def failure
-    redirect_to new_user_session_path, alert: "Authentication failed."
+    redirect_to new_user_session_path, alert: I18n.t("authorization.auth_failed")
   end
 end
