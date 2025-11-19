@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_17_164456) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_19_091921) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -67,11 +67,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_17_164456) do
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
   end
 
-  create_table "contact_us", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "dogs", force: :cascade do |t|
     t.string "name"
     t.integer "age_month"
@@ -83,6 +78,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_17_164456) do
     t.string "status"
     t.string "size"
     t.index ["user_id"], name: "index_dogs_on_user_id"
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "email"
+    t.string "subject"
+    t.text "message"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_reports_on_user_id"
   end
 
   create_table "sso_identities", force: :cascade do |t|
@@ -132,6 +138,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_17_164456) do
   add_foreign_key "adopts", "dogs"
   add_foreign_key "adopts", "users"
   add_foreign_key "dogs", "users"
+  add_foreign_key "reports", "users"
   add_foreign_key "sso_identities", "users"
   add_foreign_key "volunteers", "users"
 end
