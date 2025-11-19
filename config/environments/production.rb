@@ -34,7 +34,7 @@ Rails.application.configure do
   # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
 
   # Log to STDOUT with the current request id as a default log tag.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
   config.logger   = ActiveSupport::TaggedLogging.logger(STDOUT)
 
   # Change to "debug" to log everything (including potentially personally-identifiable information!)
@@ -80,7 +80,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Only use :id for inspections in production.
-  config.active_record.attributes_for_inspect = [ :id ]
+  config.active_record.attributes_for_inspect = [:id]
 
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
@@ -93,11 +93,11 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: "mg.abrakadabramarsa.space", protocol: "https" }
   config.action_mailer.asset_host = "https://mg.abrakadabramarsa.space"
-  
+
   mailgun_domain = ENV["MAILGUN_DOMAIN"]
   mailgun_key    = ENV["MAILGUN_API_KEY"]
   mailgun_host   = ENV["MAILGUN_API_HOST"].presence || "api.eu.mailgun.net"
-  
+
   if mailgun_domain.present? && mailgun_key.present?
     config.action_mailer.delivery_method = :mailgun
     config.action_mailer.mailgun_settings = {

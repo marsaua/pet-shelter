@@ -1,11 +1,11 @@
 class CommentsController < ApplicationController
   include Pundit::Authorization
-    before_action :authenticate_user!, except: [ :create ]
-    before_action :set_commentable, only: [ :create ]
+    before_action :authenticate_user!
+    before_action :set_commentable, only: %i[create destroy]
 
     def create
       @comment = @commentable.comments.build(comment_params)
-      @comment.user = current_user if current_user
+      @comment.user = current_user
 
       if @comment.save
         redirect_to @commentable, notice: "Comment was successfully added."
@@ -14,10 +14,16 @@ class CommentsController < ApplicationController
       end
     end
 
+    def destroy
+      @comment = Comment.find(params[:id])
+      @comment.destroy
+      redirect_to @commentable, notice: "Comment was successfully deleted."
+    end
+
     private
 
     def comment_params
-      params.require(:comment).permit(:body).merge(user_id: current_user&.id)
+      params.require(:comment).permit(:body)
     end
 
     def set_commentable

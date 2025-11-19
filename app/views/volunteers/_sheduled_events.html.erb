@@ -1,0 +1,56 @@
+<!-- Your Scheduled Events Section -->
+  <section class="scheduled-events-section mb-5">
+    <div class="events-container">
+      <h2 class="text-center mb-4">
+        <i class="fas fa-calendar-alt me-2"></i>
+        Your Scheduled Volunteer Events
+      </h2>
+
+      <% if @volunteers.present? %>
+        <div class="row g-3">
+          <% @volunteers.each do |v| %>
+            <div class="col-md-6 col-lg-4">
+              <div class="event-card">
+                <div class="event-header">
+                  <div class="event-icon">
+                    <% case v.duty %>
+                    <% when 'cleaner' %>
+                      <i class="fas fa-broom fa-2x blue-text"></i>
+                    <% when 'feeder' %>
+                      <i class="fas fa-utensils fa-2x blue-text"></i>
+                    <% when 'walker' %>
+                      <i class="fas fa-walking fa-2x blue-text"></i>
+                    <% end %>
+                  </div>
+                  <div class="event-details">
+                    <h5 class="event-role"><%= v.duty.capitalize %></h5>
+                    <p class="event-date">
+                      <i class="fas fa-calendar me-1"></i>
+                      <%= Date.parse(v.date).strftime("%B %d, %Y") %>
+                    </p>
+                  </div>
+                </div>
+
+                <div class="event-actions">
+                  <%= button_to create_event_volunteers_path(date: v.date, duty: v.duty),
+                      method: :post,
+                      class: "btn btn-outline-primary btn-sm w-100" do %>
+                    <i class="fab fa-google me-1"></i>
+                    Add to Google Calendar
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="no-events-message">
+          <div class="text-center py-5">
+            <i class="fas fa-calendar-times fa-4x text-muted mb-3"></i>
+            <h4 class="text-muted">No Events Scheduled</h4>
+            <p class="text-muted">Schedule your first volunteer session above to get started!</p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </section>

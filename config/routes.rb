@@ -12,12 +12,13 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   resources :dogs do
-    resources :comments, only: :create
-    resources :adopts, only: [:new, :create, :index, :show]
+    resources :comments, only: %i[create destroy]
+    resources :adopts, only: %i[new create index show destroy]
+    post :adopt_dog, on: :member
   end
 
   get "dogs/:id/requests", to: "adopts#requests", as: :dog_requests
-  
+
   # Defines the root path route ("/")
   root "pages#home"
   get "about", to: "pages#about"
@@ -33,19 +34,20 @@ Rails.application.routes.draw do
   resources :donations
 
   devise_for :users, controllers: {
-    sessions: 'users/sessions',
-    registrations: 'users/registrations',
-    passwords: 'users/passwords',
-    confirmations: 'users/confirmations',
-    omniauth_callbacks: 'users/omniauth_callbacks'
+    sessions: "users/sessions",
+    registrations: "users/registrations",
+    passwords: "users/passwords",
+    confirmations: "users/confirmations",
+    omniauth_callbacks: "users/omniauth_callbacks"
   }
+
+  resources :contact_us
+
   get "contact", to: "pages#contact"
-  resources :contact_us, only: [:create], controller: "contact_us"
   get "profile", to: "pages#profile"
   resources :volunteers do
     collection do
       post :create_event
     end
   end
-
 end

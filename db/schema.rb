@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_04_142121) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_17_164456) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -61,11 +61,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_04_142121) do
     t.text "body"
     t.string "commentable_type", null: false
     t.integer "commentable_id", null: false
-    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
-    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "contact_us", force: :cascade do |t|
@@ -75,13 +74,31 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_04_142121) do
 
   create_table "dogs", force: :cascade do |t|
     t.string "name"
-    t.string "sex"
     t.integer "age_month"
-    t.string "size"
     t.string "breed"
-    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.string "sex"
+    t.string "status"
+    t.string "size"
+    t.index ["user_id"], name: "index_dogs_on_user_id"
+  end
+
+  create_table "sso_identities", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "provider", null: false
+    t.string "uid", null: false
+    t.string "access_token"
+    t.string "refresh_token"
+    t.datetime "token_expires_at"
+    t.string "name"
+    t.string "image"
+    t.json "data", default: {}
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["provider", "uid"], name: "index_sso_identities_on_provider_and_uid", unique: true
+    t.index ["user_id"], name: "index_sso_identities_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -92,11 +109,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_04_142121) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "google_uid"
-    t.text "google_access_token"
-    t.text "google_refresh_token"
-    t.datetime "google_token_expires_at"
-    t.string "google_calendar_id"
     t.string "name"
     t.string "image"
     t.string "phone"
@@ -107,11 +119,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_04_142121) do
   end
 
   create_table "volunteers", force: :cascade do |t|
-    t.string "role"
     t.string "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
+    t.string "duty"
     t.index ["user_id"], name: "index_volunteers_on_user_id"
   end
 
@@ -119,6 +131,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_04_142121) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "adopts", "dogs"
   add_foreign_key "adopts", "users"
-  add_foreign_key "comments", "users"
+  add_foreign_key "dogs", "users"
+  add_foreign_key "sso_identities", "users"
   add_foreign_key "volunteers", "users"
 end

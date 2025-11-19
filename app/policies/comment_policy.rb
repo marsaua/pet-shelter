@@ -1,10 +1,12 @@
 class CommentPolicy < ApplicationPolicy
-    def index?   = true
-    def show?    = true
-    def create?  = user.present?
-    def update?  = admin? || manager? || owner?
-    def destroy? = admin? || owner?
-  
+    def create?
+       true
+    end
+
+    def destroy?
+       admin? || owner?
+    end
+
     class Scope < Scope
       def resolve
         if user&.admin? || user&.manager?
@@ -14,7 +16,7 @@ class CommentPolicy < ApplicationPolicy
         end
       end
     end
-  
+
     private
     def owner? = record.respond_to?(:user_id) && user && record.user_id == user.id
-  end
+end

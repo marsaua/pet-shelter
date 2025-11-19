@@ -3,6 +3,9 @@
    <% @comments.each do |comment| %>
         <strong><%= comment.user&.email || "Anonymous" %></strong>
         <p><%= comment.body %></p>
+        <% if policy(comment).destroy? %>
+            <%= link_to "Delete", dog_comment_path(dog, dog.comments.find(comment.id)), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "btn btn-danger" %>
+        <% end %>
         <hr>
    <% end %>
-</div>  
+</div>

@@ -14,7 +14,7 @@ dogs_data = [
   },
   {
     name: "Luna",
-    sex: "female", 
+    sex: "female",
     age_month: 18,
     size: "small",
     breed: "Beagle",
@@ -33,7 +33,7 @@ dogs_data = [
     sex: "female",
     age_month: 12,
     size: "small",
-    breed: "Chihuahua", 
+    breed: "Chihuahua",
     status: "available"
   },
   {

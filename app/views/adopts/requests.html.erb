@@ -26,9 +26,15 @@
               <strong>Phone:</strong> <%= adopt.phone %><br>
               <strong>Has other pets:</strong> <%= adopt.has_another_pets ? "Yes" : "No" %><br>
               <strong>Yard:</strong> <%= adopt.yard ? "Yes" : "No" %><br>
-              <strong>Home:</strong> <%= adopt.home ? "Own" : "Rent" %>
+              <strong>Home:</strong> <%= adopt.home ? "Own" : "Rent" %><br>
+              <strong>Status:</strong> <%= adopt.dog.status %><br>
+
+              <% if  @dog.user_id == adopt.user_id %>
+                <strong>Possible owner:</strong> <%= adopt.user.name %><br>
+              <% end %>
 
             </p>
+            <%= render 'adopt_reject_button', adopt: adopt %>
           </div>
           </div>
           <% end %>
