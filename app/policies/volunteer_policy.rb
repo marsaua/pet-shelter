@@ -1,9 +1,12 @@
 class VolunteerPolicy < ApplicationPolicy
-    def index?   = true
-    def show?    = true
-    def create?  = user.present?
-    def update?  = admin? || manager? || owner?
-    def destroy? = admin? || owner?
+    def index?
+      true
+    end
+
+    alias show? index?
+    alias create? index?
+    alias update? index?
+    alias destroy? index?
 
     class Scope < Scope
       def resolve
@@ -14,7 +17,4 @@ class VolunteerPolicy < ApplicationPolicy
         end
       end
     end
-
-    private
-    def owner? = record.respond_to?(:user_id) && user && record.user_id == user.id
 end

@@ -27,9 +27,7 @@ class DogsController < ApplicationController
 
     def show
         @dog = Dog.find(params[:id])
-
-        @adopt = Adopt.new(dog: @dog, user: current_user)
-
+        @adopts = policy_scope(Adopt).includes(:user, :dog)
         @comments = @dog.comments.order(created_at: :desc)
         @comment = @dog.comments.build
       end

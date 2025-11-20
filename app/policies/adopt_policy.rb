@@ -1,23 +1,32 @@
 class AdoptPolicy < ApplicationPolicy
-    def index?   = owner? || user.admin? || user.manager?
-    def show?    = owner? || user.admin? || user.manager?
-    def create?  = user.present?
-    def update?  = user.admin? || user.manager? || owner?
-    def destroy? = user.admin? || owner?
-    def requests?
-        user.admin? || user.adopts.exists?(dog: record)
+    def index?
+      true
     end
 
+    def show?
+      return false unless user
+      user.admin? || owner?
+    end
 
-        class Scope < Scope
-            def resolve
-              if user.admin?
-                scope.all
-              else
-                scope.where(user: user)
-              end
-            end
+    alias update? show?
+    alias destroy? show?
+
+    def create?
+      true
+    end
+
+    def requests?
+      return false unless user
+      user.admin? || user.adopts.exists?(dog_id: record.id) rescue user.admin?
+    end
+
+    class Scope < Scope
+      def resolve
+        if user&.admin?
+          scope.all
+        else
+          scope.where(user: user)
         end
-    private
-    def owner? = record.user == user
+      end
+    end
 end

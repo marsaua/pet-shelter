@@ -1,5 +1,7 @@
-<% if adopt.dog.status == "available" %>
-    <%= link_to "Accept", adopt_dog_dog_path(@dog, adopt_id: adopt.id, dog: { status: "adopted" }), data: { turbo_method: :post }, class: "btn btn-primary" %>            
-<% else %>
-    <%= button_to "Reject adoption", adopt_dog_dog_path(@dog, dog: { status: "available" }), data: { turbo_method: :post }, class: "btn btn-primary" %>
+<% if policy(@dog).update? %>
+    <% if adopt.dog.status == "available" %>
+        <%= link_to "Accept", adopt_dog_dog_path(@dog, adopt_id: adopt.id, dog: { status: "adopted" }), data: { turbo_method: :post }, class: "btn btn-primary" %>
+    <% else %>
+        <%= button_to "Reject adoption", adopt_dog_dog_path(@dog, dog: { status: "available" }), data: { turbo_method: :post }, class: "btn btn-primary" %>
+    <% end %>
 <% end %>

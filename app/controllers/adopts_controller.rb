@@ -1,9 +1,11 @@
 class AdoptsController < ApplicationController
   before_action :set_dog
   before_action :set_adopt, only: %i[show edit update destroy]
+
   def index
-    @adopts = policy_scope(Adopt.includes(:dog, :user))
+    @adopts = policy_scope(Adopt).includes(:user, :dog)
   end
+
   def new
     @adopt = @dog.adopts.build
   end
@@ -42,8 +44,8 @@ class AdoptsController < ApplicationController
   end
 
   def destroy
-    @adopt.destroy
     authorize @adopt
+    @adopt.destroy
     redirect_to dog_path(@dog)
   end
 

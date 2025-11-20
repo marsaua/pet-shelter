@@ -1,22 +1,26 @@
 class DogPolicy < ApplicationPolicy
-    def index?   = true
-    def show?    = true
-
-    def create? = admin_or_manager?
-    def new?     = create?
-
-    def update?  = admin_or_manager?
-    def edit?    = update?
-    def destroy? = admin_or_manager?
-
-
-    def admin_or_manager?
-    user && (user.admin? || user.manager?)
+    def index?
+        true
     end
+
+    alias show? index?
+
+    def create?
+        user&.admin? || user&.manager?
+    end
+
+    alias new? create?
+    alias update? create?
+    alias edit? create?
+    alias destroy? create?
 
     class Scope < Scope
         def resolve
-            scope.all
+            if user&.admin?
+                scope.all
+            else
+                scope.where(user: user)
+            end
         end
     end
 end

@@ -8,42 +8,9 @@ class ApplicationPolicy
     @record = record
   end
 
-  def index?
-    false
-  end
-
-  def show?
-    false
-  end
-
-  def create?
-    false
-  end
-
-  def new?
-    create?
-  end
-
-  def update?
-    false
-  end
-
-  def edit?
-    update?
-  end
-
-  def destroy?
-    false
-  end
-
-  def admin?    = user&.admin?
-  def manager?  = user&.manager?
-  def owner?    = record.respond_to?(:user_id) && user && record.user_id == user.id
-
-
   class Scope
     def initialize(user, scope)
-      @user = user
+      @user  = user
       @scope = scope
     end
 
@@ -52,7 +19,12 @@ class ApplicationPolicy
     end
 
     private
-
     attr_reader :user, :scope
+  end
+
+  private
+
+  def owner?
+    record.respond_to?(:user) && record.user == user
   end
 end
