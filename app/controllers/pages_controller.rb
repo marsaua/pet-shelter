@@ -29,6 +29,6 @@ class PagesController < ApplicationController
     def profile
         @user = current_user
         @current_user_adopts = @user.adopts
-        @adopts = Adopt.joins(:dog).order("dogs.name ASC")
+        @adopts = policy_scope(Adopt)
     end
 end

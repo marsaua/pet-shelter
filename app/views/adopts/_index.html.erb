@@ -12,7 +12,7 @@
             <% else %>
                 <%= image_tag "avatar.svg", height: 200, class: "object-fit-cover" %>
             <% end %>
-  
+
           <div class="card-body">
             <h5 class="card-title text-primary"><%= dog.name %></h5>
             <p class="card-text text-muted mb-2">
@@ -22,12 +22,12 @@
               <%= pluralize(adopts.count, "adoption request") %>
             </p>
           </div>
-  
+
           <div class="card-footer bg-transparent border-0 text-end">
             <a href="<%= dog_requests_path(dog) %>" class="btn btn-outline-primary btn-sm">View Requests</a>
           </div>
         </div>
       </div>
   <% end %>
-  
+
 </div>

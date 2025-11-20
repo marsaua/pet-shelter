@@ -1,8 +1,5 @@
 class DogsController < ApplicationController
-    include Pundit::Authorization
-    rescue_from Pundit::NotAuthorizedError do
-        redirect_to root_path, alert: "Not authorized"
-      end
+    before_action :authenticate_user!
 
     before_action :set_dog, only: %i[show edit update destroy adopt_dog]
 
@@ -27,12 +24,10 @@ class DogsController < ApplicationController
 
     def show
         @dog = Dog.find(params[:id])
-
-        @adopt = Adopt.new(dog: @dog, user: current_user)
-
+        @adopts = policy_scope(Adopt).includes(:user, :dog)
         @comments = @dog.comments.order(created_at: :desc)
         @comment = @dog.comments.build
-      end
+    end
     def edit
         authorize @dog
     end

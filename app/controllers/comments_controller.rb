@@ -1,7 +1,6 @@
 class CommentsController < ApplicationController
-  include Pundit::Authorization
-    before_action :authenticate_user!
-    before_action :set_commentable, only: %i[create destroy]
+  before_action :authenticate_user!
+  before_action :set_commentable, only: %i[create destroy]
 
     def create
       @comment = @commentable.comments.build(comment_params)

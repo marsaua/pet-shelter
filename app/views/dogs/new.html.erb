@@ -1,4 +1,6 @@
 <section class="container">
-    <h1>New Dog</h1>
-    <%= render 'dog_form', dog: @dog %>
+    <% if policy(@dog).create? %>
+        <h1>New Dog</h1>
+        <%= render 'dog_form', dog: @dog %>
+    <% end %>
 </section>
