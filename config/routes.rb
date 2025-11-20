@@ -22,8 +22,6 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "pages#home"
   get "about", to: "pages#about"
-  get "contact", to: "pages#contact"
-
 
   resources :placements
 
@@ -41,9 +39,8 @@ Rails.application.routes.draw do
     omniauth_callbacks: "users/omniauth_callbacks"
   }
 
-  resources :contact_us
+  resources :reports, only: %i[new create]
 
-  get "contact", to: "pages#contact"
   get "profile", to: "pages#profile"
   resources :volunteers do
     collection do

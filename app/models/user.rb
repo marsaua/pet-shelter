@@ -9,8 +9,10 @@ class User < ApplicationRecord
   has_many :adopts, dependent: :destroy
   has_many :dogs, dependent: :nullify
   has_many :comments, dependent: :nullify
-
+  has_many :reports, dependent: :nullify
   has_many :sso_identities, dependent: :destroy
+
+  validates :email, presence: true, uniqueness: true
 
   def identity_for(provider)
     sso_identities.find_by(provider:)
