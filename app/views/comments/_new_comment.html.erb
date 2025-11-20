@@ -1,9 +1,16 @@
 
 <h3>Comments</h3>
  <p>Have you ever met this dog? Leave a comment about your experience</p>
- <% if policy(@comment).create? %>
-    <%= form_with(model: [@dog, @comment]) do |form| %>
-        <%= form.text_area :body, class: "form-control" %>
-        <%= form.submit class: "btn btn-primary mt-4" %>
+ <% if current_user %>
+    <% if policy(@comment).create? %>
+        <%= form_with(model: [@dog, @comment]) do |form| %>
+            <%= form.text_area :body, class: "form-control" %>
+            <%= form.submit class: "btn btn-primary mt-4" %>
+        <% end %>
     <% end %>
-<% end %>
+ <% else %>
+    <br>
+    <hr>
+    <p>Please log in to leave a comment</p>
+    <%= link_to "Log in", new_user_session_path, class: "btn btn-secondary" %>
+ <% end %>

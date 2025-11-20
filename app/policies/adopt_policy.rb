@@ -4,8 +4,7 @@ class AdoptPolicy < ApplicationPolicy
     end
 
     def show?
-      return false unless user
-      user.admin? || owner?
+      user&.admin? || owner?
     end
 
     alias update? show?
@@ -16,8 +15,7 @@ class AdoptPolicy < ApplicationPolicy
     end
 
     def requests?
-      return false unless user
-      user.admin? || user.adopts.exists?(dog_id: record.id) rescue user.admin?
+      user&.admin? || user&.adopts.exists?(dog_id: record.id)
     end
 
     class Scope < Scope

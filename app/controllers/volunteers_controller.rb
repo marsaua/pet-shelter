@@ -1,6 +1,5 @@
 
 class VolunteersController < ApplicationController
-    include Pundit::Authorization
     before_action :authenticate_user!
 
 

@@ -1,6 +1,7 @@
 class AdoptsController < ApplicationController
   before_action :set_dog
   before_action :set_adopt, only: %i[show edit update destroy]
+  before_action :authenticate_user!
 
   def index
     @adopts = policy_scope(Adopt).includes(:user, :dog)
