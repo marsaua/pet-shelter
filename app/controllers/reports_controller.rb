@@ -1,6 +1,7 @@
 class ReportsController < ApplicationController
-  before_action :authenticate_user!, only: %i[new create]
-  before_action :set_current_user
+  skip_before_action :authenticate_user!, only: %i[new create]
+
+  before_action :set_current_user, only: %i[new create]
 
   def new
     @report = Report.new
@@ -15,9 +16,9 @@ class ReportsController < ApplicationController
       ReportMailer.with(report: @report.attributes.symbolize_keys)
                       .report
                       .deliver_later
-      redirect_to root_path, notice: "Your message has been sent successfully!"
+      redirect_to root_path, notice: t("contact_us.success_create")
     else
-      flash.now[:alert] = "Report form is invalid."
+      flash.now[:alert] = t("contact_us.failed_create")
       render "reports/new", status: :unprocessable_entity
     end
   end

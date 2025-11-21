@@ -1,7 +1,7 @@
 class AdoptsController < ApplicationController
   before_action :set_dog
   before_action :set_adopt, only: %i[show edit update destroy]
-  before_action :authenticate_user!
+  before_action :authorize_adopt, only: %i[show edit update destroy]
 
   def index
     @adopts = policy_scope(Adopt).includes(:user, :dog)
@@ -13,11 +13,10 @@ class AdoptsController < ApplicationController
 
   def create
     @adopt = @dog.adopts.build(adopt_params.merge(user: current_user))
-    if @adopt.save
-      redirect_to dog_path(@dog)
-    else
-      render :new, status: :unprocessable_entity
-    end
+    @adopt.save!
+    redirect_to dog_path(@dog), notice: t("success_create", thing: "Adopt")
+  rescue StandardError => e
+    redirect_to dog_path(@dog), alert: e || t("failed_create", thing: "Adopt")
   end
 
   def requests
@@ -27,37 +26,36 @@ class AdoptsController < ApplicationController
                 .order(created_at: :desc)
   end
 
-  def show
-    authorize @adopt
-  end
+  def show; end
 
-  def edit
-    authorize @adopt
-  end
+  def edit; end
 
   def update
-    authorize @adopt
-    if @adopt.update(adopt_params)
-      redirect_to dog_path(@dog)
-    else
-      render :edit
-    end
+    @adopt.update!(adopt_params)
+    redirect_to dog_path(@dog), notice: t("success_update", thing: "Adopt")
+  rescue StandardError => e
+    redirect_to dog_path(@dog), alert: e || t("failed_update", thing: "Adopt")
   end
 
   def destroy
-    authorize @adopt
-    @adopt.destroy
-    redirect_to dog_path(@dog)
+    @adopt.destroy!
+    redirect_to dog_path(@dog), notice: t("success_destroy", thing: "Adopt")
+  rescue StandardError => e
+    redirect_to dog_path(@dog), alert: e || t("failed_destroy", thing: "Adopt")
   end
 
   private
 
   def set_dog
-    @dog = Dog.find(params[:dog_id] || params[:id])
+    @dog = Dog.find(params[:id])
   end
 
   def set_adopt
     @adopt = @dog.adopts.find(params[:id])
+  end
+
+  def authorize_adopt
+    authorize @adopt
   end
 
   def adopt_params
