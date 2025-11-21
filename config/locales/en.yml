@@ -28,4 +28,75 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  # General CRUD messages
+  failed_create: "Failed to add %{thing}."
+  success_create: "%{thing} was successfully added."
+  failed_update: "Failed to update %{thing}."
+  success_update: "%{thing} was successfully updated."
+  failed_destroy: "Failed to remove %{thing}."
+  success_destroy: "%{thing} was successfully removed."
+  unprocessable_entity: "Failed to save %{thing}."
+
+  # Contact form messages
+  contact_us:
+    failed_create: "Failed to send your message."
+    success_create: "Your message was successfully sent."
+
+  # Adoption related messages
+  adopt:
+    failed:
+      adopt: "Failed to adopt dog."
+      return: "Failed to return dog."
+    success:
+      adopt: "Dog was successfully adopted."
+      return: "Dog was successfully returned."
+
+  # Dog authorization messages
+  dog:
+    unauthorized: "You are not authorized to perform this action."
+    create?: "You are not authorized to create a dog."
+    edit?: "You are not authorized to edit this dog."
+    update?: "You are not authorized to update this dog."
+    destroy?: "You are not authorized to remove this dog."
+
+  # Authentication and authorization messages
+  authorization:
+    auth:
+      success: "User was successfully authenticated."
+      failed: "Authentication failed. Please try again."
+    user:
+      create:
+        success: "User was successfully created."
+        failed: "Failed to create user."
+      update:
+        success: "User was successfully updated."
+        failed: "Failed to update user."
+
+  volunteers:
+    google_calendar:
+      event_created: "Event created and added to Google Calendar!"
+      event_created_calendar_failed: "Event created! (Google Calendar sync failed - please try adding manually)"
+      event_created_sync_calendar_failed: "Event created! (Google Calendar sync failed - please try adding manually)"
+      event_creation_failed: "Failed to create Google Calendar event"
+    create:
+      success: "Volunteer event was successfully created."
+      failure: "Failed to create volunteer event."
+  errors:
+    google_auth: "Authentication with Google failed. Please try again."
+
+  about_us:
+    mentally_healthy:
+      title: "mentally healthy"
+      info: "For many people, especially those who are lonely, having a pet can be a valuable source of comfort and company. Renting a pet gives lonely people the opportunity to enjoy the presence and love of a pet, which can significantly increase their mood and well-being at such a difficult time."
+      image: "about_us_1.png"
+      color: "#DEC1E9"
+    animal_socialization:
+      title: "animal socialization"
+      info: "Many pets need to socialize and interact with people and other animals to be happy and healthy. Renting pets also helps those animals that are looking for a permanent home. While they are on rent, they receive care, attention and the opportunity to show their best qualities to potential adopters. This can significantly increase the chances of their successful adaptation and a happy life in a new home."
+      image: "about_us_2.png"
+      color: "#7383D9"
+    convenience:
+      title: "convenience"
+      info: "You choose your own rental period and schedule, convenient for you. All you need is to pick up your pet and enjoy a temporary companion. Renting allows you to enjoy the wonderful world of animals. You can gain valuable experience and understand whether a particular animal species suits you."
+      image: "about_us_3.png"
+      color: "#C97E54"

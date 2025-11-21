@@ -1,5 +1,6 @@
 class ReportsController < ApplicationController
-  before_action :authenticate_user!, only: %i[new create]
+  skip_before_action :authenticate_user!
+
   before_action :set_current_user
 
   def new
@@ -10,16 +11,14 @@ class ReportsController < ApplicationController
     @report = Report.new(report_params)
     @report.user = current_user
 
-    if @report.valid?
-      @report.save
-      ReportMailer.with(report: @report.attributes.symbolize_keys)
-                      .report
-                      .deliver_later
-      redirect_to root_path, notice: "Your message has been sent successfully!"
-    else
-      flash.now[:alert] = "Report form is invalid."
-      render "reports/new", status: :unprocessable_entity
-    end
+    @report.save!
+    ReportMailer.with(report: @report.attributes.symbolize_keys)
+                    .report
+                    .deliver_later
+    redirect_to root_path, notice: t("contact_us.success_create")
+  rescue StandardError => e
+    flash.now[:error] = e || t("contact_us.failed_create")
+    render "reports/new", status: :unprocessable_entity
   end
 
   private

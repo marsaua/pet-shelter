@@ -24,16 +24,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
         UserMailer.with(user: resource).welcome.deliver_later
 
         respond_with resource, location: after_sign_up_path_for(resource)
-      else
-        set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
-        expire_data_after_sign_in!
-        respond_with resource, location: after_inactive_sign_up_path_for(resource)
       end
-    else
-      clean_up_passwords resource
-      set_minimum_password_length
-      respond_with resource
+
+      set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
+      expire_data_after_sign_in!
+      respond_with resource, location: after_inactive_sign_up_path_for(resource)
     end
+
+    clean_up_passwords resource
+    set_minimum_password_length
+    respond_with resource
   end
 
 

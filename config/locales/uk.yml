@@ -1,6 +1,43 @@
 uk:
-  pundit:
-    dog_policy:
-      edit?: "You are not authorized to edit this dog."
-      update?: "You are not authorized to update this dog."
-      destroy?: "You are not authorized to destroy this dog."
+  # General CRUD messages
+  failed_create: "Failed to add %{thing}."
+  success_create: "%{thing} was successfully added."
+  failed_update: "Failed to update %{thing}."
+  success_update: "%{thing} was successfully updated."
+  failed_destroy: "Failed to remove %{thing}."
+  success_destroy: "%{thing} was successfully removed."
+
+  # Contact form messages
+  contact_us:
+    failed_create: "Failed to send your message."
+    success_create: "Your message was successfully sent."
+
+  # Adoption related messages
+  adopt:
+    failed:
+      adopt: "Failed to adopt dog."
+      return: "Failed to return dog."
+    success:
+      adopt: "Dog was successfully adopted."
+      return: "Dog was successfully returned."
+
+  # Dog authorization messages
+  dog:
+    unauthorized: "You are not authorized to perform this action."
+    create?: "You are not authorized to create a dog."
+    edit?: "You are not authorized to edit this dog."
+    update?: "You are not authorized to update this dog."
+    destroy?: "You are not authorized to remove this dog."
+
+  # Authentication and authorization messages
+  authorization:
+    auth:
+      success: "User was successfully authenticated."
+      failed: "Authentication failed. Please try again."
+    user:
+      create:
+        success: "User was successfully created."
+        failed: "Failed to create user."
+      update:
+        success: "User was successfully updated."
+        failed: "Failed to update user."
