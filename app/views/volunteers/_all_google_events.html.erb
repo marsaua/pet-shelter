@@ -7,27 +7,7 @@
       </h2>
 
       <% if @google_connected %>
-        <% if @google_events.any? %>
-          <h4 class="mb-3">Upcoming Events from Google Calendar:</h4>
-          <div class="row g-3 mb-4">
-            <% @google_events.each do |event| %>
-              <div class="col-md-6">
-                <div class="google-event-card">
-                  <h6><%= event.summary %></h6>
-                  <p class="text-muted mb-0">
-                    <i class="fas fa-calendar me-1"></i>
-                    <%= event.start.date_time&.strftime("%B %d, %Y at %I:%M %p") || event.start.date %>
-                  </p>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        <% else %>
-          <div class="text-center text-muted mb-4">
-            <i class="fas fa-calendar-plus fa-2x mb-2"></i>
-            <p>No upcoming events found in your Google Calendar.</p>
-          </div>
-        <% end %>
+        <%= render 'google_events' %>
       <% else %>
         <div class="text-center text-muted mb-4">
           <i class="fas fa-calendar-times fa-2x mb-2"></i>

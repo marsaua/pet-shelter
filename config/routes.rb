@@ -12,10 +12,11 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   resources :dogs do
-    resources :comments, only: %i[create destroy]
     resources :adopts, only: %i[new create index show destroy]
     post :adopt_dog, on: :member
   end
+
+  resources :comments
 
   get "dogs/:id/requests", to: "adopts#requests", as: :dog_requests
 

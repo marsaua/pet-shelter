@@ -1,0 +1,6 @@
+<%= form_with(model: Comment.new, url: comments_path) do |form| %>
+    <%= form.hidden_field :commentable_id, value: commentable_id %>
+    <%= form.hidden_field :commentable_type, value: commentable_type %>
+    <%= form.text_area :body, class: "form-control" %>
+    <%= form.submit class: "btn btn-primary mt-4" %>
+<% end %>
