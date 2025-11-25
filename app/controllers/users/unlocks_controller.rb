@@ -24,14 +24,14 @@ class Users::UnlocksController < Devise::UnlocksController
   def configure_sign_up_params
     devise_parameter_sanitizer.permit(
       :sign_up,
-      keys: %i[name phone age phone]
+      keys: %i[name phone date_of_birth phone]
     )
   end
 
   def configure_account_update_params
     devise_parameter_sanitizer.permit(
       :account_update,
-      keys: %i[name phone age phone]
+      keys: %i[name phone date_of_birth phone]
     )
   end
 

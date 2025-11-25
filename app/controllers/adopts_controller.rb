@@ -1,10 +1,13 @@
 class AdoptsController < ApplicationController
-  before_action :set_dog
+  before_action :set_dog, only: %i[new create]
   before_action :set_adopt, only: %i[show edit update destroy]
   before_action :authorize_adopt, only: %i[show edit update destroy]
 
   def index
-    @adopts = policy_scope(Adopt).includes(:user, :dog)
+    @adopts = policy_scope(Adopt)
+            .includes_dog
+            .with_assotiations
+            .includes(dog: { avatar_attachment: :blob })
   end
 
   def new
@@ -21,9 +24,9 @@ class AdoptsController < ApplicationController
 
   def requests
     @adopts = policy_scope(Adopt)
-                .where(dog_id: @dog.id)
-                .includes(:user, :dog)
-                .order(created_at: :desc)
+                .for_dog(@dog)
+                .with_assotiations
+                .recent
   end
 
   def show; end
@@ -47,7 +50,7 @@ class AdoptsController < ApplicationController
   private
 
   def set_dog
-    @dog = Dog.find(params[:id])
+    @dog = Dog.find(params[:dog_id] || params[:id])
   end
 
   def set_adopt

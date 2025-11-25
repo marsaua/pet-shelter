@@ -4,7 +4,7 @@ class AdoptPolicy < ApplicationPolicy
     end
 
     def show?
-      user&.admin? || owner?
+      user.admin? || owner?
     end
 
     alias update? show?
@@ -15,14 +15,12 @@ class AdoptPolicy < ApplicationPolicy
     end
 
     def requests?
-      user&.admin? || user&.adopts.exists?(dog_id: record.id)
+      user.admin? || user.adopts.exists?(dog_id: record.id)
     end
 
     class Scope < Scope
       def resolve
-        if user&.admin?
-          return scope.all
-        end
+        return scope.all if user.admin?
 
         scope.where(user: user)
       end

@@ -12,7 +12,14 @@ class User < ApplicationRecord
   has_many :reports, dependent: :nullify
   has_many :sso_identities, dependent: :destroy
 
-  validates :email, presence: true, uniqueness: true
+  validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true
+  validates :phone, phone: true
+  validates :date_of_birth, presence: true, date: {
+    before: Proc.new { Time.now - 18.years },
+    message: "You must be at least 18 years old"
+  }
+  validates :name, presence: true
+
 
   def identity_for(provider)
     sso_identities.find_by(provider:)

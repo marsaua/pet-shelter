@@ -91,7 +91,7 @@ class VolunteersController < ApplicationController
     redirect_to volunteers_path, notice: "Event created! (Google Calendar sync failed - please try adding manually)"
 
   rescue => e
-    redirect_to volunteers_path, notice: e || "Something went wrong"
+    redirect_to volunteers_path, alert: e || "Something went wrong"
   end
 
   def handle_failed_creation

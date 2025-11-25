@@ -35,6 +35,7 @@ class CommentsController < ApplicationController
     end
 
     def authorize_comment
-      authorize @comment || Comment.new
+      @comment = Comment.find(params[:id])
+      authorize @comment
     end
 end

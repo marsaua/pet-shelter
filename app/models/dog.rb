@@ -10,4 +10,12 @@ class Dog < ApplicationRecord
     validates :name, presence: true
     validates :age_month, presence: true
     validates :breed, presence: true
+
+    scope :with_assotiations, -> { includes(:dog, :user) }
+    scope :recent_with_avatar, ->(page = 1) {
+            Dog.includes(:avatar_attachment)
+            .order(created_at: :desc)
+            .page(page)
+            .per(3)
+    }
 end
