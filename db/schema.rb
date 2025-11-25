@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_19_091921) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_25_122833) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -53,6 +53,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_19_091921) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_adopts_on_created_at"
+    t.index ["dog_id", "user_id"], name: "index_adopts_on_dog_and_user"
     t.index ["dog_id"], name: "index_adopts_on_dog_id"
     t.index ["user_id"], name: "index_adopts_on_user_id"
   end
@@ -65,6 +67,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_19_091921) do
     t.datetime "updated_at", null: false
     t.integer "user_id"
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "dogs", force: :cascade do |t|
@@ -77,6 +80,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_19_091921) do
     t.string "sex"
     t.string "status"
     t.string "size"
+    t.index ["status"], name: "index_dogs_on_status"
     t.index ["user_id"], name: "index_dogs_on_user_id"
   end
 
@@ -118,18 +122,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_19_091921) do
     t.string "name"
     t.string "image"
     t.string "phone"
-    t.integer "age"
     t.integer "role", default: 0, null: false
+    t.date "date_of_birth", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   create_table "volunteers", force: :cascade do |t|
-    t.string "date"
+    t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
     t.string "duty"
+    t.index ["date"], name: "index_volunteers_on_date"
+    t.index ["user_id", "date"], name: "index_volunteers_on_user_id_and_date"
     t.index ["user_id"], name: "index_volunteers_on_user_id"
   end
 

@@ -52,6 +52,12 @@ gem "mailgun_rails"
 # For pagination
 gem "kaminari"
 
+# For phone number validation
+gem "phonelib"
+
+# For date validation
+gem "date_validator"
+
 group :development, :test do
   gem "dotenv-rails"
 
@@ -79,6 +85,7 @@ group :development do
   gem "rubocop", require: false
   gem "rubocop-rails", require: false
   gem "ruby-lsp", require: false
+  gem "bullet"
 end
 
 group :test do

@@ -10,9 +10,7 @@ class VolunteerPolicy < ApplicationPolicy
 
     class Scope < Scope
       def resolve
-        if user&.admin? || user&.manager?
-          return scope.all
-        end
+        return scope.all if user&.admin? || user&.manager?
 
         scope.where(user_id: user&.id)
       end

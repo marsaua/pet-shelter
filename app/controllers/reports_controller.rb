@@ -17,7 +17,7 @@ class ReportsController < ApplicationController
                     .deliver_later
     redirect_to root_path, notice: t("contact_us.success_create")
   rescue StandardError => e
-    flash.now[:error] = e || t("contact_us.failed_create")
+    flash.now[:alert] = e || t("contact_us.failed_create")
     render "reports/new", status: :unprocessable_entity
   end
 

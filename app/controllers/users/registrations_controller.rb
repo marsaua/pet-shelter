@@ -23,12 +23,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
         UserMailer.with(user: resource).welcome.deliver_later
 
-        respond_with resource, location: after_sign_up_path_for(resource)
+        return respond_with resource, location: after_sign_up_path_for(resource)
       end
 
       set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
       expire_data_after_sign_in!
-      respond_with resource, location: after_inactive_sign_up_path_for(resource)
+      return respond_with resource, location: after_inactive_sign_up_path_for(resource)
     end
 
     clean_up_passwords resource
@@ -65,12 +65,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: %i[name age phone])
+    devise_parameter_sanitizer.permit(:sign_up, keys: %i[name date_of_birth phone])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: %i[name age phone])
+    devise_parameter_sanitizer.permit(:account_update, keys: %i[name date_of_birth phone])
   end
 
   # The path used after sign up.

@@ -25,6 +25,6 @@ class ApplicationPolicy
   private
 
   def owner?
-    record.respond_to?(:user) && record.user == user
+    record.user&.id == user&.id
   end
 end

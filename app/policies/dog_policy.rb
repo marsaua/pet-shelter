@@ -16,11 +16,9 @@ class DogPolicy < ApplicationPolicy
 
     class Scope < Scope
         def resolve
-            if user&.admin?
-                scope.all
-            else
-                scope.where(user: user)
-            end
+            return scope.all if user&.admin?
+
+            scope.where(user: user)
         end
     end
 end

@@ -30,6 +30,6 @@ class PagesController < ApplicationController
 
     def profile
         @user = current_user
-        @adopts = policy_scope(Adopt)
+        @adopts = policy_scope(Adopt).includes(dog: :avatar_attachment)
     end
 end

@@ -5,7 +5,7 @@ class DogsController < ApplicationController
     before_action :set_dog, only: %i[show edit update destroy adopt_dog]
 
     def index
-        @dogs = Dog.order(created_at: :desc).page(params[:page]).per(3)
+        @dogs = Dog.recent_with_avatar(params[:page])
     end
 
     def new
@@ -20,10 +20,11 @@ class DogsController < ApplicationController
     end
 
     def show
-        @adopts = policy_scope(Adopt).includes(:user, :dog)
-        @comments = @dog.comments.order(created_at: :desc)
+        @adopts = policy_scope(Adopt).with_assotiations
+        @comments = @dog.comments.includes(:user).order(created_at: :desc)
         @comment = @dog.comments.build
     end
+
     def edit; end
 
     def update
@@ -42,13 +43,15 @@ class DogsController < ApplicationController
         return_dog_to_available
 
     rescue StandardError => e
-        flash.now[:error] = e || t("adopt.failed.return")
+        flash.now[:alert] = e || t("adopt.failed.return")
         render :show, status: :unprocessable_entity
     end
 
     def destroy
         @dog.destroy
         redirect_to dogs_path, notice: t("success_destroy", thing: "Dog")
+    rescue StandardError => e
+        redirect_to dog_path(@dog), alert: e || t("failed_destroy", thing: "Dog")
     end
 
 
@@ -70,12 +73,16 @@ class DogsController < ApplicationController
         @dog.update!(params.require(:dog).permit(:status))
         flash[:notice] = t("adopt.success.return")
         redirect_to dog_path(@dog), notice: t("adopt.success.return"), status: :see_other
+    rescue StandardError => e
+        redirect_to dog_path(@dog), alert: e || t("failed_return", thing: "Dog")
     end
 
     def book_adoption
         @adopt = Adopt.find(params[:adopt_id])
         @dog.update!(params.require(:dog).permit(:status).merge(user_id: @adopt.user.id))
         redirect_to dog_path(@dog), notice: t("adopt.success.adopt"), status: :see_other
+    rescue StandardError => e
+        redirect_to dog_path(@dog), alert: e || t("failed_adopt", thing: "Dog")
     end
 
     def deliver_emails

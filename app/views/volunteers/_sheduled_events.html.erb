@@ -26,7 +26,7 @@
                     <h5 class="event-role"><%= v.duty.capitalize %></h5>
                     <p class="event-date">
                       <i class="fas fa-calendar me-1"></i>
-                      <%= Date.parse(v.date).strftime("%B %d, %Y") %>
+                      <%= v.date.strftime("%B %d, %Y") %>
                     </p>
                   </div>
                 </div>
