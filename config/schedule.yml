@@ -1,0 +1,5 @@
+weekly_newsletter:
+  cron: "0 10 * * 1"
+  class: WeeklyNewsletterWorker
+  queue: default
+  description: "Sends weekly newsletter to all users every Monday at 10:00 AM"

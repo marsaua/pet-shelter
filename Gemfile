@@ -80,6 +80,10 @@ gem "googleauth"
 gem "omniauth"
 gem "omniauth-github"
 
+# For jobs
+gem "sidekiq"
+gem "sidekiq-cron"
+
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
