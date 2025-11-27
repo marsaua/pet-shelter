@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: %i[google_oauth2]
+         :omniauthable, omniauth_providers: %i[google_oauth2 github]
 
   enum :role, { user: 0, manager: 1, admin: 2, guest: 3 }, default: :user
 
@@ -13,8 +13,8 @@ class User < ApplicationRecord
   has_many :sso_identities, dependent: :destroy
 
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true
-  validates :phone, phone: true
-  validates :date_of_birth, presence: true, date: {
+  validates :phone, phone: true, allow_blank: true
+  validates :date_of_birth, date: {
     before: Proc.new { Time.now - 18.years },
     message: "You must be at least 18 years old"
   }

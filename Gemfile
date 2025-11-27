@@ -76,6 +76,11 @@ gem "omniauth-google-oauth2"
 gem "google-apis-calendar_v3"
 gem "googleauth"
 
+# Github oauth
+gem "omniauth"
+gem "omniauth-github"
+
+
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"

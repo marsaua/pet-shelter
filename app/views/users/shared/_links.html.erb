@@ -12,6 +12,10 @@
        alt="Google logo" style="width: 18px; height: 18px;" />
   <span class="text-muted fw-semibold">Sign in with Google</span>
 <% end %>
+<%= link_to "Sign in with GitHub",
+      user_github_omniauth_authorize_path,
+      data: { turbo: false },
+      class: "btn btn-dark" %>
 <br />
 <p>To test google authorization, please contact me
 <%= link_to "by Telegram", "https://t.me/bilokinSvitlana", target: "_blank", rel: "noopener" %>

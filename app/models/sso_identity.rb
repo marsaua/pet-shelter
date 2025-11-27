@@ -1,5 +1,5 @@
 require "googleauth"
- AVAILABLE_PROVIDERS = %w[google_oauth2].freeze
+AVAILABLE_PROVIDERS = %w[google_oauth2 github].freeze
 
 class SsoIdentity < ApplicationRecord
     belongs_to :user
@@ -34,10 +34,10 @@ class SsoIdentity < ApplicationRecord
           end
 
           creds
-      rescue => e
-          Rails.logger.error "Failed to create Google credentials for SSO Identity #{id}: #{e.message}"
-          nil
-      end
+    rescue => e
+        Rails.logger.error "Failed to create Google credentials for SSO Identity #{id}: #{e.message}"
+        nil
+    end
 
     def self.upsert_from_omniauth(auth)
       provider = auth.provider
@@ -52,6 +52,38 @@ class SsoIdentity < ApplicationRecord
       user.password ||= Devise.friendly_token[0, 20]
       user.save!
 
+      case provider
+      when "github"
+        resolve_github_identity(identity:, auth:, user:)
+      when "google_oauth2"
+        resolve_google_identity(identity:, auth:, user:)
+      else
+        raise StandardError, "Unknown provider: #{provider}"
+      end
+
+
+      identity.save!
+
+      user
+    rescue ActiveRecord::RecordInvalid => e
+      Rails.logger.error "SSO upsert failed (validation). provider=#{provider} uid=#{uid} email=#{email} user_id=#{user&.id} errors=#{e.record.errors.full_messages.to_sentence}"
+      nil
+    rescue => e
+      Rails.logger.error "SSO upsert failed. provider=#{provider} uid=#{uid} email=#{email} user_id=#{user&.id} error=#{e.class}: #{e.message}"
+      nil
+    end
+
+    def self.resolve_github_identity(identity:, auth:, user:)
+      user.image ||= auth.info.image
+      user.save!
+
+      identity.user = user
+      identity.name = auth.info.name
+      identity.image = auth.info.image
+      identity.data = auth.extra.raw_info.to_h
+    end
+
+    def self.resolve_google_identity(identity:, auth:, user:)
       creds = auth.credentials
       identity.user = user
       identity.assign_attributes(
@@ -62,15 +94,6 @@ class SsoIdentity < ApplicationRecord
         image: auth.info&.image,
         data:  auth.extra&.to_h || {}
       )
-      identity.save!
-
-      user
-      rescue ActiveRecord::RecordInvalid => e
-        Rails.logger.error "SSO upsert failed (validation). provider=#{provider} uid=#{uid} email=#{email} user_id=#{user&.id} errors=#{e.record.errors.full_messages.to_sentence}"
-        nil
-      rescue => e
-        Rails.logger.error "SSO upsert failed. provider=#{provider} uid=#{uid} email=#{email} user_id=#{user&.id} error=#{e.class}: #{e.message}"
-        nil
     end
 
     def google_connected?
