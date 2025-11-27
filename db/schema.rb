@@ -129,11 +129,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_25_154539) do
   end
 
   create_table "volunteers", force: :cascade do |t|
-    t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
     t.string "duty"
+    t.date "date"
     t.index ["date"], name: "index_volunteers_on_date"
     t.index ["user_id", "date"], name: "index_volunteers_on_user_id_and_date"
     t.index ["user_id"], name: "index_volunteers_on_user_id"
