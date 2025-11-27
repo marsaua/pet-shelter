@@ -1,8 +1,8 @@
-class WelcomeWorker
+class PasswordWorker
   include Sidekiq::Worker
 
   def perform(user_id)
     user = User.find(user_id)
-    UserMailer.welcome(user).deliver_now
+    PasswordMailer.reset_password(user).deliver_now
   end
 end

@@ -1,5 +1,5 @@
 class AdoptsController < ApplicationController
-  before_action :set_dog, only: %i[new create]
+  before_action :set_dog, only: %i[new create requests]
   before_action :set_adopt, only: %i[show edit update destroy]
   before_action :authorize_adopt, only: %i[show edit update destroy]
 
