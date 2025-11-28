@@ -19,7 +19,7 @@ class Users::PasswordsController < Devise::PasswordsController
   # PUT /resource/password
   def update
     super
-    PasswordMailer.reset_password(user: current_user).deliver_later
+    PasswordWorker.perform_async(current_user.id)
   end
 
   # protected

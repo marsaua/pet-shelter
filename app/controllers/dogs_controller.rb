@@ -86,11 +86,11 @@ class DogsController < ApplicationController
     end
 
     def deliver_emails
-        AdoptAccessMailer.with(user: @adopt.user).adopt_access.deliver_later
+        AdoptAccessWorker.perform_async(@adopt.user.id)
 
         @adopts = Adopt.where.not(id: params[:adopt_id])
         @adopts.each do |adopt|
-            AdoptRejectMailer.with(user: adopt.user).adopt_reject.deliver_later
+            AdoptRejectWorker.perform_async(adopt.user.id)
         end
     end
 end

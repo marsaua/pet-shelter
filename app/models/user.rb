@@ -20,6 +20,8 @@ class User < ApplicationRecord
   }
   validates :name, presence: true
 
+  after_create :send_welcome_email
+
 
   def identity_for(provider)
     sso_identities.find_by(provider:)
@@ -31,5 +33,9 @@ class User < ApplicationRecord
 
   def google_connected?
     google_identity&.google_connected? || false
+  end
+
+  def send_welcome_email
+    WelcomeWorker.perform_async(id)
   end
 end

@@ -21,8 +21,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
         set_flash_message! :notice, :signed_up
         sign_up(resource_name, resource)
 
-        UserMailer.with(user: resource).welcome.deliver_later
-
         return respond_with resource, location: after_sign_up_path_for(resource)
       end
 

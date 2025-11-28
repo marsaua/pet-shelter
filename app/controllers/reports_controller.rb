@@ -12,9 +12,6 @@ class ReportsController < ApplicationController
     @report.user = current_user
 
     @report.save!
-    ReportMailer.with(report: @report.attributes.symbolize_keys)
-                    .report
-                    .deliver_later
     redirect_to root_path, notice: t("contact_us.success_create")
   rescue StandardError => e
     flash.now[:alert] = e || t("contact_us.failed_create")
