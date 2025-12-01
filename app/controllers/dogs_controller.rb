@@ -10,11 +10,21 @@ class DogsController < ApplicationController
 
     def new
         @dog = Dog.new
+        @dog.diagnosis = {} if @dog.diagnosis.nil?
     end
 
     def create
-        @dog = Dog.create!(dog_params)
-        redirect_to @dog, notice: t("success_create", thing: "Dog"), status: :see_other
+        @dog = Dog.new(dog_params)
+        health_data = {
+            disease_name: params[:dog][:disease_name],
+            description: params[:dog][:description],
+            medicine_name: params[:dog][:medicine_name],
+            price: params[:dog][:price],
+            frequency: params[:dog][:frequency]
+        }
+        @dog.diagnosis = health_data
+
+        redirect_to @dog, notice: t("success_create", thing: "Dog"), status: :see_other if @dog.save
     rescue StandardError => e
         redirect_to dogs_path, alert: e || t("failed_create", thing: "Dog")
     end
@@ -66,7 +76,7 @@ class DogsController < ApplicationController
     end
 
     def dog_params
-        params.require(:dog).permit(:name, :sex, :age_month, :size, :breed, :status, :avatar)
+        params.require(:dog).permit(:name, :sex, :age_month, :size, :breed, :status, :avatar, :diagnosis, :health_status)
     end
 
     def return_dog_to_available
