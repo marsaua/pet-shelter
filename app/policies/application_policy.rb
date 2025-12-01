@@ -18,6 +18,10 @@ class ApplicationPolicy
       raise NoMethodError, "You must define #resolve in #{self.class}"
     end
 
+    def adoptable_dogs
+      raise NoMethodError, "You must define #adoptable_dogs in #{self.class}"
+    end
+
     private
     attr_reader :user, :scope
   end

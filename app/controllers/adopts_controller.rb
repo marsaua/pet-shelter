@@ -12,14 +12,21 @@ class AdoptsController < ApplicationController
 
   def new
     @adopt = @dog.adopts.build
+    authorize @adopt
+  rescue Pundit::NotAuthorizedError
+    redirect_to dog_path(@dog), alert: "This dog is not available for adoption."
   end
 
   def create
     @adopt = @dog.adopts.build(adopt_params.merge(user: current_user))
+    authorize @adopt
+
     @adopt.save!
     redirect_to dog_path(@dog), notice: t("success_create", thing: "Adopt")
+  rescue Pundit::NotAuthorizedError
+    redirect_to dog_path(@dog), alert: "This dog is not available for adoption."
   rescue StandardError => e
-    redirect_to dog_path(@dog), alert: e || t("failed_create", thing: "Adopt")
+    redirect_to dog_path(@dog), alert: e.message || t("failed_create", thing: "Adopt")
   end
 
   def requests
@@ -37,14 +44,14 @@ class AdoptsController < ApplicationController
     @adopt.update!(adopt_params)
     redirect_to dog_path(@dog), notice: t("success_update", thing: "Adopt")
   rescue StandardError => e
-    redirect_to dog_path(@dog), alert: e || t("failed_update", thing: "Adopt")
+    redirect_to dog_path(@dog), alert: e.message || t("failed_update", thing: "Adopt")
   end
 
   def destroy
     @adopt.destroy!
     redirect_to dog_path(@dog), notice: t("success_destroy", thing: "Adopt")
   rescue StandardError => e
-    redirect_to dog_path(@dog), alert: e || t("failed_destroy", thing: "Adopt")
+    redirect_to dog_path(@dog), alert: e.message || t("failed_destroy", thing: "Adopt")
   end
 
   private
@@ -54,7 +61,7 @@ class AdoptsController < ApplicationController
   end
 
   def set_adopt
-    @adopt = @dog.adopts.find(params[:id])
+    @adopt = Adopt.find(params[:id])
   end
 
   def authorize_adopt
