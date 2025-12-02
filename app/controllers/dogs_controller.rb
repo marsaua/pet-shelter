@@ -3,6 +3,7 @@ class DogsController < ApplicationController
 
     before_action :authorize_dog, only: %i[new create]
     before_action :set_dog, only: %i[show edit update destroy adopt_dog]
+    before_action :setup_comments_and_adopts, only: %i[show]
 
     def index
         @dogs = Dog.recent_with_avatar(params[:page])
@@ -30,8 +31,6 @@ class DogsController < ApplicationController
 
     def show
         @adopts = policy_scope(Adopt).with_assotiations
-        @comments = @dog.comments.includes(:user).order(created_at: :desc)
-        @comment = @dog.comments.build
     end
 
     def edit; end
@@ -52,7 +51,6 @@ class DogsController < ApplicationController
             book_adoption
             return deliver_emails
         end
-
         return_dog_to_available
 
     rescue StandardError => e
@@ -83,7 +81,7 @@ class DogsController < ApplicationController
     end
 
     def return_dog_to_available
-        @dog.update!(params.require(:dog).permit(:status))
+        @dog.update!(params.require(:dog).permit(:status).merge(date_of_adopt: nil))
         flash[:notice] = t("adopt.success.return")
         redirect_to dog_path(@dog), notice: t("adopt.success.return"), status: :see_other
     rescue StandardError => e
@@ -92,10 +90,15 @@ class DogsController < ApplicationController
 
     def book_adoption
         @adopt = Adopt.find(params[:adopt_id])
-        @dog.update!(params.require(:dog).permit(:status).merge(user_id: @adopt.user.id))
+        @dog.update!(params.require(:dog).permit(:status).merge(user_id: @adopt.user.id, date_of_adopt: Date.today))
         redirect_to dog_path(@dog), notice: t("adopt.success.adopt"), status: :see_other
     rescue StandardError => e
         redirect_to dog_path(@dog), alert: e || t("failed_adopt", thing: "Dog")
+    end
+
+    def setup_comments_and_adopts
+        @comments = @dog.comments.includes(:user).order(created_at: :desc)
+        @comment = @dog.comments.build
     end
 
     def deliver_emails
