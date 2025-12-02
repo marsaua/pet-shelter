@@ -14,6 +14,8 @@ class DogsController < ApplicationController
 
     def create
         @dog = Dog.new(dog_params)
+        ChangeStatusDog.call(dog: @dog)
+
         @dog.diagnosis = {
             disease_name: params[:dog][:disease_name],
             medicine_name: params[:dog][:medicine_name],
@@ -36,6 +38,10 @@ class DogsController < ApplicationController
 
     def update
         @dog.update!(dog_params)
+        if @dog.saved_change_to_health_status?
+            ChangeStatusDog.call(dog: @dog)
+            @dog.save!
+        end
         redirect_to @dog, notice: t("success_update", thing: "Dog"), status: :see_other
     rescue StandardError => e
         redirect_to dog_path(@dog), alert: e || t("failed_update", thing: "Dog")
