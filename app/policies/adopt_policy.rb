@@ -7,12 +7,11 @@ class AdoptPolicy < ApplicationPolicy
       user.admin? || owner?
     end
 
+    alias new? index?
+    alias create? index?
+
     alias update? show?
     alias destroy? show?
-
-    def create?
-      true
-    end
 
     def requests?
       user.admin? || user.adopts.exists?(dog_id: record.id)

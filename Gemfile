@@ -84,6 +84,7 @@ gem "omniauth-github"
 gem "sidekiq"
 gem "sidekiq-cron"
 
+gem "interactor", "~> 3.0"
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]

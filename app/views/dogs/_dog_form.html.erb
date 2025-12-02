@@ -21,8 +21,38 @@
     </div>
     <div class="mb-3">
         <%= form.label :status, class: "form-label" %>
-        <%= form.select :status, %w[available adopted], {}, { class: "form-select" }  %>
+        <%= form.select :status, status_options, {}, { class: "form-select" }  %>
     </div>
+
+    <h4>Health Status and Treatment</h4>
+
+    <div class="mb-3">
+        <%= form.label :health_status, "Health Status", class: "form-label" %>
+        <%= form.select :health_status, health_status_options, {}, { class: "form-select" } %>
+    </div>
+
+    <div class="mb-3">
+        <%= form.label :disease_name, "Disease Name", class: "form-label" %>
+        <%= form.text_field :disease_name, value: @dog.diagnosis&.dig("disease_name"), class: "form-control" %>
+    </div>
+
+    <h5>Medicine</h5>
+    <div class="mb-3">
+        <%= form.label :medicine_name, "Medicine Name", class: "form-label" %>
+        <%= form.text_field :medicine_name, value: @dog.diagnosis&.dig("medicine_name"), class: "form-control" %>
+    </div>
+    <div class="mb-3">
+        <%= form.label :additional_info, "Additional Info", class: "form-label" %>
+        <%= form.text_field :additional_info, value: @dog.diagnosis&.dig("additional_info"), class: "form-control" %>
+    </div>
+
+    <h5>Aggressiveness</h5>
+    <div class="mb-3">
+        <%= form.label :aggressiveness, "Aggressiveness", class: "form-label" %>
+        <%= form.select :aggressiveness, aggressiveness_options, {}, { class: "form-select" }  %>
+    </div>
+
+
     <div class="mb-3">
         <%= form.label :avatar, class: "form-label" %>
         <%= form.file_field :avatar, class: "form-control" %>

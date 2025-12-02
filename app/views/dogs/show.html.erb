@@ -14,12 +14,15 @@
             <p><span class="fw-bold">Age:</span> <%= @dog.age_month %> months</p>
             <p><span class="fw-bold">Size:</span> <%= @dog.size %></p>
             <p><span class="fw-bold">Breed:</span> <%= @dog.breed %></p>
-            <p><span class="fw-bold">Status:</span> <%= @dog.status %></p>
+            <p><span class="fw-bold">Status:</span> <%= @dog.status.humanize %></p>
+            <h4>Health Status and Treatment</h4>
+            <%= render "dogs/dog_health", diagnosis: @dog.diagnosis, health_status: @dog.health_status.humanize %>
+            <p><span class="fw-bold">Aggressiveness:</span> <%= @dog.agressivness.humanize %></p>
             <div class="d-flex gap-2 align-items-center">
                 <% if policy(@dog).update? %>
                     <%= link_to "Edit", edit_dog_path(@dog), class: "btn btn-primary" %>
                 <% end %>
-                    <%= link_to "Back", dogs_path, class: "btn btn-secondary" %>
+                <%= link_to "Back", dogs_path, class: "btn btn-secondary" %>
                 <% if policy(@dog).destroy? %>
                     <%= link_to "Delete", dog_path(@dog), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "btn btn-danger" %>
                 <% end %>
@@ -30,7 +33,7 @@
                         <%= link_to "Adopt", new_dog_adopt_path(@dog), class: "btn btn-primary" %>
                     <% end %>
                 <% end %>
-                </div>
+            </div>
         </div>
     </div>
     <div class="pt-5">

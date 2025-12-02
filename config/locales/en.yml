@@ -50,6 +50,9 @@ en:
     success:
       adopt: "Dog was successfully adopted."
       return: "Dog was successfully returned."
+    create:
+      success: "Adopt was successfully created."
+      unadoptable: "Dog is not adoptable."
 
   # Dog authorization messages
   dog:
