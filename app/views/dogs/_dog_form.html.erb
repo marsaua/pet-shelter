@@ -35,19 +35,11 @@
         <%= form.label :disease_name, "Disease Name", class: "form-label" %>
         <%= form.text_field :disease_name, value: @dog.diagnosis&.dig("disease_name"), class: "form-control" %>
     </div>
-    <div class="mb-3">
-        <%= form.label :description, "Description", class: "form-label" %>
-        <%= form.text_field :description, value: @dog.diagnosis&.dig("description"), class: "form-control" %>
-    </div>
 
     <h5>Medicine</h5>
     <div class="mb-3">
         <%= form.label :medicine_name, "Medicine Name", class: "form-label" %>
         <%= form.text_field :medicine_name, value: @dog.diagnosis&.dig("medicine_name"), class: "form-control" %>
-    </div>
-    <div class="mb-3">
-        <%= form.label :price, "Price", class: "form-label" %>
-        <%= form.text_field :price, value: @dog.diagnosis&.dig("price"), class: "form-control" %>
     </div>
     <div class="mb-3">
         <%= form.label :additional_info, "Additional Info", class: "form-label" %>

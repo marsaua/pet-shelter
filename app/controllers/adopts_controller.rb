@@ -11,8 +11,10 @@ class AdoptsController < ApplicationController
   end
 
   def new
-    @adopt = @dog.adopts.build if @dog.status == "available"
-    redirect_to dog_path(@dog), alert: "This dog is not available for adoption." unless @adopt
+    unless @dog.status == "available"
+      redirect_to dog_path(@dog), alert: "This dog is not available for adoption."
+    end
+    @adopt = @dog.adopts.build
   end
 
   def create

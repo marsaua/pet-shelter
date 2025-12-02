@@ -14,16 +14,14 @@ class DogsController < ApplicationController
 
     def create
         @dog = Dog.new(dog_params)
-        health_data = {
+        @dog.diagnosis = {
             disease_name: params[:dog][:disease_name],
-            description: params[:dog][:description],
             medicine_name: params[:dog][:medicine_name],
-            price: params[:dog][:price],
             additional_info: params[:dog][:additional_info]
         }
-        @dog.diagnosis = health_data
 
-        redirect_to @dog, notice: t("success_create", thing: "Dog"), status: :see_other if @dog.save
+        @dog.save!
+        redirect_to @dog, notice: t("success_create", thing: "Dog"), status: :see_other
     rescue StandardError => e
         redirect_to dogs_path, alert: e || t("failed_create", thing: "Dog")
     end
