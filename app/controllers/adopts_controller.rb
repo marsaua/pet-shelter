@@ -11,20 +11,15 @@ class AdoptsController < ApplicationController
   end
 
   def new
-    @adopt = @dog.adopts.build
-    authorize @adopt
-  rescue Pundit::NotAuthorizedError
-    redirect_to dog_path(@dog), alert: "This dog is not available for adoption."
+    @adopt = @dog.adopts.build if @dog.status == "available"
+    redirect_to dog_path(@dog), alert: "This dog is not available for adoption." unless @adopt
   end
 
   def create
     @adopt = @dog.adopts.build(adopt_params.merge(user: current_user))
-    authorize @adopt
 
     @adopt.save!
     redirect_to dog_path(@dog), notice: t("success_create", thing: "Adopt")
-  rescue Pundit::NotAuthorizedError
-    redirect_to dog_path(@dog), alert: "This dog is not available for adoption."
   rescue StandardError => e
     redirect_to dog_path(@dog), alert: e.message || t("failed_create", thing: "Adopt")
   end
@@ -64,7 +59,7 @@ class AdoptsController < ApplicationController
     @adopt = Adopt.find(params[:id])
   end
 
-  def authorize_adopt
+  def authorize_adopt!
     authorize @adopt
   end
 

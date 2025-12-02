@@ -10,7 +10,6 @@ class DogsController < ApplicationController
 
     def new
         @dog = Dog.new
-        @dog.diagnosis = {} if @dog.diagnosis.nil?
     end
 
     def create
@@ -20,7 +19,7 @@ class DogsController < ApplicationController
             description: params[:dog][:description],
             medicine_name: params[:dog][:medicine_name],
             price: params[:dog][:price],
-            frequency: params[:dog][:frequency]
+            additional_info: params[:dog][:additional_info]
         }
         @dog.diagnosis = health_data
 

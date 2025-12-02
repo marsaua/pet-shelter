@@ -10,25 +10,18 @@ class AdoptPolicy < ApplicationPolicy
     alias update? show?
     alias destroy? show?
 
-    def create?
-      record.dog.available?
-    end
-    def new?
-      create?
-    end
+    alias new? index?
+    alias create? index?
 
     def requests?
       user.admin? || user.adopts.exists?(dog_id: record.id)
     end
 
-    class Scope < ApplicationPolicy::Scope
+    class Scope < Scope
       def resolve
         return scope.all if user.admin?
-        scope.where(user: user)
-      end
 
-      def adoptable_dogs
-        scope.joins(:dog).where(dogs: { status: :available })
+        scope.where(user: user)
       end
     end
 end

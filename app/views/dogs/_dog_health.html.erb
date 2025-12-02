@@ -1,0 +1,8 @@
+<% if diagnosis.present? %>
+    <p><span class="fw-bold">Health Status:</span> <%= health_status.humanize %></p>
+    <p><span class="fw-bold">Disease Name:</span> <%= diagnosis["disease_name"] %></p>
+    <p><span class="fw-bold">Description:</span> <%= diagnosis["description"] %></p>
+    <p><span class="fw-bold">Medicine Name:</span> <%= diagnosis["medicine_name"] %></p>
+    <p><span class="fw-bold">Price:</span> <%= diagnosis["price"] %></p>
+    <p><span class="fw-bold">Additional Info:</span> <%= diagnosis["additional_info"] %></p>
+<% end %>
