@@ -15,18 +15,12 @@ class DogsController < ApplicationController
 
     def create
         @dog = Dog.new(dog_params)
-        ChangeStatusDog.call(dog: @dog)
+        result = Dogs::CreateDogOrganizer.call(dog: @dog, params: params[:dog])
 
-        @dog.diagnosis = {
-            disease_name: params[:dog][:disease_name],
-            medicine_name: params[:dog][:medicine_name],
-            additional_info: params[:dog][:additional_info]
-        }
+        return redirect_to @dog, notice: t("success_create", thing: "Dog"), status: :see_other if result
 
-        @dog.save!
-        redirect_to @dog, notice: t("success_create", thing: "Dog"), status: :see_other
-    rescue StandardError => e
-        redirect_to dogs_path, alert: e || t("failed_create", thing: "Dog")
+        flash.now[:alert] = result.error || t("failed_create", thing: "Dog")
+        render :new, status: :unprocessable_entity
     end
 
     def show
@@ -37,25 +31,32 @@ class DogsController < ApplicationController
 
     def update
         @dog.update!(dog_params)
-        if @dog.saved_change_to_health_status?
-            ChangeStatusDog.call(dog: @dog)
-            @dog.save!
-        end
+        Dogs::ChangeStatus.call(dog: @dog)
         redirect_to @dog, notice: t("success_update", thing: "Dog"), status: :see_other
     rescue StandardError => e
         redirect_to dog_path(@dog), alert: e || t("failed_update", thing: "Dog")
     end
 
     def adopt_dog
-        if @dog.status == "available"
-            book_adoption
-            return deliver_emails
-        end
-        return_dog_to_available
+        if @dog.available?
+            result = Adopts::AdoptDogOrganizer.call(dog: @dog, params: params)
 
-    rescue StandardError => e
-        flash.now[:alert] = e || t("adopt.failed.return")
-        render :show, status: :unprocessable_entity
+            if result.success?
+                redirect_to dog_path(@dog), notice: t("adopt.success.adopt"), status: :see_other
+            else
+                flash.now[:alert] = result.errors || t("adopt.failed")
+                render :show, status: :unprocessable_entity
+            end
+        else
+            result = Adopts::ReturnDogToAvailable.call(dog: @dog, params: params)
+            if result.success?
+                flash[:notice] = t("adopt.success.return") if result
+                redirect_to dog_path(@dog), status: :see_other
+            else
+                flash.now[:alert] = result.errors || t("adopt.failed")
+                render :show, status: :unprocessable_entity
+            end
+        end
     end
 
     def destroy
@@ -80,33 +81,8 @@ class DogsController < ApplicationController
         params.require(:dog).permit(:name, :sex, :age_month, :size, :breed, :status, :avatar, :diagnosis, :health_status)
     end
 
-    def return_dog_to_available
-        @dog.update!(params.require(:dog).permit(:status).merge(date_of_adopt: nil))
-        flash[:notice] = t("adopt.success.return")
-        redirect_to dog_path(@dog), notice: t("adopt.success.return"), status: :see_other
-    rescue StandardError => e
-        redirect_to dog_path(@dog), alert: e || t("failed_return", thing: "Dog")
-    end
-
-    def book_adoption
-        @adopt = Adopt.find(params[:adopt_id])
-        @dog.update!(params.require(:dog).permit(:status).merge(user_id: @adopt.user.id, date_of_adopt: Date.today))
-        redirect_to dog_path(@dog), notice: t("adopt.success.adopt"), status: :see_other
-    rescue StandardError => e
-        redirect_to dog_path(@dog), alert: e || t("failed_adopt", thing: "Dog")
-    end
-
     def setup_comments_and_adopts
         @comments = @dog.comments.includes(:user).order(created_at: :desc)
         @comment = @dog.comments.build
-    end
-
-    def deliver_emails
-        AdoptAccessWorker.perform_async(@adopt.user.id)
-
-        @adopts = Adopt.where.not(id: params[:adopt_id])
-        @adopts.each do |adopt|
-            AdoptRejectWorker.perform_async(adopt.user.id)
-        end
     end
 end
