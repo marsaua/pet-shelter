@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_02_142431) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_04_074740) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -143,6 +143,24 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_02_142431) do
     t.index ["user_id"], name: "index_volunteers_on_user_id"
   end
 
+  create_table "walking_reservations", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "dog_id", null: false
+    t.date "reservation_date", null: false
+    t.string "time_slot", null: false
+    t.integer "status", default: 0, null: false
+    t.string "responsible_name", null: false
+    t.string "responsible_phone", null: false
+    t.string "responsible_email", null: false
+    t.boolean "rules_accepted", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dog_id"], name: "index_walking_reservations_on_dog_id"
+    t.index ["user_id", "dog_id", "reservation_date"], name: "index_walking_reservations_on_user_dog_date", unique: true
+    t.index ["user_id", "time_slot", "reservation_date"], name: "index_walking_reservations_on_user_time_date"
+    t.index ["user_id"], name: "index_walking_reservations_on_user_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "adopts", "dogs"
@@ -151,4 +169,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_02_142431) do
   add_foreign_key "reports", "users"
   add_foreign_key "sso_identities", "users"
   add_foreign_key "volunteers", "users"
+  add_foreign_key "walking_reservations", "dogs"
+  add_foreign_key "walking_reservations", "users"
 end

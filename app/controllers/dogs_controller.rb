@@ -17,7 +17,7 @@ class DogsController < ApplicationController
         @dog = Dog.new(dog_params)
         result = Dogs::CreateDogOrganizer.call(dog: @dog, params: params[:dog])
 
-        return redirect_to @dog, notice: t("success_create", thing: "Dog"), status: :see_other if result
+        return redirect_to @dog, notice: t("success_create", thing: "Dog"), status: :see_other if result.success?
 
         flash.now[:alert] = result.error || t("failed_create", thing: "Dog")
         render :new, status: :unprocessable_entity
@@ -38,24 +38,20 @@ class DogsController < ApplicationController
     end
 
     def adopt_dog
-        if @dog.available?
-            result = Adopts::AdoptDogOrganizer.call(dog: @dog, params: params)
+        organizer = @dog.available? ? Adopts::AdoptDogOrganizer : Adopts::ReturnDogOrganizer
 
-            if result.success?
-                redirect_to dog_path(@dog), notice: t("adopt.success.adopt"), status: :see_other
-            else
-                flash.now[:alert] = result.errors || t("adopt.failed")
-                render :show, status: :unprocessable_entity
-            end
+        result = organizer.call(
+            dog: @dog,
+            dog_attributes: params.require(:dog).permit(:status),
+            adopt_id: params[:adopt_id]
+        )
+
+        if result.success?
+            notice_key = @dog.available? ? "adopt.success.return" : "adopt.success.adopt"
+            redirect_to dog_path(@dog), notice: t(notice_key), status: :see_other
         else
-            result = Adopts::ReturnDogToAvailable.call(dog: @dog, params: params)
-            if result.success?
-                flash[:notice] = t("adopt.success.return") if result
-                redirect_to dog_path(@dog), status: :see_other
-            else
-                flash.now[:alert] = result.errors || t("adopt.failed")
-                render :show, status: :unprocessable_entity
-            end
+            flash.now[:alert] = result.errors || t("adopt.failed")
+            render :show, status: :unprocessable_entity
         end
     end
 

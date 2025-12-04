@@ -15,7 +15,6 @@ module Dogs
 
       dog.status = new_status
       dog.save!
-      context.dog = dog
     rescue ActiveRecord::RecordInvalid => e
       context.errors = e.record.errors.full_messages.join(", ")
       context.fail!
