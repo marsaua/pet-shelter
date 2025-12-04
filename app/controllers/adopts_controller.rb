@@ -2,6 +2,7 @@ class AdoptsController < ApplicationController
   before_action :set_dog, only: %i[new create requests]
   before_action :set_adopt, only: %i[show edit update destroy]
   before_action :authorize_adopt, only: %i[show edit update destroy]
+  before_action :check_dog_adoptable, only: :new
 
   def index
     @adopts = policy_scope(Adopt)
@@ -11,9 +12,6 @@ class AdoptsController < ApplicationController
   end
 
   def new
-    unless @dog.status == "available"
-      redirect_to dog_path(@dog), alert: "This dog is not available for adoption."
-    end
     @adopt = @dog.adopts.build
   end
 
@@ -63,6 +61,10 @@ class AdoptsController < ApplicationController
 
   def authorize_adopt!
     authorize @adopt
+  end
+
+  def check_dog_adoptable
+    redirect_to dog_path(@dog), alert: "Dog is not available to adopt" unless @dog.available? || @dog.adopted? || @dog.archived?
   end
 
   def adopt_params

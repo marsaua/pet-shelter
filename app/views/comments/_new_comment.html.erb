@@ -1,7 +1,7 @@
 
 <h3>Comments</h3>
  <p>Have you ever met this dog? Leave a comment about your experience</p>
- <% if current_user %>
+ <% if current_user  && @comment.present? %>
     <% if policy(@comment).create? %>
        <%= render "comments/form_create_comment", commentable_id: commentable_id, commentable_type: commentable_type %>
     <% else %>
