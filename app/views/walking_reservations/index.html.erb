@@ -1,0 +1,10 @@
+<section class="back-img">
+    <div class="container">
+        <h1>Walking Reservations</h1>
+        <div class="row gap-2">
+            <% @walking_reservations.each do |reservation| %>
+            <%= render "walking_card", reservation: reservation %>
+            <% end %>
+        </div>
+    </div>
+</section>

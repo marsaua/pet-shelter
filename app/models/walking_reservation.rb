@@ -2,7 +2,7 @@ class WalkingReservation < ApplicationRecord
   belongs_to :user
   belongs_to :dog
 
-  enum status: { pending: 0, accepted: 1, rejected: 2 }
+  enum :status, { pending: 0, accepted: 1, rejected: 2 }
 
   WEEKDAY_SLOT = {
     "07:00-11:00" => "07:00 AM - 11:00 AM",
@@ -18,7 +18,7 @@ class WalkingReservation < ApplicationRecord
   validates :responsible_phone, presence: true, phone: true
   validates :responsible_email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :responsible_name, presence: true
-  validates :rules_accepted, presence: true, acceptance: true
+  validates :rules_accepted, acceptance: true
 
   validate :reservation_date_cannot_be_in_past
   validate :user_can_only_reserve_same_dog_once_per_day
@@ -26,6 +26,23 @@ class WalkingReservation < ApplicationRecord
   validate :dog_must_be_available_for_walking
 
 
+  def available_slots_for_date
+    if weekend?
+      WEEKEND_SLOT
+    else
+      WEEKDAY_SLOT
+    end
+  end
+
+  def weekend?
+    reservation_date.saturday? || reservation_date.sunday?
+  end
+
+  def available_slots_for(date, user, dog)
+    user_reservation = where(user: user, reservation_date: date)
+
+    slots.reject { |slot| user_reservation.exists?(time_slot: slot) || dog.reservations.exists?(time_slot: slot) }
+  end
 
 
 
@@ -40,9 +57,9 @@ class WalkingReservation < ApplicationRecord
       user: user,
       dog: dog,
       reservation_date: reservation_date,
-    )
-    if existing
-      error.add(:reservation_date, "You can only reserve the same dog once per day")
+    ).where.not(id: id)
+    if existing.exists?
+      errors.add(:reservation_date, "You can only reserve the same dog once per day")
     end
   end
 
@@ -51,9 +68,9 @@ class WalkingReservation < ApplicationRecord
       user: user,
       reservation_date: reservation_date,
       time_slot: time_slot,
-    )
-    if existing
-      error.add(:reservation_date, "You can only reserve one dog in the same slot")
+    ).where.not(id: id)
+    if existing.exists?
+      errors.add(:reservation_date, "You can only reserve one dog in the same slot")
     end
   end
 

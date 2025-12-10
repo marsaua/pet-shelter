@@ -26,9 +26,11 @@ Rails.application.routes.draw do
   resources :dogs do
     resources :adopts, only: %i[new create index show destroy]
     post :adopt_dog, on: :member
+    resources :walking_reservations, only: %i[new create show destroy]
   end
 
   resources :comments
+  resources :walking_reservations, only: [:index]
 
   get "dogs/:id/requests", to: "adopts#requests", as: :dog_requests
 
