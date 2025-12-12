@@ -41,3 +41,8 @@
                    disabled: @walking_reservation.time_slot.blank? %>
   </div>
 <% end %>
+
+<script>
+  window.WEEKDAY_SLOT = <%= raw WalkingReservation::WEEKDAY_SLOT.to_json %>;
+  window.WEEKEND_SLOT = <%= raw WalkingReservation::WEEKEND_SLOT.to_json %>;
+</script>

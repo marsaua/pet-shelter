@@ -19,19 +19,16 @@ class WalkingReservation < ApplicationRecord
   validates :responsible_email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :responsible_name, presence: true
   validates :rules_accepted, acceptance: true
+  validates :responsible_phone, presence: true, phone: true
 
   validate :reservation_date_cannot_be_in_past
   validate :user_can_only_reserve_same_dog_once_per_day
   validate :user_cannot_have_another_dog_in_same_slot
   validate :dog_must_be_available_for_walking
 
-
   def available_slots_for_date
-    if weekend?
-      WEEKEND_SLOT
-    else
-      WEEKDAY_SLOT
-    end
+    return WEEKEND_SLOT if weekend?
+    WEEKDAY_SLOT
   end
 
   def weekend?
@@ -43,9 +40,6 @@ class WalkingReservation < ApplicationRecord
 
     slots.reject { |slot| user_reservation.exists?(time_slot: slot) || dog.reservations.exists?(time_slot: slot) }
   end
-
-
-
 
   private
   def reservation_date_cannot_be_in_past

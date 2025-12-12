@@ -1,10 +1,9 @@
 class WalkingReservationsController < ApplicationController
-  before_action :authenticate_user!, only: %i[new create show destroy]
   before_action :set_dog, only: %i[new create]
   before_action :set_walking_reservation, only: %i[show destroy]
-  before_action :initialize_session, only: [:new, :create]
+  before_action :initialize_session, only: %i[new create]
   before_action :check_dogs_available, only: :new
-  before_action :validate_step, only: [:new]
+  before_action :validate_step, only: :new
 
   VALID_STEPS = [1, 2, 3].freeze
   def index
@@ -13,14 +12,14 @@ class WalkingReservationsController < ApplicationController
 
   def new
     @step = params[:step]&.to_i || 1
+    @step = 1 if @step < 1 || @step > 3
 
     @walking_reservation = @dog.walking_reservations.build
 
     @walking_reservation.assign_attributes(session[:reservation_data]) if session[:reservation_data].present?
 
     if params[:back].present?
-      @step -= 1
-      @step = 1 if @step < 1
+      @step -= 1 if @step > 1
       render :new
       return
     end
@@ -104,7 +103,7 @@ class WalkingReservationsController < ApplicationController
     end
   end
 
-  def reservation_params
+  def walking_reservation_params
     params.require(:walking_reservation).permit(
       :reservation_date,
       :time_slot,
@@ -114,5 +113,4 @@ class WalkingReservationsController < ApplicationController
       :rules_accepted
     )
   end
-  alias walking_reservation_params reservation_params
 end

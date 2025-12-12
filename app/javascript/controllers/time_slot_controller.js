@@ -22,17 +22,9 @@ export default class extends Controller {
     console.log("Loading time slots for:", selectedDate);
 
     const dayOfWeek = selectedDate.getDay();
-    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+    const isWeekend = [0, 6].includes(dayOfWeek);
 
-    const slots = isWeekend
-      ? {
-          "09:00-13:00": "9:00 AM - 1:00 PM",
-          "17:00-19:00": "5:00 PM - 7:00 PM",
-        }
-      : {
-          "07:00-11:00": "7:00 AM - 11:00 AM",
-          "18:00-20:00": "6:00 PM - 8:00 PM",
-        };
+    const slots = isWeekend ? window.WEEKEND_SLOT : window.WEEKDAY_SLOT;
 
     const currentSlot = this.currentSlotValue;
 

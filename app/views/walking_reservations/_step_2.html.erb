@@ -24,13 +24,10 @@
                             @walking_reservation.responsible_phone,
                             class: "form-control",
                             required: true,
-                            data: { controller: "phone-input", action: "input->phone-input#format" },
                             placeholder: "+380XXXXXXXXX",
-                            pattern: '\+[0-9]{12}',
                             id: "phone_input",
                             title: "Please enter a valid phone number starting with +380" %>
 
-    <small class="form-text text-muted">Format: +380XXXXXXXXX</small>
   </div>
 
   <div class="mb-4">

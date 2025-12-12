@@ -24,7 +24,7 @@
   </div>
 </div>
 
-<%= form_with model: @walking_reservation, url: dog_walking_reservations_path(@dog), method: :post do |f| %>
+<%= form_for @walking_reservation, url: dog_walking_reservations_path(@dog), method: :post do |f| %>
   <%= f.hidden_field :reservation_date, value: @walking_reservation.reservation_date %>
   <%= f.hidden_field :time_slot, value: @walking_reservation.time_slot %>
   <%= f.hidden_field :responsible_name, value: @walking_reservation.responsible_name %>
