@@ -2,6 +2,7 @@ class Dog < ApplicationRecord
     has_one_attached :avatar
     has_many :comments, as: :commentable, dependent: :nullify
     has_many :adopts, dependent: :destroy
+    has_many :walking_reservations, dependent: :destroy
     belongs_to :user, optional: true
 
     validates :size,   inclusion: { in: %w[small medium large] }

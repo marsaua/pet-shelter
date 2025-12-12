@@ -11,13 +11,14 @@ class User < ApplicationRecord
   has_many :comments, dependent: :nullify
   has_many :reports, dependent: :nullify
   has_many :sso_identities, dependent: :destroy
+  has_many :walking_reservations, dependent: :destroy
 
   validates :email, presence: true, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: true
   validates :phone, phone: true, allow_blank: true
   validates :date_of_birth, date: {
     before: Proc.new { Time.now - 18.years },
     message: "You must be at least 18 years old"
-  }
+  }, if: -> { date_of_birth.present? }
   validates :name, presence: true
 
   after_create :send_welcome_email

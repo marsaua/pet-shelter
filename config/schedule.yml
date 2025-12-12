@@ -3,3 +3,9 @@ weekly_newsletter:
   class: WeeklyNewsletterWorker
   queue: default
   description: "Sends weekly newsletter to all users every Monday at 10:00 AM"
+
+archive_adopted_dogs:
+  cron: "0 2 * * *"
+  class: ArchiveAdoptedDogsWorker
+  queue: default
+  description: "Archives dogs that have been adopted for more than 1 month"
