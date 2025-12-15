@@ -11,9 +11,6 @@ class WalkingReservationsController < ApplicationController
   end
 
   def new
-    @step = params[:step]&.to_i || 1
-    @step = 1 if @step < 1 || @step > 3
-
     @walking_reservation = @dog.walking_reservations.build
 
     @walking_reservation.assign_attributes(session[:reservation_data]) if session[:reservation_data].present?
@@ -38,9 +35,7 @@ class WalkingReservationsController < ApplicationController
       if params[:walking_reservation].present? && params[:commit].present?
         session[:reservation_data] ||= {}
         session[:reservation_data].merge!(
-          responsible_name: params[:walking_reservation][:responsible_name],
-          responsible_email: params[:walking_reservation][:responsible_email],
-          responsible_phone: params[:walking_reservation][:responsible_phone]
+          walking_reservation_params.slice(:responsible_name, :responsible_email, :responsible_phone)
         )
 
         redirect_to new_dog_walking_reservation_path(@dog, step: 3)
