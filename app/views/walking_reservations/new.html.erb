@@ -1,0 +1,23 @@
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h2>Book a Walk for <%= @dog.name %></h2>
+          <div class="progress mt-3">
+            <div class="progress-bar" role="progressbar"
+                 style="width: <%= (@step.to_f / 3 * 100).round %>%"
+                 aria-valuenow="<%= @step %>" aria-valuemin="0" aria-valuemax="3">
+              Step <%= @step %> of 3
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <%= render "step_#{@step}", dog: @dog, walking_reservation: @walking_reservation %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

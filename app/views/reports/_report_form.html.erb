@@ -1,5 +1,5 @@
 <div class="flex-grow-1 flex-basis-0 min-w-0">
-<%= form_with model: @report, method: :post, url: reports_path, local: true do |form| %>
+<%= form_for @report, method: :post, url: reports_path, local: true do |form| %>
     <div class="form-group mt-4">
         <%= form.label :name, 'Full Name', class: 'form-label' %>
         <%= form.text_field :name, class: 'form-control', value: @current_user&.name %>

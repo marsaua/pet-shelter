@@ -36,6 +36,9 @@
             </div>
         </div>
     </div>
+    <div>
+        <%= link_to "Book a walk with this dog", new_dog_walking_reservation_path(@dog), class: "btn btn-primary" %>
+    </div>
     <div class="pt-5">
         <% if policy(Comment.new).create? %>
             <%= render "comments/new_comment", commentable_id: @dog.id, commentable_type: "Dog" %>

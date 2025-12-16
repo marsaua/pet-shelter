@@ -1,0 +1,48 @@
+<h3>Step 3: Walking Rules</h3>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <h5>Reservation Summary:</h5>
+    <ul class="list-unstyled">
+      <li><strong>Date:</strong> <%= @walking_reservation.reservation_date %></li>
+      <li><strong>Time:</strong> <%= @walking_reservation.time_slot %></li>
+      <li><strong>Name:</strong> <%= @walking_reservation.responsible_name %></li>
+      <li><strong>Phone:</strong> <%= @walking_reservation.responsible_phone %></li>
+      <li><strong>Email:</strong> <%= @walking_reservation.responsible_email %></li>
+    </ul>
+
+    <hr>
+
+    <h5>Please read and accept the following rules:</h5>
+    <ul>
+      <li>Always keep the dog on a leash</li>
+      <li>Clean up after the dog</li>
+      <li>Do not let the dog approach other dogs without permission</li>
+      <li>Return the dog on time</li>
+      <li>Report any incidents immediately</li>
+    </ul>
+  </div>
+</div>
+
+<%= form_for @walking_reservation, url: dog_walking_reservations_path(@dog), method: :post do |f| %>
+  <%= f.hidden_field :reservation_date, value: @walking_reservation.reservation_date %>
+  <%= f.hidden_field :time_slot, value: @walking_reservation.time_slot %>
+  <%= f.hidden_field :responsible_name, value: @walking_reservation.responsible_name %>
+  <%= f.hidden_field :responsible_phone, value: @walking_reservation.responsible_phone %>
+  <%= f.hidden_field :responsible_email, value: @walking_reservation.responsible_email %>
+
+  <div class="form-check mb-3">
+    <input type="hidden" name="walking_reservation[rules_accepted]" value="0">
+    <input type="checkbox"
+       name="walking_reservation[rules_accepted]"
+       id="walking_reservation_rules_accepted"
+       value="1"
+       required>
+    <label for="walking_reservation_rules_accepted">I accept the rules</label>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <%= link_to "Back", new_dog_walking_reservation_path(@dog, step: 2, back: true), class: "btn btn-secondary" %>
+    <%= f.submit "Confirm Reservation", class: "btn btn-success" %>
+  </div>
+<% end %>

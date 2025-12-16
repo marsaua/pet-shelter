@@ -1,0 +1,48 @@
+<h3>Step 1: Choose Date and Time</h3>
+
+<%= form_with url: new_dog_walking_reservation_path(@dog),
+              method: :get,
+              local: true,
+              data: {
+                controller: "time-slot",
+                time_slot_current_slot_value: @walking_reservation.time_slot
+              } do |f| %>
+  <%= hidden_field_tag :step, 1 %>
+
+  <div class="mb-3">
+    <%= label_tag :reservation_date, "Select Date", class: "form-label" %>
+    <%= date_field_tag :reservation_date,
+                       @walking_reservation.reservation_date,
+                       min: Date.current,
+                       class: "form-control",
+                       required: true,
+                       data: {
+                         time_slot_target: "dateField",
+                         action: "change->time-slot#dateChanged"
+                       } %>
+  </div>
+
+  <div class="mb-3" data-time-slot-target="timeSlots">
+    <label class="form-label">Select Time Slot</label>
+    <% if @walking_reservation.time_slot.present? %>
+      <div class="alert alert-info">
+        Selected time slot: <%= @walking_reservation.time_slot %>
+        <%= hidden_field_tag :time_slot, @walking_reservation.time_slot %>
+      </div>
+    <% else %>
+      <p class="text-muted">Choose a date first to see available slots</p>
+    <% end %>
+  </div>
+
+  <div class="d-flex justify-content-end">
+    <%= submit_tag "Next",
+                   class: "btn btn-primary",
+                   data: { time_slot_target: "nextBtn" },
+                   disabled: @walking_reservation.time_slot.blank? %>
+  </div>
+<% end %>
+
+<script>
+  window.WEEKDAY_SLOT = <%= raw WalkingReservation::WEEKDAY_SLOT.to_json %>;
+  window.WEEKEND_SLOT = <%= raw WalkingReservation::WEEKEND_SLOT.to_json %>;
+</script>
