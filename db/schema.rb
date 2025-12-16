@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_04_074740) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_16_121520) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -53,9 +53,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_04_074740) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "manager_user_id"
+    t.string "passport"
+    t.datetime "approved_at"
     t.index ["created_at"], name: "index_adopts_on_created_at"
     t.index ["dog_id", "user_id"], name: "index_adopts_on_dog_and_user"
     t.index ["dog_id"], name: "index_adopts_on_dog_id"
+    t.index ["manager_user_id"], name: "index_adopts_on_manager_user_id"
     t.index ["user_id"], name: "index_adopts_on_user_id"
   end
 
@@ -165,6 +169,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_04_074740) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "adopts", "dogs"
   add_foreign_key "adopts", "users"
+  add_foreign_key "adopts", "users", column: "manager_user_id"
   add_foreign_key "dogs", "users"
   add_foreign_key "reports", "users"
   add_foreign_key "sso_identities", "users"
