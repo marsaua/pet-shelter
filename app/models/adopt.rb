@@ -1,6 +1,7 @@
 class Adopt < ApplicationRecord
     belongs_to :dog
     belongs_to :user
+    belongs_to :manager_user, class_name: "User", optional: true
 
     validates :name, presence: true
     validates :has_another_pets, inclusion: { in: [true, false] }

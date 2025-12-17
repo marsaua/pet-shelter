@@ -9,7 +9,7 @@ module Adopts
                   date_of_adopt: Date.today,
                   status: "adopted"
                 ))
-        adopt.update!( manager_user_id: current_user.id, approved_at: Time.now)
+        adopt.update!(manager_user_id: current_user.id, approved_at: Time.now)
 
         context.adopt = adopt
     rescue ActiveRecord::RecordNotFound => e

@@ -1,0 +1,35 @@
+<h2>Notification about adoption</h2>
+
+<p>Dear <%= @adopt.manager_user.name %>,</p>
+
+<p>A new adoption request for <strong><%= @dog.name %></strong> has been submitted by <%= @adopt.user.name %>.</p>
+
+<p><strong>Applicant details:</strong></p>
+<ul>
+  <li>Name: <%= @adopt.name %></li>
+  <li>Phone: <%= @adopt.phone %></li>
+  <li>Email: <%= @adopt.email %></li>
+  <li>Has other pets: <%= @adopt.has_another_pets ? 'Yes' : 'No' %></li>
+  <% if @adopt.has_another_pets %>
+    <li>Other pets: <%= @adopt.other_pets_types %> (<%= @adopt.other_pets_count %>)</li>
+    <% if @adopt.other_pets_notes.present? %>
+      <li>Notes about other pets: <%= @adopt.other_pets_notes %></li>
+    <% end %>
+  <% end %>
+  <li>Has yard: <%= @adopt.yard ? 'Yes' : 'No' %></li>
+  <li>Has home: <%= @adopt.home ? 'Yes' : 'No' %></li>
+  <% if @adopt.passport.present? %>
+    <li>Passport: <%= @adopt.passport %></li>
+  <% end %>
+</ul>
+
+<% if @adopt.approved_at.present? %>
+  <p><strong>Approval information:</strong></p>
+  <ul>
+    <li>Approved by: <%= @adopt.manager_user.name %></li>
+    <li>Approved at: <%= @adopt.approved_at.strftime("%d.%m.%Y %H:%M") %></li>
+  </ul>
+<% end %>
+
+<p>Best regards,<br>
+Pet Shelter</p>

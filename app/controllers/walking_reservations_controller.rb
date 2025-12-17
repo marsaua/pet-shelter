@@ -1,22 +1,23 @@
 class WalkingReservationsController < ApplicationController
   before_action :set_dog, only: %i[new create]
-  before_action :set_walking_reservation, only: %i[show destroy]
-  before_action :initialize_session, only: %i[new create]
   before_action :check_dogs_available, only: :new
+  before_action :initialize_session, only: %i[new create]
   before_action :validate_step, only: :new
 
+  before_action :set_walking_reservation, only: %i[show destroy]
+
   VALID_STEPS = [1, 2, 3].freeze
+
   def index
     @walking_reservations = current_user.walking_reservations.includes(:dog).order(reservation_date: :desc)
   end
 
   def new
     @walking_reservation = @dog.walking_reservations.build
-
     @walking_reservation.assign_attributes(session[:reservation_data]) if session[:reservation_data].present?
 
     if params[:back].present?
-      @step -= 1 if @step > 1
+      @step = [@step - 1, 1].max
       render :new
       return
     end
@@ -37,7 +38,6 @@ class WalkingReservationsController < ApplicationController
         session[:reservation_data].merge!(
           walking_reservation_params.slice(:responsible_name, :responsible_email, :responsible_phone)
         )
-
         redirect_to new_dog_walking_reservation_path(@dog, step: 3)
         return
       end
@@ -49,7 +49,7 @@ class WalkingReservationsController < ApplicationController
   end
 
   def create
-    reservation_data = session[:reservation_data].merge(
+    reservation_data = (session[:reservation_data] || {}).merge(
       walking_reservation_params.slice(:rules_accepted)
     )
 
@@ -58,11 +58,12 @@ class WalkingReservationsController < ApplicationController
 
     if @walking_reservation.save
       session.delete(:reservation_data)
-      redirect_to walking_reservations_path(@dog), notice: "Reservation created successfully"
+      redirect_to walking_reservations_path, notice: "Reservation created successfully"
     else
       @step = 3
       @walking_reservation.assign_attributes(session[:reservation_data]) if session[:reservation_data].present?
-      redirect_to new_dog_walking_reservation_path(@dog, step: 3), alert: @walking_reservation.errors.full_messages.join("\n")
+      flash.now[:alert] = @walking_reservation.errors.full_messages.join(", ")
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -74,6 +75,7 @@ class WalkingReservationsController < ApplicationController
   end
 
   private
+
   def validate_step
     @step = params[:step].to_i
     @step = 1 if @step.zero? || !VALID_STEPS.include?(@step)
@@ -92,7 +94,6 @@ class WalkingReservationsController < ApplicationController
   end
 
   def check_dogs_available
-    @dog = Dog.find(params[:dog_id])
     if @dog.status == "unavailable"
       redirect_to dog_path(@dog), alert: "This dog is not available for walks"
     end
