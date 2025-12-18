@@ -3,6 +3,7 @@ class AdoptsController < ApplicationController
   before_action :set_adopt, only: %i[show edit update destroy]
   before_action :authorize_adopt, only: %i[show edit update destroy]
   before_action :check_dog_adoptable, only: :new
+  before_action :check_passport_present, only: :create
 
   def index
     @adopts = policy_scope(Adopt)
@@ -67,7 +68,11 @@ class AdoptsController < ApplicationController
     redirect_to dog_path(@dog), alert: "Dog is not available to adopt" unless @dog.available? || @dog.adopted? || @dog.archived?
   end
 
+  def check_passport_present
+    redirect_to dog_path(@dog), alert: "Passport is not present" unless params[:adopt][:passport].present?
+  end
+
   def adopt_params
-    params.require(:adopt).permit(:name, :email, :phone, :has_another_pets, :other_pets_types, :other_pets_count, :other_pets_notes, :yard, :home)
+    params.require(:adopt).permit(:name, :email, :phone, :passport, :has_another_pets, :other_pets_types, :other_pets_count, :other_pets_notes, :yard, :home)
   end
 end

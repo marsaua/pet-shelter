@@ -1,13 +1,15 @@
 module Adopts
   class BookAdoption < BaseInteractor
-    delegate :dog, :dog_attributes, :adopt_id, to: :context
+    delegate :dog, :dog_attributes, :adopt_id, :current_user, to: :context
 
     def call
         adopt = Adopt.find(adopt_id)
         dog.update!(dog_attributes.merge(
                   user_id: adopt.user.id,
-                  date_of_adopt: Date.today
+                  date_of_adopt: Date.today,
+                  status: "adopted"
                 ))
+        adopt.update!(manager_user_id: current_user.id, approved_at: Time.now)
 
         context.adopt = adopt
     rescue ActiveRecord::RecordNotFound => e

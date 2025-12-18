@@ -43,7 +43,8 @@ class DogsController < ApplicationController
         result = organizer.call(
             dog: @dog,
             dog_attributes: params.require(:dog).permit(:status),
-            adopt_id: params[:adopt_id]
+            adopt_id: params[:adopt_id],
+            current_user: current_user
         )
 
         if result.success?
