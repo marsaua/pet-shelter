@@ -26,18 +26,14 @@
                 <% if policy(@dog).destroy? %>
                     <%= link_to "Delete", dog_path(@dog), data: {turbo_method: :delete, turbo_confirm: "Are you sure?"}, class: "btn btn-danger" %>
                 <% end %>
-                <% if current_user&.user? %>
-                    <% if @dog.adopts.exists?(user_id: current_user.id) %>
-                        <%= link_to "You have already sent an adoption request", dog_adopt_path(@dog), class: "btn btn-primary disabled" %>
-                    <% else %>
-                        <%= link_to "Adopt", new_dog_adopt_path(@dog), class: "btn btn-primary" %>
-                    <% end %>
-                <% end %>
+                <%= render "dogs/adopt_button", current_user=current_user %>
             </div>
         </div>
     </div>
     <div>
-        <%= link_to "Book a walk with this dog", new_dog_walking_reservation_path(@dog), class: "btn btn-primary" %>
+        <% if ["available_for_walk", "available"].include?(@dog.status) %>
+            <%= link_to "Book a walk with this dog", new_dog_walking_reservation_path(@dog), class: "btn btn-primary" %>
+        <% end %>
     </div>
     <div class="pt-5">
         <% if policy(Comment.new).create? %>

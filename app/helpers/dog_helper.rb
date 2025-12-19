@@ -19,4 +19,16 @@ module DogHelper
   def aggressiveness_options
     Dog.agressivnesses.map { |key, value| [key.humanize, key] }
   end
+
+  def dog_status_options
+    options = [
+      ["All", ""],
+      ["Available", "available"],
+      ["Adopted", "adopted"],
+      ["Available for walk", "available_for_walk"]
+    ]
+
+    options << ["Archived", "archived"] if current_user&.role != "user"
+    options
+  end
 end

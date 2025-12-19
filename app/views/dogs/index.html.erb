@@ -1,16 +1,13 @@
 <section class="back-img">
-    <div class="container">
-        <h1 class="text-center">Pets</h1>
-        <% if policy(Dog.new).create? %>
-            <%= link_to "New Dog", new_dog_path, class: "btn btn-primary my-3 d-block mx-auto" %>
-        <% end %>
-        <% if @dogs.any? %>
-            <div class="row row-cols-1 auto-grid">
-                <%= render @dogs %> <!-- render each dog in the collection automatically -->
-            </div>
-            <%= paginate @dogs %>
-        <% else %>
-            <p>No dogs found</p>
-        <% end %>
-    </div>
+  <div class="container">
+    <h1 class="text-center">Pets</h1>
+
+    <% if policy(Dog.new).create? %>
+      <%= link_to "New Dog", new_dog_path, class: "btn btn-primary my-3 d-block mx-auto" %>
+    <% end %>
+
+    <%= render "dogs/filters" %>
+
+    <%= render "dogs/dogs_collection", dogs: @dogs %>
+  </div>
 </section>

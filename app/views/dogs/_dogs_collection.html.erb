@@ -1,0 +1,13 @@
+<% if @dogs.any? %>
+    <p class="text-muted mb-3">
+    Found <%= @dogs.total_count %> <%= "dog".pluralize(@dogs.total_count) %>
+    </p>
+    <div class="row row-cols-1 auto-grid">
+    <%= render @dogs %>
+    </div>
+    <%= paginate @dogs %>
+<% else %>
+    <div class="alert alert-info">
+    No dogs found matching your criteria. Try adjusting your filters.
+    </div>
+<% end %>
