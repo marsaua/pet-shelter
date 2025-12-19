@@ -6,7 +6,12 @@ class DogsController < ApplicationController
     before_action :setup_comments_and_adopts, only: %i[show]
 
     def index
-        @dogs = Dog.recent_with_avatar(params[:page])
+        @q = Dog.ransack(search_params)
+        @dogs = Dogs::FilterQuery.call(
+        search_params: search_params,
+        page: params[:page],
+        current_user: current_user
+        )
     end
 
     def new
@@ -15,7 +20,7 @@ class DogsController < ApplicationController
 
     def create
         @dog = Dog.new(dog_params)
-        result = Dogs::CreateDogOrganizer.call(dog: @dog, params: params[:dog])
+        result = Dogs::CreateDogOrganizer.call(dog: @dog, params: params[:dog], current_user: @current_user)
 
         return redirect_to @dog, notice: t("success_create", thing: "Dog"), status: :see_other if result.success?
 
@@ -44,7 +49,7 @@ class DogsController < ApplicationController
             dog: @dog,
             dog_attributes: params.require(:dog).permit(:status),
             adopt_id: params[:adopt_id],
-            current_user: current_user
+            current_user: @current_user
         )
 
         if result.success?
@@ -65,6 +70,20 @@ class DogsController < ApplicationController
 
 
     private
+
+    def search_params
+        params.fetch(:q, {}).permit(
+            :name_cont,
+            :breed_cont,
+            :sex_eq,
+            :age_month_gteq,
+            :age_month_lteq,
+            :size_eq,
+            :status_eq,
+            :health_status_eq,
+            :s
+        )
+    end
 
     def set_dog
         @dog = Dog.find(params[:id])

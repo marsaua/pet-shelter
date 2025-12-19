@@ -15,6 +15,8 @@ gem "stimulus-rails"
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
 
+gem "rails-patterns", "~> 0.11.0"
+
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 gem "sprockets-rails"
@@ -54,6 +56,9 @@ gem "kaminari"
 
 # For phone number validation
 gem "phonelib"
+
+# For filters
+gem "ransack"
 
 # For date validation
 gem "date_validator"
