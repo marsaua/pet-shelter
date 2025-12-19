@@ -32,10 +32,11 @@ module Dogs
     end
 
     def hide_dogs_under_treatment_for_user(scope)
-      if current_user.role == "user"
-        scope = scope.where.not(health_status: "under_treatment")
+      scope = if current_user.role == "user"
+        scope.where.not(health_status: "under_treatment")
+      else
+        scope
       end
-      scope
     end
   end
 end

@@ -31,7 +31,7 @@
         </div>
     </div>
     <div>
-        <% if @dog.status =="available_for_walk" || @dog.status=="available" %>
+        <% if ["available_for_walk", "available"].include?(@dog.status) %>
             <%= link_to "Book a walk with this dog", new_dog_walking_reservation_path(@dog), class: "btn btn-primary" %>
         <% end %>
     </div>
